@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet"/>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@100..900&family=Satoshi:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-container": "#bdffdb",
+                    "outline-variant": "#c3c6d7",
+                    "on-surface-variant": "#434655",
+                    "tertiary-fixed": "#6ffbbe",
+                    "on-secondary-fixed-variant": "#3f465f",
+                    "primary": "#004ac6",
+                    "surface-container-low": "#f2f4f6",
+                    "primary-fixed": "#dbe1ff",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-container": "#d8defe",
+                    "on-secondary": "#ffffff",
+                    "on-primary-fixed": "#00174b",
+                    "secondary": "#575d78",
+                    "on-primary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "on-secondary-container": "#5b617d",
+                    "inverse-on-surface": "#eff1f3",
+                    "surface": "#f7f9fb",
+                    "on-background": "#191c1e",
+                    "error": "#ba1a1a",
+                    "inverse-primary": "#b4c5ff",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "on-primary-container": "#eeefff",
+                    "primary-container": "#2563eb",
+                    "tertiary": "#006242",
+                    "on-tertiary-fixed": "#002113",
+                    "surface-dim": "#d8dadc",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-highest": "#e0e3e5",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "on-error-container": "#93000a",
+                    "inverse-surface": "#2d3133",
+                    "background": "#f7f9fb",
+                    "surface-variant": "#e0e3e5",
+                    "surface-container": "#eceef0",
+                    "secondary-fixed": "#dce1ff",
+                    "error-container": "#ffdad6",
+                    "surface-bright": "#f7f9fb",
+                    "outline": "#737686",
+                    "surface-tint": "#0053db",
+                    "tertiary-container": "#007d55",
+                    "on-surface": "#191c1e",
+                    "on-secondary-fixed": "#141a32",
+                    "secondary-fixed-dim": "#bfc5e4",
+                    "surface-container-high": "#e6e8ea"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit": "4px",
+                    "xxl": "48px",
+                    "sm": "8px",
+                    "lg": "24px",
+                    "section-md": "96px",
+                    "margin-desktop": "48px",
+                    "margin-mobile": "16px",
+                    "xl": "32px",
+                    "xs": "4px",
+                    "md": "16px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "display-lg": ["Satoshi"],
+                    "label-caps": ["Satoshi"],
+                    "body-bold": ["Pretendard"],
+                    "headline-md": ["Pretendard"],
+                    "stat-lg-mobile": ["Satoshi"],
+                    "headline-md-mobile": ["Pretendard"],
+                    "body-base": ["Pretendard"],
+                    "stat-lg": ["Satoshi"]
+            },
+            "fontSize": {
+                    "display-lg": ["44px", {"lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.15em", "fontWeight": "700"}],
+                    "body-bold": ["16px", {"lineHeight": "24px", "letterSpacing": "0", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "stat-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md-mobile": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "body-base": ["16px", {"lineHeight": "24px", "letterSpacing": "0", "fontWeight": "400"}],
+                    "stat-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #f7f9fb;
+            font-family: 'Pretendard', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .double-bezel {
+            position: relative;
+            background: rgba(0, 0, 0, 0.03);
+            padding: 1px;
+            border-radius: 1rem;
+        }
+        .double-bezel-inner {
+            background: #ffffff;
+            border-radius: calc(1rem - 1px);
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8), 0 2px 4px rgba(0, 0, 0, 0.02);
+        }
+        .shimmer-bar {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite linear;
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #c3c6d7;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="text-on-surface">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop bg-surface/90 backdrop-blur-xl border-b border-outline-variant shadow-sm h-20">
+<div class="flex items-center gap-xl">
+<span class="font-display-lg text-display-lg font-black text-primary">Market Entry Diagnostic</span>
+<nav class="hidden md:flex items-center gap-lg">
+<a class="text-on-surface-variant font-body-base hover:text-primary transition-colors duration-300" href="#">메인</a>
+<a class="text-primary font-body-bold border-b-2 border-primary pb-1" href="#">상세 진단</a>
+<a class="text-on-surface-variant font-body-base hover:text-primary transition-colors duration-300" href="#">보고서</a>
+<a class="text-on-surface-variant font-body-base hover:text-primary transition-colors duration-300" href="#">환경 설정</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<span class="font-body-base text-on-surface-variant cursor-pointer hover:text-primary">KR/UK</span>
+<button class="p-sm rounded-full hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-sm rounded-full hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</header>
+<main class="pt-32 pb-xl px-margin-desktop min-h-screen">
+<div class="max-w-7xl mx-auto">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row justify-between items-end mb-xl gap-md">
+<div>
+<h1 class="font-display-lg text-display-lg text-on-surface mb-xs">국가 리스트</h1>
+<p class="text-on-surface-variant font-body-base">글로벌 시장 진입을 위한 핵심 국가별 시장 지표 및 상태 현황을 확인하십시오.</p>
+</div>
+<!-- Filter Dropdown -->
+<div class="relative group" id="country-dropdown-container">
+<button class="h-[52px] px-lg rounded-full bg-white border border-outline-variant flex items-center justify-between gap-xl min-w-[240px] hover:border-primary transition-all duration-300 shadow-sm active:scale-95" id="dropdown-toggle">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary" data-icon="public">public</span>
+<span class="font-body-bold text-on-surface">국가 선택</span>
+</div>
+<span class="material-symbols-outlined transition-transform duration-300" id="dropdown-arrow">expand_more</span>
+</button>
+<!-- Dropdown Menu -->
+<div class="absolute right-0 top-[60px] w-72 bg-white rounded-xl border border-outline-variant shadow-lg backdrop-blur-xl z-10 hidden overflow-hidden opacity-0 transform translate-y-[-10px] transition-all duration-300" id="dropdown-menu">
+<div class="p-md border-b border-outline-variant bg-surface-container-low">
+<div class="relative">
+<input class="w-full bg-white border border-outline-variant rounded-lg py-sm pl-9 pr-md font-body-base focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="국가 검색..." type="text"/>
+<span class="material-symbols-outlined absolute left-2 top-2.5 text-outline text-sm" data-icon="search">search</span>
+</div>
+</div>
+<div class="max-h-64 overflow-y-auto custom-scrollbar p-sm">
+<label class="flex items-center gap-md p-sm hover:bg-surface-container-low rounded-lg cursor-pointer transition-colors">
+<input checked="" class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+<span class="font-body-base text-on-surface">대한민국 (South Korea)</span>
+</label>
+<label class="flex items-center gap-md p-sm hover:bg-surface-container-low rounded-lg cursor-pointer transition-colors">
+<input checked="" class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+<span class="font-body-base text-on-surface">미국 (United States)</span>
+</label>
+<label class="flex items-center gap-md p-sm hover:bg-surface-container-low rounded-lg cursor-pointer transition-colors">
+<input class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+<span class="font-body-base text-on-surface">일본 (Japan)</span>
+</label>
+<label class="flex items-center gap-md p-sm hover:bg-surface-container-low rounded-lg cursor-pointer transition-colors">
+<input class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+<span class="font-body-base text-on-surface">독일 (Germany)</span>
+</label>
+<label class="flex items-center gap-md p-sm hover:bg-surface-container-low rounded-lg cursor-pointer transition-colors">
+<input class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+<span class="font-body-base text-on-surface">싱가포르 (Singapore)</span>
+</label>
+</div>
+<div class="p-sm bg-surface-container-low flex justify-end gap-sm border-t border-outline-variant">
+<button class="px-md py-xs text-on-surface-variant font-label-caps hover:bg-outline-variant/20 rounded-full transition-colors">초기화</button>
+<button class="px-md py-xs bg-primary text-white font-label-caps rounded-full hover:bg-primary-container transition-colors">적용하기</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Bento Grid Content -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-lg">
+<!-- Main Table Container (Double Bezel) -->
+<div class="md:col-span-12 double-bezel overflow-hidden">
+<div class="double-bezel-inner overflow-x-auto custom-scrollbar">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant">
+<th class="px-lg py-md font-label-caps text-on-secondary-fixed-variant">국가 정보</th>
+<th class="px-lg py-md font-label-caps text-on-secondary-fixed-variant text-center">진단 스코어</th>
+<th class="px-lg py-md font-label-caps text-on-secondary-fixed-variant">시장 개방도</th>
+<th class="px-lg py-md font-label-caps text-on-secondary-fixed-variant">관세율</th>
+<th class="px-lg py-md font-label-caps text-on-secondary-fixed-variant">상태</th>
+<th class="px-lg py-md font-label-caps text-on-secondary-fixed-variant"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/30">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="px-lg py-lg">
+<div class="flex items-center gap-md">
+<div class="w-12 h-8 rounded bg-surface-container shadow-sm overflow-hidden flex items-center justify-center">
+<span class="material-symbols-outlined text-outline" data-icon="flag">flag</span>
+</div>
+<div>
+<div class="font-body-bold text-on-surface">대한민국</div>
+<div class="text-xs text-outline">KR · East Asia</div>
+</div>
+</div>
+</td>
+<td class="px-lg py-lg text-center">
+<span class="font-display-lg text-primary text-[24px]">88</span>
+</td>
+<td class="px-lg py-lg">
+<div class="w-32 h-1.5 bg-surface-container rounded-full overflow-hidden relative">
+<div class="absolute top-0 left-0 h-full bg-primary rounded-full w-[85%]">
+<div class="shimmer-bar absolute inset-0"></div>
+</div>
+</div>
+<span class="text-xs text-on-surface-variant font-body-base mt-1 block">매우 높음 (85%)</span>
+</td>
+<td class="px-lg py-lg font-body-base text-on-surface">2.4% <span class="text-xs text-tertiary">(FTA 적용)</span></td>
+<td class="px-lg py-lg">
+<span class="inline-flex items-center gap-xs px-md py-1 rounded-full bg-tertiary-container text-on-tertiary-container text-xs font-body-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-on-tertiary-container animate-pulse"></span>
+                                            활성
+                                        </span>
+</td>
+<td class="px-lg py-lg text-right">
+<button class="p-sm text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="px-lg py-lg">
+<div class="flex items-center gap-md">
+<div class="w-12 h-8 rounded bg-surface-container shadow-sm overflow-hidden flex items-center justify-center">
+<span class="material-symbols-outlined text-outline" data-icon="flag">flag</span>
+</div>
+<div>
+<div class="font-body-bold text-on-surface">미국</div>
+<div class="text-xs text-outline">US · North America</div>
+</div>
+</div>
+</td>
+<td class="px-lg py-lg text-center">
+<span class="font-display-lg text-primary text-[24px]">92</span>
+</td>
+<td class="px-lg py-lg">
+<div class="w-32 h-1.5 bg-surface-container rounded-full overflow-hidden relative">
+<div class="absolute top-0 left-0 h-full bg-primary rounded-full w-[92%]">
+<div class="shimmer-bar absolute inset-0"></div>
+</div>
+</div>
+<span class="text-xs text-on-surface-variant font-body-base mt-1 block">매우 높음 (92%)</span>
+</td>
+<td class="px-lg py-lg font-body-base text-on-surface">0.0% <span class="text-xs text-tertiary">(무관세)</span></td>
+<td class="px-lg py-lg">
+<span class="inline-flex items-center gap-xs px-md py-1 rounded-full bg-tertiary-container text-on-tertiary-container text-xs font-body-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-on-tertiary-container animate-pulse"></span>
+                                            활성
+                                        </span>
+</td>
+<td class="px-lg py-lg text-right">
+<button class="p-sm text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="px-lg py-lg">
+<div class="flex items-center gap-md">
+<div class="w-12 h-8 rounded bg-surface-container shadow-sm overflow-hidden flex items-center justify-center">
+<span class="material-symbols-outlined text-outline" data-icon="flag">flag</span>
+</div>
+<div>
+<div class="font-body-bold text-on-surface">중국</div>
+<div class="text-xs text-outline">CN · East Asia</div>
+</div>
+</div>
+</td>
+<td class="px-lg py-lg text-center">
+<span class="font-display-lg text-on-surface-variant text-[24px]">64</span>
+</td>
+<td class="px-lg py-lg">
+<div class="w-32 h-1.5 bg-surface-container rounded-full overflow-hidden relative">
+<div class="absolute top-0 left-0 h-full bg-secondary-container rounded-full w-[64%]"></div>
+</div>
+<span class="text-xs text-on-surface-variant font-body-base mt-1 block">보통 (64%)</span>
+</td>
+<td class="px-lg py-lg font-body-base text-on-surface">12.5%</td>
+<td class="px-lg py-lg">
+<span class="inline-flex items-center gap-xs px-md py-1 rounded-full bg-surface-variant text-on-surface-variant text-xs font-body-bold">
+                                            대기
+                                        </span>
+</td>
+<td class="px-lg py-lg text-right">
+<button class="p-sm text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="px-lg py-lg">
+<div class="flex items-center gap-md">
+<div class="w-12 h-8 rounded bg-surface-container shadow-sm overflow-hidden flex items-center justify-center">
+<span class="material-symbols-outlined text-outline" data-icon="flag">flag</span>
+</div>
+<div>
+<div class="font-body-bold text-on-surface">브라질</div>
+<div class="text-xs text-outline">BR · South America</div>
+</div>
+</div>
+</td>
+<td class="px-lg py-lg text-center">
+<span class="font-display-lg text-error text-[24px]">42</span>
+</td>
+<td class="px-lg py-lg">
+<div class="w-32 h-1.5 bg-surface-container rounded-full overflow-hidden relative">
+<div class="absolute top-0 left-0 h-full bg-error rounded-full w-[42%]"></div>
+</div>
+<span class="text-xs text-on-surface-variant font-body-base mt-1 block">위험 (42%)</span>
+</td>
+<td class="px-lg py-lg font-body-base text-on-surface">35.0%</td>
+<td class="px-lg py-lg">
+<span class="inline-flex items-center gap-xs px-md py-1 rounded-full bg-error-container text-on-error-container text-xs font-body-bold">
+                                            제한
+                                        </span>
+</td>
+<td class="px-lg py-lg text-right">
+<button class="p-sm text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- Pagination -->
+<div class="px-lg py-md bg-surface-container-lowest border-t border-outline-variant flex justify-between items-center">
+<span class="text-xs text-on-surface-variant font-body-base">총 128개 국가 중 4개 표시</span>
+<div class="flex gap-sm">
+<button class="w-8 h-8 flex items-center justify-center border border-outline-variant rounded hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="chevron_left">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center bg-primary text-white rounded font-body-bold text-xs">1</button>
+<button class="w-8 h-8 flex items-center justify-center border border-outline-variant rounded hover:bg-surface-container-low transition-colors font-body-base text-xs">2</button>
+<button class="w-8 h-8 flex items-center justify-center border border-outline-variant rounded hover:bg-surface-container-low transition-colors font-body-base text-xs">3</button>
+<button class="w-8 h-8 flex items-center justify-center border border-outline-variant rounded hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Secondary Analytics Cards -->
+<div class="md:col-span-4 double-bezel overflow-hidden">
+<div class="double-bezel-inner p-lg h-full">
+<div class="flex justify-between items-start mb-md">
+<h3 class="font-body-bold text-on-surface">시장 분석 요약</h3>
+<span class="material-symbols-outlined text-primary" data-icon="insights">insights</span>
+</div>
+<div class="space-y-lg">
+<div>
+<p class="text-xs text-on-surface-variant font-label-caps mb-xs">평균 진단 점수</p>
+<div class="flex items-baseline gap-sm">
+<span class="font-display-lg text-display-lg text-primary">74.5</span>
+<span class="text-tertiary font-body-bold text-xs">▲ 12%</span>
+</div>
+</div>
+<div class="h-px bg-outline-variant/30"></div>
+<div class="grid grid-cols-2 gap-md">
+<div>
+<p class="text-[10px] text-on-surface-variant font-label-caps">활성 국가</p>
+<p class="font-display-lg text-[24px] text-on-surface">42</p>
+</div>
+<div>
+<p class="text-[10px] text-on-surface-variant font-label-caps">제한 국가</p>
+<p class="font-display-lg text-[24px] text-on-surface">8</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md:col-span-8 double-bezel overflow-hidden h-[300px]">
+<div class="double-bezel-inner w-full h-full p-lg relative flex items-center justify-center bg-surface-container-low">
+<div class="absolute inset-0 opacity-40 mix-blend-multiply" style="background-image: radial-gradient(#c3c6d7 1px, transparent 1px); background-size: 20px 20px;"></div>
+<div class="relative text-center z-10">
+<span class="material-symbols-outlined text-[48px] text-primary/30 mb-md" data-icon="map">map</span>
+<h3 class="font-headline-md text-on-surface mb-sm">지리적 분포 현황</h3>
+<p class="text-on-surface-variant font-body-base max-w-sm mx-auto">선택된 국가들의 시장 진입 난이도가 대륙별로 시각화됩니다.</p>
+<button class="mt-lg px-xl py-md bg-white border border-primary text-primary font-body-bold rounded-full hover:bg-primary hover:text-white transition-all duration-300">지도 상세 보기</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="w-full flex flex-col md:flex-row justify-between items-center px-margin-desktop gap-md py-xl border-t border-outline-variant bg-surface-container-lowest">
+<div class="flex flex-col items-center md:items-start gap-xs">
+<span class="font-headline-md text-headline-md font-bold text-secondary">Global Market Diagnostic</span>
+<span class="text-on-surface-variant font-label-caps text-xs">© 2024 Global Market Diagnostic. All rights reserved.</span>
+</div>
+<div class="flex gap-lg">
+<a class="text-on-surface-variant font-label-caps hover:text-primary underline transition-all" href="#">이용약관</a>
+<a class="text-on-surface-variant font-label-caps hover:text-primary underline transition-all" href="#">개인정보처리방침</a>
+<a class="text-on-surface-variant font-label-caps hover:text-primary underline transition-all" href="#">고객지원</a>
+<a class="text-on-surface-variant font-label-caps hover:text-primary underline transition-all" href="#">데이터 출처</a>
+</div>
+</footer>
+<script>
+        // Dropdown Logic
+        const dropdownToggle = document.getElementById('dropdown-toggle');
+        const dropdownMenu = document.getElementById('dropdown-menu');
+        const dropdownArrow = document.getElementById('dropdown-arrow');
+        const container = document.getElementById('country-dropdown-container');
+
+        dropdownToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isHidden = dropdownMenu.classList.contains('hidden');
+            
+            if (isHidden) {
+                dropdownMenu.classList.remove('hidden');
+                setTimeout(() => {
+                    dropdownMenu.classList.remove('opacity-0', 'translate-y-[-10px]');
+                }, 10);
+                dropdownArrow.style.transform = 'rotate(180deg)';
+                dropdownToggle.classList.add('border-primary', 'shadow-md');
+            } else {
+                closeDropdown();
+            }
+        });
+
+        function closeDropdown() {
+            dropdownMenu.classList.add('opacity-0', 'translate-y-[-10px]');
+            dropdownArrow.style.transform = 'rotate(0deg)';
+            dropdownToggle.classList.remove('border-primary', 'shadow-md');
+            setTimeout(() => {
+                dropdownMenu.classList.add('hidden');
+            }, 300);
+        }
+
+        document.addEventListener('click', (e) => {
+            if (!container.contains(e.target)) {
+                closeDropdown();
+            }
+        });
+
+        // Micro-interaction for table rows
+        const rows = document.querySelectorAll('tbody tr');
+        rows.forEach(row => {
+            row.addEventListener('mouseenter', () => {
+                row.style.transform = 'translateY(-1px)';
+                row.style.boxShadow = '0 4px 6px -1px rgb(0 0 0 / 0.05)';
+            });
+            row.addEventListener('mouseleave', () => {
+                row.style.transform = 'none';
+                row.style.boxShadow = 'none';
+            });
+        });
+    </script>
+</body></html>

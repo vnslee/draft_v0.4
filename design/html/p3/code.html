@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>프로그레스 팝업 (P3) - Market Entry Diagnostic</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet"/>
+<link href="https://fonts.cdnfonts.com/css/satoshi" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@100..900&family=Satoshi:wght@100..900&display=swap" rel="stylesheet"/>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "on-tertiary-container": "#bdffdb",
+                "outline-variant": "#c3c6d7",
+                "on-surface-variant": "#434655",
+                "tertiary-fixed": "#6ffbbe",
+                "on-secondary-fixed-variant": "#3f465f",
+                "primary": "#004ac6",
+                "surface-container-low": "#f2f4f6",
+                "primary-fixed": "#dbe1ff",
+                "surface-container-lowest": "#ffffff",
+                "secondary-container": "#d8defe",
+                "on-secondary": "#ffffff",
+                "on-primary-fixed": "#00174b",
+                "secondary": "#575d78",
+                "on-primary": "#ffffff",
+                "on-error": "#ffffff",
+                "on-secondary-container": "#5b617d",
+                "inverse-on-surface": "#eff1f3",
+                "surface": "#f7f9fb",
+                "on-background": "#191c1e",
+                "error": "#ba1a1a",
+                "inverse-primary": "#b4c5ff",
+                "primary-fixed-dim": "#b4c5ff",
+                "on-tertiary-fixed-variant": "#005236",
+                "on-primary-container": "#eeefff",
+                "primary-container": "#2563eb",
+                "tertiary": "#006242",
+                "on-tertiary-fixed": "#002113",
+                "surface-dim": "#d8dadc",
+                "on-tertiary": "#ffffff",
+                "surface-container-highest": "#e0e3e5",
+                "tertiary-fixed-dim": "#4edea3",
+                "on-primary-fixed-variant": "#003ea8",
+                "on-error-container": "#93000a",
+                "inverse-surface": "#2d3133",
+                "background": "#f7f9fb",
+                "surface-variant": "#e0e3e5",
+                "surface-container": "#eceef0",
+                "secondary-fixed": "#dce1ff",
+                "error-container": "#ffdad6",
+                "surface-bright": "#f7f9fb",
+                "outline": "#737686",
+                "surface-tint": "#0053db",
+                "tertiary-container": "#007d55",
+                "on-surface": "#191c1e",
+                "on-secondary-fixed": "#141a32",
+                "secondary-fixed-dim": "#bfc5e4",
+                "surface-container-high": "#e6e8ea"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "unit": "4px",
+                "xxl": "48px",
+                "sm": "8px",
+                "lg": "24px",
+                "section-md": "96px",
+                "margin-desktop": "48px",
+                "margin-mobile": "16px",
+                "xl": "32px",
+                "xs": "4px",
+                "md": "16px",
+                "gutter": "24px"
+            },
+            "fontFamily": {
+                "display-lg": ["Satoshi"],
+                "label-caps": ["Satoshi"],
+                "body-bold": ["Pretendard"],
+                "headline-md": ["Pretendard"],
+                "stat-lg-mobile": ["Satoshi"],
+                "headline-md-mobile": ["Pretendard"],
+                "body-base": ["Pretendard"],
+                "stat-lg": ["Satoshi"]
+            },
+            "fontSize": {
+                "display-lg": ["44px", { "lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.15em", "fontWeight": "700" }],
+                "body-bold": ["16px", { "lineHeight": "24px", "letterSpacing": "0", "fontWeight": "600" }],
+                "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                "stat-lg-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                "headline-md-mobile": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                "body-base": ["16px", { "lineHeight": "24px", "letterSpacing": "0", "fontWeight": "400" }],
+                "stat-lg": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #f7f9fb;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .double-bezel {
+            box-shadow: 0 0 0 1px rgba(0,0,0,0.05), inset 0 1px 1px rgba(255,255,255,0.8);
+        }
+        .shimmer {
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+            background-size: 200% 100%;
+            animation: shimmer-effect 2s infinite linear;
+        }
+        @keyframes shimmer-effect {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .glow-pulse {
+            animation: glow-pulse-animation 2s infinite ease-in-out;
+        }
+        @keyframes glow-pulse-animation {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface overflow-hidden">
+<!-- Header (Shared Component: TopNavBar) -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop bg-surface/90 dark:bg-inverse-surface/90 border-b border-outline-variant dark:border-outline backdrop-blur-xl h-20 shadow-sm">
+<div class="flex items-center gap-xl">
+<span class="font-display-lg text-display-lg font-black text-primary dark:text-primary-fixed-dim">Market Entry Diagnostic</span>
+<nav class="hidden md:flex items-center gap-lg ml-xl">
+<a class="text-on-surface-variant dark:text-outline-variant font-body-base hover:text-primary transition-colors" href="#">메인</a>
+<a class="text-primary dark:text-primary-fixed-dim font-body-bold border-b-2 border-primary pb-1" href="#">상세 진단</a>
+<a class="text-on-surface-variant dark:text-outline-variant font-body-base hover:text-primary transition-colors" href="#">보고서</a>
+<a class="text-on-surface-variant dark:text-outline-variant font-body-base hover:text-primary transition-colors" href="#">환경 설정</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<span class="font-body-base text-on-surface-variant">KR/UK</span>
+<button class="p-sm text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined">notifications</span></button>
+<button class="p-sm text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined">account_circle</span></button>
+</div>
+</header>
+<!-- Main Content Underlay (Background visual only) -->
+<main class="pt-20 min-h-screen px-margin-desktop py-xl">
+<div class="grid grid-cols-12 gap-gutter opacity-20 pointer-events-none">
+<div class="col-span-8 h-[600px] bg-surface-container-high rounded-xl double-bezel relative overflow-hidden">
+<div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#004ac6 1px, transparent 1px); background-size: 20px 20px;"></div>
+</div>
+<div class="col-span-4 flex flex-col gap-gutter">
+<div class="h-40 bg-surface-container-high rounded-xl double-bezel"></div>
+<div class="h-40 bg-surface-container-high rounded-xl double-bezel"></div>
+<div class="h-80 bg-surface-container-high rounded-xl double-bezel"></div>
+</div>
+</div>
+</main>
+<!-- Modal Backdrop -->
+<div class="fixed inset-0 z-[60] bg-on-background/40 backdrop-blur-sm flex items-center justify-center p-md" id="modal-backdrop">
+<!-- Modal Container (Double-Bezel Architecture) -->
+<div class="relative w-full max-w-3xl bg-white dark:bg-inverse-surface rounded-xl overflow-hidden shadow-2xl double-bezel border border-white/20 animate-in fade-in zoom-in duration-300">
+<!-- Modal Header -->
+<div class="flex items-center justify-between px-xl py-lg bg-surface-container-lowest border-b border-outline-variant">
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-primary tracking-widest uppercase">DIAGNOSTIC STATUS</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">시장 진입 분석 에이전트 가동 중</h2>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors text-on-surface-variant" onclick="window.location.reload()">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Modal Content -->
+<div class="p-xl space-y-xl">
+<!-- Status Dashboard -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-md">
+<!-- Stat Card 1 -->
+<div class="p-md bg-surface-container-low rounded-lg border border-outline-variant/30 flex flex-col gap-xs">
+<span class="font-label-caps text-[10px] text-on-surface-variant">ACTIVE AGENTS</span>
+<div class="flex items-baseline gap-xs">
+<span class="font-display-lg text-2xl font-bold text-primary">04</span>
+<span class="text-xs text-outline">/ 04</span>
+</div>
+</div>
+<!-- Stat Card 2 -->
+<div class="p-md bg-surface-container-low rounded-lg border border-outline-variant/30 flex flex-col gap-xs">
+<span class="font-label-caps text-[10px] text-on-surface-variant">DATA NODES</span>
+<span class="font-display-lg text-2xl font-bold text-primary">1,240</span>
+</div>
+<!-- Stat Card 3 -->
+<div class="p-md bg-surface-container-low rounded-lg border border-outline-variant/30 flex flex-col gap-xs">
+<span class="font-label-caps text-[10px] text-on-surface-variant">TIME ELAPSED</span>
+<span class="font-display-lg text-2xl font-bold text-primary" id="timer">00:12</span>
+</div>
+<!-- Stat Card 4 -->
+<div class="p-md bg-surface-container-low rounded-lg border border-outline-variant/30 flex flex-col gap-xs">
+<span class="font-label-caps text-[10px] text-on-surface-variant">STABILITY</span>
+<span class="font-display-lg text-2xl font-bold text-tertiary">99.8%</span>
+</div>
+</div>
+<!-- Progress Section -->
+<div class="space-y-lg">
+<!-- Progress Item 1: 시장 (Market) -->
+<div class="space-y-sm">
+<div class="flex justify-between items-end">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary text-lg">analytics</span>
+<span class="font-body-bold text-on-surface">시장 (Market)</span>
+<span class="text-xs text-on-surface-variant px-2 py-0.5 bg-surface-container-high rounded-full">인구 및 구매력 분석</span>
+</div>
+<span class="font-label-caps text-primary" id="percent-market">45%</span>
+</div>
+<div class="h-2 w-full bg-surface-container-highest rounded-full overflow-hidden relative border border-black/5">
+<div class="h-full bg-primary relative transition-all duration-500 ease-out" id="bar-market" style="width: 45%;">
+<div class="absolute inset-0 shimmer opacity-50"></div>
+</div>
+</div>
+</div>
+<!-- Progress Item 2: 규제 (Regulation) -->
+<div class="space-y-sm">
+<div class="flex justify-between items-end">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary text-lg">gavel</span>
+<span class="font-body-bold text-on-surface">규제 (Regulation)</span>
+<span class="text-xs text-on-surface-variant px-2 py-0.5 bg-surface-container-high rounded-full">법률 및 인허가 리스크</span>
+</div>
+<span class="font-label-caps text-primary" id="percent-regulation">28%</span>
+</div>
+<div class="h-2 w-full bg-surface-container-highest rounded-full overflow-hidden relative border border-black/5">
+<div class="h-full bg-primary relative transition-all duration-500 ease-out" id="bar-regulation" style="width: 28%;">
+<div class="absolute inset-0 shimmer opacity-50"></div>
+</div>
+</div>
+</div>
+<!-- Progress Item 3: 상품 (Product) -->
+<div class="space-y-sm">
+<div class="flex justify-between items-end">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary text-lg">inventory_2</span>
+<span class="font-body-bold text-on-surface">상품 (Product)</span>
+<span class="text-xs text-on-surface-variant px-2 py-0.5 bg-surface-container-high rounded-full">경쟁 제품 매칭도 분석</span>
+</div>
+<span class="font-label-caps text-primary" id="percent-product">12%</span>
+</div>
+<div class="h-2 w-full bg-surface-container-highest rounded-full overflow-hidden relative border border-black/5">
+<div class="h-full bg-primary relative transition-all duration-500 ease-out" id="bar-product" style="width: 12%;">
+<div class="absolute inset-0 shimmer opacity-50"></div>
+</div>
+</div>
+</div>
+<!-- Progress Item 4: 시스템 (System) -->
+<div class="space-y-sm">
+<div class="flex justify-between items-end">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary text-lg">hub</span>
+<span class="font-body-bold text-on-surface">시스템 (System)</span>
+<span class="text-xs text-on-surface-variant px-2 py-0.5 bg-surface-container-high rounded-full">공급망 인프라 연동 분석</span>
+</div>
+<span class="font-label-caps text-primary" id="percent-system">0%</span>
+</div>
+<div class="h-2 w-full bg-surface-container-highest rounded-full overflow-hidden relative border border-black/5">
+<div class="h-full bg-primary relative transition-all duration-500 ease-out" id="bar-system" style="width: 0%;">
+<div class="absolute inset-0 shimmer opacity-50"></div>
+</div>
+</div>
+</div>
+<!-- Final Action: 결과 생성 (Result Generation) -->
+<div class="pt-lg border-t border-outline-variant/50 space-y-sm">
+<div class="flex justify-between items-end">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-secondary text-lg">auto_awesome</span>
+<span class="font-body-bold text-secondary">결과 생성 (Result Generation)</span>
+</div>
+<span class="font-label-caps text-secondary" id="percent-result">0%</span>
+</div>
+<div class="h-3 w-full bg-surface-container-highest rounded-full overflow-hidden relative border border-black/5">
+<div class="h-full bg-tertiary-container relative transition-all duration-500 ease-out" id="bar-result" style="width: 0%;">
+<div class="absolute inset-0 shimmer opacity-50"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Modal Footer -->
+<div class="px-xl py-lg bg-surface-container-lowest border-t border-outline-variant flex items-center justify-between">
+<div class="flex items-center gap-sm text-on-surface-variant">
+<div class="w-2 h-2 rounded-full bg-tertiary glow-pulse"></div>
+<span class="text-xs font-body-base" id="status-text">에이전트가 실시간 데이터를 처리하고 있습니다...</span>
+</div>
+<button class="group relative px-xl py-3 rounded-full bg-outline-variant text-white font-body-bold flex items-center gap-md opacity-50 cursor-not-allowed transition-all duration-500" disabled="" id="report-btn">
+                    보고서보기
+                    <div class="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</div>
+</button>
+</div>
+</div>
+</div>
+<!-- Footer (Shared Component: Footer) -->
+<footer class="fixed bottom-0 left-0 w-full bg-surface-container-lowest dark:bg-surface-dim border-t border-outline-variant dark:border-outline py-xl flex flex-col md:flex-row justify-between items-center px-margin-desktop gap-md z-40">
+<span class="font-headline-md text-headline-md font-bold text-secondary dark:text-secondary-fixed">Global Market Diagnostic</span>
+<div class="flex gap-lg">
+<a class="text-on-surface-variant dark:text-outline-variant font-label-caps text-label-caps hover:text-primary transition-all underline" href="#">이용약관</a>
+<a class="text-on-surface-variant dark:text-outline-variant font-label-caps text-label-caps hover:text-primary transition-all underline" href="#">개인정보처리방침</a>
+<a class="text-on-surface-variant dark:text-outline-variant font-label-caps text-label-caps hover:text-primary transition-all underline" href="#">고객지원</a>
+<a class="text-on-surface-variant dark:text-outline-variant font-label-caps text-label-caps hover:text-primary transition-all underline" href="#">데이터 출처</a>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant dark:text-outline-variant">© 2024 Global Market Diagnostic. All rights reserved.</span>
+</footer>
+<script>
+        // Progress Simulation Logic
+        const bars = {
+            market: { current: 45, target: 100, element: document.getElementById('bar-market'), text: document.getElementById('percent-market') },
+            regulation: { current: 28, target: 100, element: document.getElementById('bar-regulation'), text: document.getElementById('percent-regulation') },
+            product: { current: 12, target: 100, element: document.getElementById('bar-product'), text: document.getElementById('percent-product') },
+            system: { current: 0, target: 100, element: document.getElementById('bar-system'), text: document.getElementById('percent-system') },
+            result: { current: 0, target: 100, element: document.getElementById('bar-result'), text: document.getElementById('percent-result') }
+        };
+
+        const statusText = document.getElementById('status-text');
+        const reportBtn = document.getElementById('report-btn');
+        const timerElement = document.getElementById('timer');
+        let seconds = 12;
+
+        function updateTimer() {
+            seconds++;
+            const mins = Math.floor(seconds / 60).toString().padStart(2, '0');
+            const secs = (seconds % 60).toString().padStart(2, '0');
+            timerElement.textContent = `${mins}:${secs}`;
+        }
+
+        const timerInterval = setInterval(updateTimer, 1000);
+
+        function updateProgress() {
+            let allMainDone = true;
+
+            // Update main 4 bars
+            ['market', 'regulation', 'product', 'system'].forEach(key => {
+                if (bars[key].current < bars[key].target) {
+                    bars[key].current += Math.random() * 2;
+                    if (bars[key].current > bars[key].target) bars[key].current = bars[key].target;
+                    allMainDone = false;
+                }
+                bars[key].element.style.width = bars[key].current + '%';
+                bars[key].text.textContent = Math.floor(bars[key].current) + '%';
+            });
+
+            // Update result generation bar only after others are progressing well
+            if (bars.market.current > 80 && bars.regulation.current > 70) {
+                if (bars.result.current < bars.result.target) {
+                    bars.result.current += Math.random() * 1.5;
+                    if (bars.result.current > bars.result.target) bars.result.current = bars.result.target;
+                }
+                bars.result.element.style.width = bars.result.current + '%';
+                bars.result.text.textContent = Math.floor(bars.result.current) + '%';
+                statusText.textContent = "최종 분석 보고서를 생성하는 중입니다...";
+            }
+
+            // Completion check
+            if (bars.result.current === 100) {
+                clearInterval(progressInterval);
+                clearInterval(timerInterval);
+                statusText.textContent = "모든 분석이 완료되었습니다. 보고서를 확인하십시오.";
+                statusText.classList.remove('text-on-surface-variant');
+                statusText.classList.add('text-tertiary', 'font-body-bold');
+                
+                // Enable Button
+                reportBtn.disabled = false;
+                reportBtn.classList.remove('bg-outline-variant', 'opacity-50', 'cursor-not-allowed');
+                reportBtn.classList.add('bg-primary', 'hover:scale-105', 'active:scale-95', 'cursor-pointer', 'shadow-lg');
+            }
+        }
+
+        const progressInterval = setInterval(updateProgress, 100);
+
+        // Simple button click effect
+        reportBtn.addEventListener('click', () => {
+            if(!reportBtn.disabled) {
+                alert('보고서 페이지로 이동합니다.');
+            }
+        });
+    </script>
+</body></html>

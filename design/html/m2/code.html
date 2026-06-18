@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>권역 상세정보 - Market Entry Diagnostic</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet"/>
+<link href="https://fonts.cdnfonts.com/css/satoshi" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@100..900&family=Satoshi:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-container": "#bdffdb",
+                    "outline-variant": "#c3c6d7",
+                    "on-surface-variant": "#434655",
+                    "tertiary-fixed": "#6ffbbe",
+                    "on-secondary-fixed-variant": "#3f465f",
+                    "primary": "#004ac6",
+                    "surface-container-low": "#f2f4f6",
+                    "primary-fixed": "#dbe1ff",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-container": "#d8defe",
+                    "on-secondary": "#ffffff",
+                    "on-primary-fixed": "#00174b",
+                    "secondary": "#575d78",
+                    "on-primary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "on-secondary-container": "#5b617d",
+                    "inverse-on-surface": "#eff1f3",
+                    "surface": "#f7f9fb",
+                    "on-background": "#191c1e",
+                    "error": "#ba1a1a",
+                    "inverse-primary": "#b4c5ff",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "on-primary-container": "#eeefff",
+                    "primary-container": "#2563eb",
+                    "tertiary": "#006242",
+                    "on-tertiary-fixed": "#002113",
+                    "surface-dim": "#d8dadc",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-highest": "#e0e3e5",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "on-error-container": "#93000a",
+                    "inverse-surface": "#2d3133",
+                    "background": "#f7f9fb",
+                    "surface-variant": "#e0e3e5",
+                    "surface-container": "#eceef0",
+                    "secondary-fixed": "#dce1ff",
+                    "error-container": "#ffdad6",
+                    "surface-bright": "#f7f9fb",
+                    "outline": "#737686",
+                    "surface-tint": "#0053db",
+                    "tertiary-container": "#007d55",
+                    "on-surface": "#191c1e",
+                    "on-secondary-fixed": "#141a32",
+                    "secondary-fixed-dim": "#bfc5e4",
+                    "surface-container-high": "#e6e8ea"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit": "4px",
+                    "xxl": "48px",
+                    "sm": "8px",
+                    "lg": "24px",
+                    "section-md": "96px",
+                    "margin-desktop": "48px",
+                    "margin-mobile": "16px",
+                    "xl": "32px",
+                    "xs": "4px",
+                    "md": "16px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "display-lg": ["Satoshi"],
+                    "label-caps": ["Satoshi"],
+                    "body-bold": ["Pretendard"],
+                    "headline-md": ["Pretendard"],
+                    "stat-lg-mobile": ["Satoshi"],
+                    "headline-md-mobile": ["Pretendard"],
+                    "body-base": ["Pretendard"],
+                    "stat-lg": ["Satoshi"]
+            },
+            "fontSize": {
+                    "display-lg": ["44px", {"lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.15em", "fontWeight": "700"}],
+                    "body-bold": ["16px", {"lineHeight": "24px", "letterSpacing": "0", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "stat-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md-mobile": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "body-base": ["16px", {"lineHeight": "24px", "letterSpacing": "0", "fontWeight": "400"}],
+                    "stat-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Pretendard', sans-serif; background-color: #f7f9fb; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        
+        .double-bezel {
+            position: relative;
+            background: rgba(0, 0, 0, 0.03);
+            padding: 1px;
+            border-radius: 1rem;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+        .double-bezel-inner {
+            background: #ffffff;
+            border-radius: calc(1rem - 1px);
+            box-shadow: inset 0 1px 1px rgba(255,255,255,0.8);
+        }
+
+        .shimmer {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite linear;
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        .btn-precision {
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .btn-precision:active { transform: scale(0.95); }
+
+        .progress-track {
+            height: 6px;
+            background: #eceef0;
+            border-radius: 3px;
+            overflow: hidden;
+            position: relative;
+        }
+        .progress-fill {
+            height: 100%;
+            border-radius: 3px;
+            position: relative;
+        }
+
+        .stat-card-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- TopNavBar Shell -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop bg-surface/90 dark:bg-inverse-surface/90 border-b border-outline-variant dark:border-outline backdrop-blur-xl h-20 shadow-sm">
+<div class="flex items-center gap-xl">
+<span class="font-display-lg text-display-lg font-black text-primary dark:text-primary-fixed-dim">Market Entry Diagnostic</span>
+<nav class="hidden md:flex items-center gap-lg">
+<a class="text-on-surface-variant dark:text-outline-variant font-body-base hover:text-primary dark:hover:text-primary-fixed transition-colors duration-300" href="#">메인</a>
+<a class="text-primary dark:text-primary-fixed-dim font-body-bold border-b-2 border-primary pb-1 transition-colors duration-300" href="#">상세 진단</a>
+<a class="text-on-surface-variant dark:text-outline-variant font-body-base hover:text-primary dark:hover:text-primary-fixed transition-colors duration-300" href="#">보고서</a>
+<a class="text-on-surface-variant dark:text-outline-variant font-body-base hover:text-primary dark:hover:text-primary-fixed transition-colors duration-300" href="#">환경 설정</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<div class="bg-surface-container-high px-md py-xs rounded-full text-label-caps font-label-caps text-secondary">KR/UK</div>
+<button class="p-xs text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-xs text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</header>
+<main class="pt-24 pb-xxl px-margin-desktop">
+<!-- Dashboard Header -->
+<section class="flex flex-col md:flex-row md:items-end justify-between mb-xl gap-md">
+<div>
+<nav class="flex items-center gap-xs text-outline text-label-caps font-label-caps mb-sm">
+<span>GLOBAL MARKET</span>
+<span class="material-symbols-outlined text-[12px]">chevron_right</span>
+<span>EUROPEAN UNION</span>
+</nav>
+<h1 class="font-display-lg text-display-lg text-on-surface">서유럽 경제권역 상세정보</h1>
+<p class="text-on-surface-variant font-body-base max-w-2xl mt-xs">
+                    주요 거점 국가의 관세율, 소비자 구매력지수 및 진출 적합성 시뮬레이션 데이터를 종합하여 제공합니다.
+                </p>
+</div>
+<div class="flex items-center gap-md">
+<button class="btn-precision h-12 px-lg bg-surface-container-high border border-outline-variant rounded-full flex items-center gap-md hover:bg-surface-variant group">
+<span class="font-body-bold text-on-surface">보고서</span>
+<div class="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-[18px]">download</span>
+</div>
+</button>
+<button class="btn-precision h-12 px-lg bg-primary rounded-full flex items-center gap-md hover:bg-primary-container shadow-lg group">
+<span class="font-body-bold text-white">시뮬레이션</span>
+<div class="w-8 h-8 rounded-full bg-on-primary-fixed flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-[18px]">play_arrow</span>
+</div>
+</button>
+</div>
+</section>
+<!-- Bento Grid Layout -->
+<div class="stat-card-grid">
+<!-- Map Visualization (Primary) -->
+<div class="col-span-12 lg:col-span-8 double-bezel overflow-hidden min-h-[500px]">
+<div class="double-bezel-inner w-full h-full p-lg flex flex-col">
+<div class="flex justify-between items-start mb-lg">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">지역별 시장 성숙도</h3>
+<p class="font-body-base text-on-surface-variant">거점 도시별 진입 장벽 및 수요 집중도 분석</p>
+</div>
+<div class="flex gap-xs">
+<span class="px-md py-xs bg-primary/10 text-primary rounded-full text-label-caps font-label-caps">High Potential</span>
+</div>
+</div>
+<div class="flex-grow relative rounded-xl overflow-hidden bg-surface-container">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="A sophisticated interactive digital world map focusing on Western Europe, featuring glowing marker orbs in shades of cobalt blue and emerald green. The map style is minimalist with technical grid overlays, showing regional boundaries in thin light-gray lines. Soft ambient lighting illuminates the capitals like Paris, Berlin, and London, giving it a prestigious high-tech diagnostic lab appearance." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBRmdJMlZmR21rByc7Dn8pghRMkOLAy5ydeHyIYARGctALrOtd3RWpdRnvUTf1hg4fZ7mdvuU0htbeJ9Mshit-sfi8Aps_UVaI0RBzzZg17OVaa7LJLrsBmADKVCvYdHxk9UIObkSRdpcT_Wi_iszognE8UAw7NZil0xE7LP705ZfCRcgYJW6sQXyofmMsrkGzrUYvsW4yo9ox-BaY0M1aWSFeErhBp2gxL4lDwHn5I-gQFvuOCOSKO4q9SwUY5h8n_h22quxZ2HHI')"></div>
+<!-- Map Marker Example -->
+<div class="absolute top-[30%] left-[45%] group">
+<div class="relative w-4 h-4 bg-primary rounded-full animate-pulse">
+<div class="absolute -inset-2 bg-primary/20 rounded-full scale-150 blur-sm"></div>
+</div>
+<div class="absolute top-full left-1/2 -translate-x-1/2 mt-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+<div class="bg-white/80 backdrop-blur-xl border border-outline-variant p-md rounded-xl shadow-xl w-48">
+<p class="font-label-caps text-label-caps text-outline mb-xs">GERMANY / BERLIN</p>
+<p class="font-headline-md text-[18px] text-on-surface">Market Score: 88</p>
+<div class="mt-md pt-md border-t border-outline-variant/30 flex justify-between">
+<span class="text-xs text-on-surface-variant">관세율 0%</span>
+<span class="text-xs text-primary font-bold">진입 추천</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Side Metrics (Secondary) -->
+<div class="col-span-12 lg:col-span-4 flex flex-col gap-lg">
+<!-- Diagnostic Health Card -->
+<div class="double-bezel h-full">
+<div class="double-bezel-inner p-lg h-full">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-lg">진출 경쟁력 요약</h3>
+<div class="space-y-xl">
+<div>
+<div class="flex justify-between items-end mb-xs">
+<span class="font-body-base text-on-surface-variant">정책 안정성</span>
+<span class="font-display-lg text-[24px] font-bold text-on-surface">92<small class="text-sm font-normal ml-xs">pts</small></span>
+</div>
+<div class="progress-track">
+<div class="progress-fill bg-primary w-[92%]"><div class="absolute inset-0 shimmer"></div></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between items-end mb-xs">
+<span class="font-body-base text-on-surface-variant">물류 효율성</span>
+<span class="font-display-lg text-[24px] font-bold text-on-surface">78<small class="text-sm font-normal ml-xs">pts</small></span>
+</div>
+<div class="progress-track">
+<div class="progress-fill bg-tertiary w-[78%]"><div class="absolute inset-0 shimmer"></div></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between items-end mb-xs">
+<span class="font-body-base text-on-surface-variant">소비자 접근성</span>
+<span class="font-display-lg text-[24px] font-bold text-on-surface">64<small class="text-sm font-normal ml-xs">pts</small></span>
+</div>
+<div class="progress-track">
+<div class="progress-fill bg-secondary w-[64%]"><div class="absolute inset-0 shimmer"></div></div>
+</div>
+</div>
+</div>
+<div class="mt-xxl p-md bg-primary-container rounded-xl text-on-primary-container border border-primary/20">
+<div class="flex gap-md">
+<span class="material-symbols-outlined">lightbulb</span>
+<div>
+<p class="font-body-bold">진단 어드바이스</p>
+<p class="text-sm opacity-90 leading-relaxed mt-xs">독일과 프랑스 시장의 소비재 관세 혜택 기간을 활용하여 초기 진입 비용을 15% 이상 절감할 수 있는 최적기입니다.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Analytics Table -->
+<div class="col-span-12 double-bezel">
+<div class="double-bezel-inner p-lg">
+<div class="flex justify-between items-center mb-xl">
+<h3 class="font-headline-md text-headline-md text-on-surface">국가별 주요 지표 비교</h3>
+<div class="flex gap-md">
+<div class="flex items-center gap-xs px-md py-sm bg-surface-container-low rounded-lg border border-outline-variant cursor-pointer hover:bg-white transition-all">
+<span class="material-symbols-outlined text-[20px]">filter_list</span>
+<span class="text-sm font-body-bold">필터 적용</span>
+</div>
+<div class="flex items-center gap-xs px-md py-sm bg-surface-container-low rounded-lg border border-outline-variant cursor-pointer hover:bg-white transition-all">
+<span class="material-symbols-outlined text-[20px]">calendar_today</span>
+<span class="text-sm font-body-bold">2024 Q3-Q4</span>
+</div>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-outline-variant">
+<th class="py-md px-lg font-label-caps text-label-caps text-outline">국가명</th>
+<th class="py-md px-lg font-label-caps text-label-caps text-outline">GNI (Per Capita)</th>
+<th class="py-md px-lg font-label-caps text-label-caps text-outline">시장 규모 (USD)</th>
+<th class="py-md px-lg font-label-caps text-label-caps text-outline">관세율</th>
+<th class="py-md px-lg font-label-caps text-label-caps text-outline">규제 복잡도</th>
+<th class="py-md px-lg font-label-caps text-label-caps text-outline">최종 진입 점수</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/30">
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="py-lg px-lg">
+<div class="flex items-center gap-md">
+<div class="w-8 h-6 bg-surface-variant rounded-sm"></div>
+<span class="font-body-bold text-on-surface">독일 (Germany)</span>
+</div>
+</td>
+<td class="py-lg px-lg font-display-lg text-[18px]">$54,290</td>
+<td class="py-lg px-lg font-body-base">$4.2T</td>
+<td class="py-lg px-lg text-tertiary font-bold">0.0%</td>
+<td class="py-lg px-lg">
+<span class="px-sm py-1 bg-secondary-container text-on-secondary-container text-xs rounded-full">중간 (Moderate)</span>
+</td>
+<td class="py-lg px-lg">
+<div class="flex items-center gap-md">
+<span class="font-display-lg text-[20px] text-primary">8.8</span>
+<div class="w-24 h-1.5 bg-outline-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[88%]"></div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="py-lg px-lg">
+<div class="flex items-center gap-md">
+<div class="w-8 h-6 bg-surface-variant rounded-sm"></div>
+<span class="font-body-bold text-on-surface">프랑스 (France)</span>
+</div>
+</td>
+<td class="py-lg px-lg font-display-lg text-[18px]">$45,210</td>
+<td class="py-lg px-lg font-body-base">$2.9T</td>
+<td class="py-lg px-lg text-tertiary font-bold">0.0%</td>
+<td class="py-lg px-lg">
+<span class="px-sm py-1 bg-error-container text-on-error-container text-xs rounded-full">높음 (High)</span>
+</td>
+<td class="py-lg px-lg">
+<div class="flex items-center gap-md">
+<span class="font-display-lg text-[20px] text-primary">7.5</span>
+<div class="w-24 h-1.5 bg-outline-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[75%]"></div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="py-lg px-lg">
+<div class="flex items-center gap-md">
+<div class="w-8 h-6 bg-surface-variant rounded-sm"></div>
+<span class="font-body-bold text-on-surface">네덜란드 (Netherlands)</span>
+</div>
+</td>
+<td class="py-lg px-lg font-display-lg text-[18px]">$60,120</td>
+<td class="py-lg px-lg font-body-base">$1.1T</td>
+<td class="py-lg px-lg text-tertiary font-bold">0.0%</td>
+<td class="py-lg px-lg">
+<span class="px-sm py-1 bg-tertiary-container text-on-tertiary-container text-xs rounded-full">낮음 (Low)</span>
+</td>
+<td class="py-lg px-lg">
+<div class="flex items-center gap-md">
+<span class="font-display-lg text-[20px] text-primary">8.2</span>
+<div class="w-24 h-1.5 bg-outline-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[82%]"></div>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer Shell -->
+<footer class="w-full flex flex-col md:flex-row justify-between items-center px-margin-desktop gap-md py-xl bg-surface-container-lowest dark:bg-surface-dim border-t border-outline-variant dark:border-outline">
+<div class="flex flex-col gap-sm">
+<span class="font-headline-md text-headline-md font-bold text-secondary dark:text-secondary-fixed">Global Market Diagnostic</span>
+<p class="font-label-caps text-label-caps text-on-surface-variant dark:text-outline-variant">© 2024 Global Market Diagnostic. All rights reserved.</p>
+</div>
+<div class="flex items-center gap-lg">
+<a class="text-on-surface-variant dark:text-outline-variant font-label-caps text-label-caps hover:text-primary dark:hover:text-primary-fixed-dim underline transition-all" href="#">이용약관</a>
+<a class="text-on-surface-variant dark:text-outline-variant font-label-caps text-label-caps hover:text-primary dark:hover:text-primary-fixed-dim underline transition-all" href="#">개인정보처리방침</a>
+<a class="text-on-surface-variant dark:text-outline-variant font-label-caps text-label-caps hover:text-primary dark:hover:text-primary-fixed-dim underline transition-all" href="#">고객지원</a>
+<a class="text-on-surface-variant dark:text-outline-variant font-label-caps text-label-caps hover:text-primary dark:hover:text-primary-fixed-dim underline transition-all" href="#">데이터 출처</a>
+</div>
+</footer>
+<script>
+        // Micro-interactions and subtle effects
+        document.querySelectorAll('.btn-precision').forEach(button => {
+            button.addEventListener('mouseenter', () => {
+                const icon = button.querySelector('.material-symbols-outlined');
+                if(icon) icon.style.transform = 'translateX(4px)';
+            });
+            button.addEventListener('mouseleave', () => {
+                const icon = button.querySelector('.material-symbols-outlined');
+                if(icon) icon.style.transform = 'translateX(0px)';
+            });
+        });
+
+        // Simulating loading shimmer state removal
+        window.addEventListener('load', () => {
+            console.log('Diagnostic Dashboard Loaded');
+        });
+    </script>
+</body></html>

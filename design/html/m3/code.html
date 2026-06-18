@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>국가 상세정보 - Market Entry Diagnostic</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<!-- Font loading: Satoshi for display, Pretendard for body -->
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet"/>
+<link href="https://api.fontshare.com/v2/fonts?f[]=satoshi@900,700,500,400&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@100..900&family=Satoshi:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        :root {
+            --spring-easing: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #f7f9fb;
+        }
+        .font-satoshi { font-family: 'Satoshi', sans-serif; }
+        .bezel-container {
+            position: relative;
+            background: rgba(0, 0, 0, 0.03);
+            border-radius: 0.75rem;
+            padding: 1px;
+        }
+        .bezel-inner {
+            background: #ffffff;
+            border-radius: 0.72rem;
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8), 0 2px 4px rgba(0, 0, 0, 0.02);
+        }
+        .shimmer-bar {
+            position: relative;
+            overflow: hidden;
+        }
+        .shimmer-bar::after {
+            content: "";
+            position: absolute;
+            top: 0; left: -100%;
+            width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+        @keyframes shimmer {
+            100% { left: 200%; }
+        }
+        .hover-lift {
+            transition: transform 0.5s var(--spring-easing), box-shadow 0.5s var(--spring-easing);
+        }
+        .hover-lift:hover {
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 10px 20px rgba(0, 74, 198, 0.05);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-container": "#bdffdb",
+                    "outline-variant": "#c3c6d7",
+                    "on-surface-variant": "#434655",
+                    "tertiary-fixed": "#6ffbbe",
+                    "on-secondary-fixed-variant": "#3f465f",
+                    "primary": "#004ac6",
+                    "surface-container-low": "#f2f4f6",
+                    "primary-fixed": "#dbe1ff",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-container": "#d8defe",
+                    "on-secondary": "#ffffff",
+                    "on-primary-fixed": "#00174b",
+                    "secondary": "#575d78",
+                    "on-primary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "on-secondary-container": "#5b617d",
+                    "inverse-on-surface": "#eff1f3",
+                    "surface": "#f7f9fb",
+                    "on-background": "#191c1e",
+                    "error": "#ba1a1a",
+                    "inverse-primary": "#b4c5ff",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "on-primary-container": "#eeefff",
+                    "primary-container": "#2563eb",
+                    "tertiary": "#006242",
+                    "on-tertiary-fixed": "#002113",
+                    "surface-dim": "#d8dadc",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-highest": "#e0e3e5",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "on-error-container": "#93000a",
+                    "inverse-surface": "#2d3133",
+                    "background": "#f7f9fb",
+                    "surface-variant": "#e0e3e5",
+                    "surface-container": "#eceef0",
+                    "secondary-fixed": "#dce1ff",
+                    "error-container": "#ffdad6",
+                    "surface-bright": "#f7f9fb",
+                    "outline": "#737686",
+                    "surface-tint": "#0053db",
+                    "tertiary-container": "#007d55",
+                    "on-surface": "#191c1e",
+                    "on-secondary-fixed": "#141a32",
+                    "secondary-fixed-dim": "#bfc5e4",
+                    "surface-container-high": "#e6e8ea"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit": "4px",
+                    "xxl": "48px",
+                    "sm": "8px",
+                    "lg": "24px",
+                    "section-md": "96px",
+                    "margin-desktop": "48px",
+                    "margin-mobile": "16px",
+                    "xl": "32px",
+                    "xs": "4px",
+                    "md": "16px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "display-lg": ["Satoshi"],
+                    "label-caps": ["Satoshi"],
+                    "body-bold": ["Pretendard"],
+                    "headline-md": ["Pretendard"],
+                    "stat-lg-mobile": ["Satoshi"],
+                    "headline-md-mobile": ["Pretendard"],
+                    "body-base": ["Pretendard"],
+                    "stat-lg": ["Satoshi"]
+            },
+            "fontSize": {
+                    "display-lg": ["44px", {"lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.15em", "fontWeight": "700"}],
+                    "body-bold": ["16px", {"lineHeight": "24px", "letterSpacing": "0", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "stat-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md-mobile": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "body-base": ["16px", {"lineHeight": "24px", "letterSpacing": "0", "fontWeight": "400"}],
+                    "stat-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+</head>
+<body class="bg-background text-on-surface">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop bg-surface/90 backdrop-blur-xl border-b border-outline-variant h-20 shadow-sm">
+<div class="flex items-center gap-xl">
+<span class="font-display-lg text-display-lg font-black text-primary">Market Entry Diagnostic</span>
+<nav class="hidden md:flex items-center gap-lg">
+<a class="text-on-surface-variant font-body-base hover:text-primary transition-colors" href="#">메인</a>
+<a class="text-primary font-body-bold border-b-2 border-primary pb-1" href="#">상세 진단</a>
+<a class="text-on-surface-variant font-body-base hover:text-primary transition-colors" href="#">보고서</a>
+<a class="text-on-surface-variant font-body-base hover:text-primary transition-colors" href="#">환경 설정</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<button class="px-md py-xs rounded-full border border-outline-variant font-label-caps text-label-caps text-on-surface-variant hover:bg-surface-container-high transition-all">KR/UK</button>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary" data-icon="account_circle">account_circle</span>
+</div>
+</header>
+<main class="pt-20 min-h-screen">
+<!-- Hero Country Header -->
+<section class="px-margin-desktop py-xl bg-surface-container-low">
+<div class="flex flex-col md:flex-row justify-between items-end md:items-center gap-md">
+<div class="flex items-center gap-lg">
+<div class="w-16 h-12 bg-white rounded-lg shadow-sm border border-outline-variant overflow-hidden flex items-center justify-center p-1">
+<img class="w-full h-full object-contain" data-alt="High-resolution, minimalist vector representation of the South Korean national flag, featuring a crisp white background, a precise red and blue Taegeuk symbol in the center, and four black trigrams in each corner. The style is clean, modern, and prestigious, set against a subtle gray studio background for professional display." src="https://lh3.googleusercontent.com/aida-public/AB6AXuATVuXBAPr1lBpvqc0pwb-zfRTFmH8Cy0RQxbLBPQh30v2veIgK7KG0kclAi-7hpYduwxwkGW97ileiFw2YIKVU1esrXrYtNSZJipsqtuFwnuBn2F7w2R8gYcmnRGAPPH48kwd76z6r3J8k7OC3HHZCHDNh9j7nay3GFFfVejFA9yolkd2v5CW4i4AqsRoQ2eHdIhR8rxy0it81_RJgTVaXP2-E2CAsP0ucuasAxdVpVUVwLX0JvRS1Nr0rgJcPUw1WqWwPoo2iynA"/>
+</div>
+<div class="flex flex-col">
+<div class="flex items-baseline gap-sm">
+<h1 class="font-headline-md text-headline-md text-on-surface">대한민국</h1>
+<span class="font-label-caps text-label-caps text-outline">SOUTH KOREA</span>
+</div>
+<p class="font-body-base text-body-base text-on-surface-variant">동아시아 핵심 전략 허브 | 시장 성숙도: HIGH</p>
+</div>
+</div>
+<button class="group flex items-center gap-md bg-primary text-on-primary px-lg py-md rounded-full font-body-bold shadow-md hover:bg-primary-container transition-all duration-500 scale-100 active:scale-95">
+                    시뮬레이션 실행
+                    <div class="w-8 h-8 rounded-full bg-black/20 flex items-center justify-center transition-transform group-hover:translate-x-1">
+<span class="material-symbols-outlined text-on-primary text-[18px]" data-icon="play_arrow">play_arrow</span>
+</div>
+</button>
+</div>
+</section>
+<!-- Analytical Bento Grid -->
+<section class="px-margin-desktop py-lg grid grid-cols-12 gap-gutter">
+<!-- Global Diagnostic Summary -->
+<div class="col-span-12 md:col-span-8 bezel-container hover-lift">
+<div class="bezel-inner h-full p-lg flex flex-col gap-lg">
+<div class="flex justify-between items-center">
+<h3 class="font-headline-md text-headline-md">국가 종합 진단 지표</h3>
+<span class="font-label-caps text-label-caps text-primary bg-primary-fixed px-sm py-1 rounded">UPDATED: 2024 Q3</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-lg flex-grow">
+<!-- Metric Card 1 -->
+<div class="flex flex-col gap-xs p-md border-r border-outline-variant/30 last:border-0">
+<span class="font-label-caps text-label-caps text-outline-variant">MARKET ACCESSIBILITY</span>
+<div class="flex items-baseline gap-xs">
+<span class="font-display-lg text-display-lg font-bold text-primary">82.4</span>
+<span class="text-tertiary font-body-bold text-sm">+1.2%</span>
+</div>
+<div class="h-1 w-full bg-surface-container-highest rounded-full overflow-hidden mt-sm">
+<div class="h-full bg-primary shimmer-bar" style="width: 82.4%"></div>
+</div>
+</div>
+<!-- Metric Card 2 -->
+<div class="flex flex-col gap-xs p-md border-r border-outline-variant/30 last:border-0">
+<span class="font-label-caps text-label-caps text-outline-variant">ECONOMIC STABILITY</span>
+<div class="flex items-baseline gap-xs">
+<span class="font-display-lg text-display-lg font-bold text-on-surface">76.8</span>
+<span class="text-error font-body-bold text-sm">-0.5%</span>
+</div>
+<div class="h-1 w-full bg-surface-container-highest rounded-full overflow-hidden mt-sm">
+<div class="h-full bg-secondary shimmer-bar" style="width: 76.8%"></div>
+</div>
+</div>
+<!-- Metric Card 3 -->
+<div class="flex flex-col gap-xs p-md border-r border-outline-variant/30 last:border-0">
+<span class="font-label-caps text-label-caps text-outline-variant">REGULATORY COMPLIANCE</span>
+<div class="flex items-baseline gap-xs">
+<span class="font-display-lg text-display-lg font-bold text-tertiary">91.0</span>
+<span class="text-tertiary font-body-bold text-sm">+2.4%</span>
+</div>
+<div class="h-1 w-full bg-surface-container-highest rounded-full overflow-hidden mt-sm">
+<div class="h-full bg-tertiary shimmer-bar" style="width: 91%"></div>
+</div>
+</div>
+</div>
+<!-- Simplified Visual Chart Area -->
+<div class="w-full h-48 bg-surface rounded-xl flex items-end justify-between px-md pb-md gap-xs">
+<!-- Simulated Bar Chart -->
+<div class="flex-1 bg-primary/20 hover:bg-primary transition-colors rounded-t-sm" style="height: 40%"></div>
+<div class="flex-1 bg-primary/20 hover:bg-primary transition-colors rounded-t-sm" style="height: 65%"></div>
+<div class="flex-1 bg-primary/20 hover:bg-primary transition-colors rounded-t-sm" style="height: 85%"></div>
+<div class="flex-1 bg-primary/20 hover:bg-primary transition-colors rounded-t-sm" style="height: 70%"></div>
+<div class="flex-1 bg-primary/20 hover:bg-primary transition-colors rounded-t-sm" style="height: 90%"></div>
+<div class="flex-1 bg-primary/20 hover:bg-primary transition-colors rounded-t-sm" style="height: 55%"></div>
+<div class="flex-1 bg-primary/20 hover:bg-primary transition-colors rounded-t-sm" style="height: 75%"></div>
+<div class="flex-1 bg-primary/20 hover:bg-primary transition-colors rounded-t-sm" style="height: 80%"></div>
+<div class="flex-1 bg-primary/20 hover:bg-primary transition-colors rounded-t-sm" style="height: 60%"></div>
+<div class="flex-1 bg-primary/20 hover:bg-primary transition-colors rounded-t-sm" style="height: 88%"></div>
+</div>
+</div>
+</div>
+<!-- Key Info Side Panel -->
+<div class="col-span-12 md:col-span-4 bezel-container hover-lift">
+<div class="bezel-inner h-full p-lg flex flex-col gap-md">
+<h3 class="font-body-bold text-body-bold">주요 시스템 정보</h3>
+<div class="flex flex-col gap-sm">
+<div class="flex justify-between items-center py-sm border-b border-outline-variant/30">
+<span class="text-on-surface-variant font-body-base">환율 (KRW/USD)</span>
+<span class="font-body-bold">1,345.20</span>
+</div>
+<div class="flex justify-between items-center py-sm border-b border-outline-variant/30">
+<span class="text-on-surface-variant font-body-base">시장 규모</span>
+<span class="font-body-bold">$1.72 Trillion</span>
+</div>
+<div class="flex justify-between items-center py-sm border-b border-outline-variant/30">
+<span class="text-on-surface-variant font-body-base">GDP 성장률</span>
+<span class="font-body-bold text-tertiary">2.4%</span>
+</div>
+<div class="flex justify-between items-center py-sm border-b border-outline-variant/30">
+<span class="text-on-surface-variant font-body-base">리스크 등급</span>
+<span class="font-body-bold text-primary">AA-</span>
+</div>
+<div class="flex justify-between items-center py-sm">
+<span class="text-on-surface-variant font-body-base">인프라 성숙도</span>
+<div class="flex gap-1">
+<div class="w-4 h-1 bg-primary rounded-full"></div>
+<div class="w-4 h-1 bg-primary rounded-full"></div>
+<div class="w-4 h-1 bg-primary rounded-full"></div>
+<div class="w-4 h-1 bg-primary rounded-full"></div>
+<div class="w-4 h-1 bg-outline-variant rounded-full"></div>
+</div>
+</div>
+</div>
+<div class="mt-auto p-md bg-secondary-container rounded-xl">
+<p class="text-on-secondary-container text-sm leading-relaxed">
+<span class="font-bold">인공지능 분석 요약:</span> 한국 시장은 높은 기술 수용도와 규제 투명성을 바탕으로 안정적인 진입이 가능하나, 고착화된 로컬 플레이어와의 차별화 전략이 필수적입니다.
+                        </p>
+</div>
+</div>
+</div>
+<!-- Detailed Data Table Section -->
+<div class="col-span-12 bezel-container">
+<div class="bezel-inner p-lg">
+<div class="flex justify-between items-center mb-lg">
+<h3 class="font-headline-md text-headline-md">세부 통계 지표</h3>
+<div class="flex gap-sm">
+<button class="flex items-center gap-xs px-md py-sm bg-surface-container border border-outline-variant rounded-lg font-body-bold hover:bg-surface-container-high">
+<span class="material-symbols-outlined text-sm" data-icon="filter_list">filter_list</span>
+                                필터링
+                            </button>
+<button class="flex items-center gap-xs px-md py-sm bg-surface-container border border-outline-variant rounded-lg font-body-bold hover:bg-surface-container-high">
+<span class="material-symbols-outlined text-sm" data-icon="download">download</span>
+                                데이터 내보내기
+                            </button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="border-b border-outline">
+<th class="py-md font-label-caps text-label-caps text-outline uppercase">카테고리</th>
+<th class="py-md font-label-caps text-label-caps text-outline uppercase">지표명</th>
+<th class="py-md font-label-caps text-label-caps text-outline uppercase">현재값</th>
+<th class="py-md font-label-caps text-label-caps text-outline uppercase">전기 대비</th>
+<th class="py-md font-label-caps text-label-caps text-outline uppercase">상태</th>
+</tr>
+</thead>
+<tbody class="font-body-base divide-y divide-outline-variant/30">
+<tr>
+<td class="py-md">경제 구조</td>
+<td class="py-md font-body-bold">수출입 불균형 지수</td>
+<td class="py-md">14.5%</td>
+<td class="py-md text-tertiary">↓ 2.1%</td>
+<td class="py-md"><span class="px-sm py-xs bg-tertiary-container/20 text-tertiary-container rounded-full text-xs font-bold">STABLE</span></td>
+</tr>
+<tr>
+<td class="py-md">디지털 인프라</td>
+<td class="py-md font-body-bold">5G 보급률</td>
+<td class="py-md">92.4%</td>
+<td class="py-md text-tertiary">↑ 5.4%</td>
+<td class="py-md"><span class="px-sm py-xs bg-primary-container/20 text-primary-container rounded-full text-xs font-bold">EXCELLENT</span></td>
+</tr>
+<tr>
+<td class="py-md">노동 시장</td>
+<td class="py-md font-body-bold">IT 전문 인력 확보도</td>
+<td class="py-md">78.2</td>
+<td class="py-md text-error">↓ 0.8%</td>
+<td class="py-md"><span class="px-sm py-xs bg-error-container/20 text-error-container rounded-full text-xs font-bold">CAUTION</span></td>
+</tr>
+<tr>
+<td class="py-md">법률/규제</td>
+<td class="py-md font-body-bold">외국인 투자 자유도</td>
+<td class="py-md">68.5</td>
+<td class="py-md text-tertiary">↑ 1.2%</td>
+<td class="py-md"><span class="px-sm py-xs bg-surface-variant/40 text-on-surface-variant rounded-full text-xs font-bold">NORMAL</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full flex flex-col md:flex-row justify-between items-center px-margin-desktop gap-md py-xl border-t border-outline-variant bg-surface-container-lowest">
+<div class="flex flex-col gap-xs">
+<span class="font-headline-md text-headline-md font-bold text-secondary">Global Market Diagnostic</span>
+<p class="font-label-caps text-label-caps text-on-surface-variant">© 2024 Global Market Diagnostic. All rights reserved.</p>
+</div>
+<div class="flex gap-lg">
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary underline transition-all" href="#">이용약관</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary underline transition-all" href="#">개인정보처리방침</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary underline transition-all" href="#">고객지원</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary underline transition-all" href="#">데이터 출처</a>
+</div>
+</footer>
+<script>
+        // Micro-interaction for Simulation button
+        const simBtn = document.querySelector('button.bg-primary');
+        simBtn.addEventListener('mousedown', () => {
+            simBtn.classList.add('scale-95');
+        });
+        simBtn.addEventListener('mouseup', () => {
+            simBtn.classList.remove('scale-95');
+        });
+        simBtn.addEventListener('mouseleave', () => {
+            simBtn.classList.remove('scale-95');
+        });
+
+        // Simple Intersection Observer for revealing cards
+        const observerOptions = {
+            threshold: 0.1
+        };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.bezel-container').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.8s ease, transform 0.8s var(--spring-easing)';
+            observer.observe(card);
+        });
+    </script>
+</body></html>
