@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>권역 진출 진단 보고서 (M4)</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts & Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@100..900&family=Satoshi:wght@100..900&display=swap" rel="stylesheet"/>
+<!-- Custom Style Guidance Tokens -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-container": "#bdffdb",
+                    "outline-variant": "#c3c6d7",
+                    "on-surface-variant": "#434655",
+                    "tertiary-fixed": "#6ffbbe",
+                    "on-secondary-fixed-variant": "#3f465f",
+                    "primary": "#004ac6",
+                    "surface-container-low": "#f2f4f6",
+                    "primary-fixed": "#dbe1ff",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-container": "#d8defe",
+                    "on-secondary": "#ffffff",
+                    "on-primary-fixed": "#00174b",
+                    "secondary": "#575d78",
+                    "on-primary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "on-secondary-container": "#5b617d",
+                    "inverse-on-surface": "#eff1f3",
+                    "surface": "#f7f9fb",
+                    "on-background": "#191c1e",
+                    "error": "#ba1a1a",
+                    "inverse-primary": "#b4c5ff",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "on-primary-container": "#eeefff",
+                    "primary-container": "#2563eb",
+                    "tertiary": "#006242",
+                    "on-tertiary-fixed": "#002113",
+                    "surface-dim": "#d8dadc",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-highest": "#e0e3e5",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "on-error-container": "#93000a",
+                    "inverse-surface": "#2d3133",
+                    "background": "#f7f9fb",
+                    "surface-variant": "#e0e3e5",
+                    "surface-container": "#eceef0",
+                    "secondary-fixed": "#dce1ff",
+                    "error-container": "#ffdad6",
+                    "surface-bright": "#f7f9fb",
+                    "outline": "#737686",
+                    "surface-tint": "#0053db",
+                    "tertiary-container": "#007d55",
+                    "on-surface": "#191c1e",
+                    "on-secondary-fixed": "#141a32",
+                    "secondary-fixed-dim": "#bfc5e4",
+                    "surface-container-high": "#e6e8ea"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit": "4px",
+                    "xxl": "48px",
+                    "sm": "8px",
+                    "lg": "24px",
+                    "section-md": "96px",
+                    "margin-desktop": "48px",
+                    "margin-mobile": "16px",
+                    "xl": "32px",
+                    "xs": "4px",
+                    "md": "16px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "display-lg": ["Satoshi"],
+                    "label-caps": ["Satoshi"],
+                    "body-bold": ["Pretendard"],
+                    "headline-md": ["Pretendard"],
+                    "stat-lg-mobile": ["Satoshi"],
+                    "headline-md-mobile": ["Pretendard"],
+                    "body-base": ["Pretendard"],
+                    "stat-lg": ["Satoshi"]
+            },
+            "fontSize": {
+                    "display-lg": ["44px", {"lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.15em", "fontWeight": "700"}],
+                    "body-bold": ["16px", {"lineHeight": "24px", "letterSpacing": "0", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "stat-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md-mobile": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "body-base": ["16px", {"lineHeight": "24px", "letterSpacing": "0", "fontWeight": "400"}],
+                    "stat-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Pretendard', sans-serif; background-color: #f7f9fb; color: #191c1e; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .double-bezel {
+            box-shadow: 0 0 0 1px rgba(0,0,0,0.05), inset 0 1px 1px rgba(255,255,255,0.8);
+            border: 1px solid #c3c6d7;
+        }
+        .bento-card {
+            background: #ffffff;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .bento-card:hover {
+            transform: translateY(-2px) scale(1.005);
+        }
+        .shimmer {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite linear;
+        }
+        @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+        .active-tab { border-bottom: 3px solid #004ac6; color: #004ac6; font-weight: 700; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+<!-- TopNavBar (Shared Component Proxy) -->
+<header class="fixed top-0 left-0 w-full h-20 z-50 flex justify-between items-center px-margin-desktop bg-surface/90 backdrop-blur-xl border-b border-outline-variant shadow-sm">
+<div class="flex items-center gap-md">
+<span class="font-display-lg text-display-lg font-black text-primary">Market Entry Diagnostic</span>
+<nav class="hidden md:flex ml-xl gap-lg">
+<a class="text-on-surface-variant font-body-base hover:text-primary transition-colors" href="#">메인</a>
+<a class="text-primary font-body-bold border-b-2 border-primary pb-1" href="#">상세 진단</a>
+<a class="text-on-surface-variant font-body-base hover:text-primary transition-colors" href="#">보고서</a>
+<a class="text-on-surface-variant font-body-base hover:text-primary transition-colors" href="#">환경 설정</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<span class="text-label-caps font-label-caps text-outline-variant">KR/UK</span>
+<button class="material-symbols-outlined text-on-surface-variant">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant">account_circle</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="mt-20 flex-grow px-margin-desktop py-xl">
+<!-- Header Info Area -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-xl gap-md">
+<div class="flex items-center gap-md">
+<div class="w-16 h-16 rounded-xl bg-primary-container flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">public</span>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md text-on-surface">유럽(Europe) 권역 Quick-Win 분석 보고서</h1>
+<p class="text-body-base text-on-surface-variant">Diagnostic report for the European regional expansion strategy</p>
+</div>
+</div>
+<div class="text-right flex flex-col items-end gap-xs">
+<div class="flex gap-sm text-label-caps font-label-caps text-outline">
+<span>REPORT ID: #EU-2024-0042</span>
+<span>•</span>
+<span>CREATED: 2024-10-24 14:30 KST</span>
+</div>
+<button class="flex items-center gap-sm bg-primary text-on-primary px-lg py-sm rounded-full font-body-bold hover:scale-105 transition-transform duration-300">
+<span class="material-symbols-outlined">download</span>
+                    보고서 PDF 다운로드
+                </button>
+</div>
+</div>
+<!-- Diagnostic Tabs -->
+<div class="flex border-b border-outline-variant mb-lg overflow-x-auto whitespace-nowrap">
+<button class="tab-btn px-xl py-md text-body-base text-on-surface-variant hover:text-primary active-tab transition-all" onclick="switchTab('summary')">요약 (Summary)</button>
+<button class="tab-btn px-xl py-md text-body-base text-on-surface-variant hover:text-primary transition-all" onclick="switchTab('market')">시장 (Market)</button>
+<button class="tab-btn px-xl py-md text-body-base text-on-surface-variant hover:text-primary transition-all" onclick="switchTab('regulation')">규제 (Regulation)</button>
+<button class="tab-btn px-xl py-md text-body-base text-on-surface-variant hover:text-primary transition-all" onclick="switchTab('product')">상품 (Product)</button>
+<button class="tab-btn px-xl py-md text-body-base text-on-surface-variant hover:text-primary transition-all" onclick="switchTab('system')">시스템 (System)</button>
+</div>
+<!-- Dashboard Content: Summary (Bento Grid) -->
+<div class="grid grid-cols-12 gap-gutter" id="tab-content">
+<!-- Overall Score Card -->
+<div class="col-span-12 md:col-span-4 bento-card double-bezel p-lg rounded-xl flex flex-col justify-between">
+<div>
+<span class="text-label-caps font-label-caps text-outline-variant">TOTAL DIAGNOSTIC SCORE</span>
+<h2 class="font-display-lg text-display-lg text-primary mt-xs">84.5<span class="text-headline-md">/100</span></h2>
+</div>
+<div class="mt-xl">
+<div class="flex justify-between items-center mb-xs">
+<span class="text-body-bold font-body-bold">진출 가능성: <span class="text-tertiary">매우 높음</span></span>
+<span class="text-label-caps font-label-caps text-outline-variant">92% Match</span>
+</div>
+<div class="h-2 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-tertiary shimmer w-[92%]"></div>
+</div>
+</div>
+<p class="mt-md text-body-base text-on-surface-variant leading-relaxed">
+                    유럽 시장의 디지털 규제 준수 역량과 현지화 전략이 최우수 등급으로 평가되었습니다. 핀테크 부문에서의 시장 진입 가능성이 가장 높습니다.
+                </p>
+</div>
+<!-- Regional Heatmap Placeholder -->
+<div class="col-span-12 md:col-span-8 bento-card double-bezel p-lg rounded-xl min-h-[400px] relative overflow-hidden">
+<div class="absolute top-lg left-lg z-10">
+<h3 class="font-headline-md text-headline-md text-on-surface">권역별 규제 진척도 (Heatmap)</h3>
+<p class="text-body-base text-on-surface-variant">EU 회원국별 시장 개방도 및 규제 투명성 지표</p>
+</div>
+<!-- Map UI Placeholder -->
+<div class="w-full h-full bg-surface-container flex items-center justify-center rounded-lg mt-xl overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="A stylized vector map of Europe on a minimalist white background. The map features high-contrast blue and teal glowing markers indicating strategic business hubs in London, Paris, and Berlin. The aesthetic is clean and analytical, with thin gray borders and subtle topography details, reflecting a professional enterprise diagnostic interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9Qmmb7eMSwl2KNImAmbzqK2m3sOdQtUOw6RgjEpGTJbW_RrowWqGW4Pcdihw-1iBuvJEe3o7Boim3YhCF1LgCFG9Yn0iiQKujKjeDE-cS6YpLpvYO0nf9DRIZ0SsgDgZsaICFsARoA7sDs2kdE9sfwgZKPXaDgtdBadQ81EkPkYa_Y71BG7scKOC_eFOUV7cbpU33Ndz9_3SYlQe763FKhrs20XEPb6E2gbTsOLk04yRTKuiUlnCWPE0TqdEqfnR4v1zQl3cAo34"/>
+<!-- Marker Example -->
+<div class="absolute top-1/2 left-1/4 group cursor-pointer">
+<div class="w-4 h-4 bg-primary rounded-full animate-ping opacity-75 absolute"></div>
+<div class="w-4 h-4 bg-primary rounded-full relative"></div>
+<!-- Tooltip Popover -->
+<div class="hidden group-hover:block absolute bottom-6 left-1/2 -translate-x-1/2 w-48 bg-white/90 backdrop-blur-xl double-bezel p-md rounded-lg shadow-xl z-20">
+<p class="font-body-bold text-sm">프랑스 (France)</p>
+<p class="text-xs text-on-surface-variant">매력도: 88% | 규제수준: 중</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Key Metrics Bento Tiles -->
+<div class="col-span-12 md:col-span-3 bento-card double-bezel p-lg rounded-xl">
+<span class="material-symbols-outlined text-secondary text-3xl mb-md">trending_up</span>
+<h4 class="text-label-caps font-label-caps text-outline-variant">Market Volatility</h4>
+<div class="text-stat-lg font-stat-lg text-on-surface">12.4%</div>
+<p class="text-xs text-error mt-xs">▲ 0.4% (Previous Q)</p>
+</div>
+<div class="col-span-12 md:col-span-3 bento-card double-bezel p-lg rounded-xl">
+<span class="material-symbols-outlined text-secondary text-3xl mb-md">verified_user</span>
+<h4 class="text-label-caps font-label-caps text-outline-variant">Compliance Index</h4>
+<div class="text-stat-lg font-stat-lg text-on-surface">94/100</div>
+<p class="text-xs text-tertiary mt-xs">Compliant with GDPR 2.0</p>
+</div>
+<div class="col-span-12 md:col-span-6 bento-card double-bezel p-lg rounded-xl bg-surface-container-low">
+<h4 class="font-headline-md text-headline-md text-on-surface mb-md">핵심 진단 결과 요약</h4>
+<ul class="space-y-sm">
+<li class="flex items-start gap-sm">
+<span class="material-symbols-outlined text-primary text-sm mt-1">check_circle</span>
+<span class="text-body-base text-on-surface-variant">디지털 뱅킹 라이선스 취득 가능성 매우 높음 (영국, 프랑스 중심)</span>
+</li>
+<li class="flex items-start gap-sm">
+<span class="material-symbols-outlined text-primary text-sm mt-1">check_circle</span>
+<span class="text-body-base text-on-surface-variant">현지 파트너십 구축 비용 전년 대비 15% 하락으로 효율성 증대</span>
+</li>
+<li class="flex items-start gap-sm">
+<span class="material-symbols-outlined text-error text-sm mt-1">warning</span>
+<span class="text-body-base text-on-surface-variant">데이터 현지화법(Localization) 개정에 따른 추가 인프라 구축 필요</span>
+</li>
+</ul>
+</div>
+</div>
+</main>
+<!-- Footer (Shared Component Proxy) -->
+<footer class="w-full bg-surface-container-lowest py-xl border-t border-outline-variant px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-md">
+<div class="flex flex-col items-center md:items-start gap-xs">
+<span class="font-headline-md text-headline-md font-bold text-secondary">Global Market Diagnostic</span>
+<span class="text-label-caps font-label-caps text-on-surface-variant">© 2024 Global Market Diagnostic. All rights reserved.</span>
+</div>
+<div class="flex gap-lg">
+<a class="text-label-caps font-label-caps text-on-surface-variant hover:text-primary underline transition-all" href="#">이용약관</a>
+<a class="text-label-caps font-label-caps text-on-surface-variant hover:text-primary underline transition-all" href="#">개인정보처리방침</a>
+<a class="text-label-caps font-label-caps text-on-surface-variant hover:text-primary underline transition-all" href="#">고객지원</a>
+<a class="text-label-caps font-label-caps text-on-surface-variant hover:text-primary underline transition-all" href="#">데이터 출처</a>
+</div>
+</footer>
+<script>
+        function switchTab(tabName) {
+            // Update active state of buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active-tab');
+                if (btn.innerText.toLowerCase().includes(tabName)) {
+                    btn.classList.add('active-tab');
+                }
+            });
+
+            // For demonstration, we simply update the grid with a shimmer effect to simulate loading
+            const container = document.getElementById('tab-content');
+            container.style.opacity = '0.5';
+            container.style.transform = 'scale(0.99)';
+            
+            setTimeout(() => {
+                container.style.opacity = '1';
+                container.style.transform = 'scale(1)';
+                // In a real app, content would be replaced here based on tabName
+            }, 300);
+        }
+
+        // Micro-interaction for cards
+        document.querySelectorAll('.bento-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.borderColor = '#004ac6';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.borderColor = '#c3c6d7';
+            });
+        });
+    </script>
+</body></html>

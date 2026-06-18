@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Market Entry Diagnostic - 메인화면</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://api.fontshare.com/v2/font-share.css?f[]=satoshi@900,700,500,400&display=swap" rel="stylesheet"/>
+<link as="style" crossorigin="" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@100..900&family=Satoshi:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        body { font-family: 'Pretendard', sans-serif; }
+        .font-satoshi { font-family: 'Satoshi', sans-serif; }
+        
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .double-bezel {
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8), 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 74, 198, 0.1);
+        }
+
+        .map-container {
+            background: radial-gradient(circle at center, #ffffff 0%, #f0f4f8 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pulse-entered {
+            animation: mapPulseEntered 2s infinite ease-in-out;
+        }
+
+        .pulse-planned {
+            animation: mapPulsePlanned 2s infinite ease-in-out;
+        }
+
+        @keyframes mapPulseEntered {
+            0% { transform: scale(1); opacity: 0.8; box-shadow: 0 0 0 0 rgba(0, 74, 198, 0.4); }
+            70% { transform: scale(1.2); opacity: 1; box-shadow: 0 0 0 10px rgba(0, 74, 198, 0); }
+            100% { transform: scale(1); opacity: 0.8; box-shadow: 0 0 0 0 rgba(0, 74, 198, 0); }
+        }
+
+        @keyframes mapPulsePlanned {
+            0% { transform: scale(1); opacity: 0.8; box-shadow: 0 0 0 0 rgba(0, 125, 85, 0.4); }
+            70% { transform: scale(1.2); opacity: 1; box-shadow: 0 0 0 10px rgba(0, 125, 85, 0); }
+            100% { transform: scale(1); opacity: 0.8; box-shadow: 0 0 0 0 rgba(0, 125, 85, 0); }
+        }
+
+        .glass-panel {
+            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .marker-tooltip {
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .marker-hover:hover .marker-tooltip {
+            opacity: 1;
+            transform: translateY(-8px);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#004ac6",
+                        "primary-container": "#2563eb",
+                        "on-primary": "#ffffff",
+                        "secondary": "#575d78",
+                        "tertiary": "#006242",
+                        "tertiary-container": "#007d55",
+                        "surface": "#f7f9fb",
+                        "on-surface": "#191c1e",
+                        "outline": "#737686",
+                        "outline-variant": "#c3c6d7",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f2f4f6"
+                    },
+                    spacing: {
+                        "unit": "4px",
+                        "xxl": "48px",
+                        "lg": "24px",
+                        "md": "16px",
+                        "sm": "8px",
+                        "margin-desktop": "48px"
+                    },
+                    fontFamily: {
+                        "display-lg": ["Satoshi"],
+                        "label-caps": ["Satoshi"],
+                        "body-bold": ["Pretendard"],
+                        "headline-md": ["Pretendard"],
+                        "body-base": ["Pretendard"]
+                    },
+                    fontSize: {
+                        "display-lg": ["44px", {"lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.15em", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "body-base": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop bg-surface/90 backdrop-blur-xl border-b border-outline-variant h-20 shadow-sm">
+<div class="flex items-center gap-xl">
+<span class="font-display-lg text-[24px] font-black text-primary leading-none tracking-tighter">Market Entry Diagnostic</span>
+<nav class="hidden md:flex items-center gap-lg">
+<a class="text-primary font-body-bold border-b-2 border-primary pb-1 transition-colors duration-300" href="#">메인</a>
+<div class="relative group">
+<button class="text-on-surface-variant font-body-base hover:text-primary transition-colors flex items-center gap-1">
+                        상세 진단 <span class="material-symbols-outlined text-sm">keyboard_arrow_down</span>
+</button>
+<div class="absolute top-full left-0 mt-2 w-48 glass-panel rounded-xl shadow-lg border border-outline-variant opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 py-2">
+<a class="block px-4 py-2 hover:bg-primary/5 text-sm" href="#">권역 상세</a>
+<a class="block px-4 py-2 hover:bg-primary/5 text-sm" href="#">국가 상세</a>
+<a class="block px-4 py-2 hover:bg-primary/5 text-sm" href="#">국가 전체 보기</a>
+</div>
+</div>
+<div class="relative group">
+<button class="text-on-surface-variant font-body-base hover:text-primary transition-colors flex items-center gap-1">
+                        보고서 <span class="material-symbols-outlined text-sm">keyboard_arrow_down</span>
+</button>
+<div class="absolute top-full left-0 mt-2 w-48 glass-panel rounded-xl shadow-lg border border-outline-variant opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 py-2">
+<a class="block px-4 py-2 hover:bg-primary/5 text-sm" href="#">권역 보고서</a>
+<a class="block px-4 py-2 hover:bg-primary/5 text-sm" href="#">국가 보고서</a>
+</div>
+</div>
+<a class="text-on-surface-variant font-body-base hover:text-primary transition-colors" href="#">환경 설정</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<div class="flex items-center gap-2 px-3 py-1.5 bg-surface-container-low rounded-full border border-outline-variant text-sm font-medium">
+<span class="text-primary">KR</span>
+<span class="text-outline">/</span>
+<span class="text-secondary opacity-60">UK</span>
+</div>
+<button class="p-2 hover:bg-primary/5 rounded-full transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</button>
+<button class="p-2 hover:bg-primary/5 rounded-full transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">account_circle</span>
+</button>
+</div>
+</header>
+<main class="pt-20 h-screen flex flex-col relative">
+<!-- Interactive Map Section -->
+<section class="flex-1 map-container relative cursor-grab active:cursor-grabbing">
+<!-- Global Map Background -->
+<div class="absolute inset-0 z-0">
+<div class="w-full h-full opacity-40 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] pointer-events-none"></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<img class="w-full h-full object-cover opacity-60" data-alt="A highly detailed vector stylized world map in a light-mode aesthetic, featuring soft grey landmasses against a crisp off-white background. The aesthetic is clean, professional, and corporate, emphasizing global scale and data clarity. Subtle grid lines and faint topographical textures add technical depth, reminiscent of a high-end financial dashboard." data-location="World Map" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBShCIZPPU-jjG_UbjAbrXttsaLJiMczkUDIdiXNZ2dJ7bPNC0yre9lfjimwBvqeV9xLQx0P8eNUtX7UFg-RRIC_U0gdfBVwl5wFhXr8J-6qnEojJmcE9bhufPXHBTweombSf-2O3nfF4QNxkIqWyfhCNgAPGuSWjSmRckppRQylb5fWGkpMe3c3a1vVJhRej45dWNH2eTAQRX_VvtulddnWINwfL_vJO9l9z8Tufn93UNqIGB8tYI_2UhJq7nipDCjRkaw5cyj6I0"/>
+</div>
+</div>
+<!-- UI Overlay: Region Selection -->
+<div class="absolute top-lg left-margin-desktop z-10 w-72">
+<div class="glass-panel p-md rounded-xl double-bezel">
+<label class="block text-label-caps text-secondary mb-2">REGION SELECTION</label>
+<div class="relative">
+<button class="w-full h-[52px] flex items-center justify-between px-md bg-white border border-outline-variant rounded-full text-on-surface font-medium hover:border-primary transition-all" onclick="toggleDropdown('region-dropdown')">
+<span id="selected-region">Global Overview</span>
+<span class="material-symbols-outlined">expand_more</span>
+</button>
+<div class="absolute top-[60px] left-0 w-full glass-panel rounded-xl shadow-xl border border-outline-variant hidden animate-in fade-in slide-in-from-top-2 duration-300" id="region-dropdown">
+<ul class="py-2">
+<li><button class="w-full text-left px-md py-3 hover:bg-primary/5 transition-colors" onclick="selectRegion('Europe')">Europe</button></li>
+<li><button class="w-full text-left px-md py-3 hover:bg-primary/5 transition-colors" onclick="selectRegion('North America')">North America</button></li>
+<li><button class="w-full text-left px-md py-3 hover:bg-primary/5 transition-colors" onclick="selectRegion('South America')">South America</button></li>
+<li><button class="w-full text-left px-md py-3 hover:bg-primary/5 transition-colors" onclick="selectRegion('APEC')">APEC</button></li>
+<li><button class="w-full text-left px-md py-3 hover:bg-primary/5 transition-colors" onclick="selectRegion('Middle East')">Middle East</button></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<!-- UI Overlay: Legend -->
+<div class="absolute top-lg right-margin-desktop z-10">
+<div class="glass-panel px-lg py-md rounded-xl double-bezel flex gap-lg">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-primary pulse-entered"></div>
+<span class="text-sm font-medium text-secondary">진출 완료 (Entered)</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-tertiary pulse-planned"></div>
+<span class="text-sm font-medium text-secondary">진출 예정 (Planned)</span>
+</div>
+</div>
+</div>
+<!-- Map Markers (Simulated) -->
+<!-- South Korea (Entered) -->
+<div class="absolute top-[42%] left-[82%] marker-hover">
+<div class="relative flex items-center justify-center">
+<div class="absolute w-12 h-12 bg-primary/20 rounded-full pulse-entered"></div>
+<div class="w-4 h-4 bg-primary border-2 border-white rounded-full shadow-lg z-10 cursor-pointer"></div>
+<div class="marker-tooltip absolute bottom-full mb-3 px-3 py-2 glass-panel rounded-lg shadow-xl opacity-0 whitespace-nowrap double-bezel">
+<p class="text-xs font-bold text-primary">SOUTH KOREA</p>
+<p class="text-[10px] text-secondary">Diagnostic Score: 94.2</p>
+</div>
+</div>
+</div>
+<!-- USA (Entered) -->
+<div class="absolute top-[38%] left-[18%] marker-hover">
+<div class="relative flex items-center justify-center">
+<div class="absolute w-12 h-12 bg-primary/20 rounded-full pulse-entered"></div>
+<div class="w-4 h-4 bg-primary border-2 border-white rounded-full shadow-lg z-10 cursor-pointer"></div>
+<div class="marker-tooltip absolute bottom-full mb-3 px-3 py-2 glass-panel rounded-lg shadow-xl opacity-0 whitespace-nowrap double-bezel">
+<p class="text-xs font-bold text-primary">USA</p>
+<p class="text-[10px] text-secondary">Diagnostic Score: 88.5</p>
+</div>
+</div>
+</div>
+<!-- Germany (Planned) -->
+<div class="absolute top-[35%] left-[50%] marker-hover">
+<div class="relative flex items-center justify-center">
+<div class="absolute w-12 h-12 bg-tertiary/20 rounded-full pulse-planned"></div>
+<div class="w-4 h-4 bg-tertiary border-2 border-white rounded-full shadow-lg z-10 cursor-pointer"></div>
+<div class="marker-tooltip absolute bottom-full mb-3 px-3 py-2 glass-panel rounded-lg shadow-xl opacity-0 whitespace-nowrap double-bezel">
+<p class="text-xs font-bold text-tertiary text-nowrap">GERMANY (PLANNED)</p>
+<p class="text-[10px] text-secondary">Target Entry: Q3 2025</p>
+</div>
+</div>
+</div>
+<!-- Brazil (Planned) -->
+<div class="absolute top-[68%] left-[32%] marker-hover">
+<div class="relative flex items-center justify-center">
+<div class="absolute w-12 h-12 bg-tertiary/20 rounded-full pulse-planned"></div>
+<div class="w-4 h-4 bg-tertiary border-2 border-white rounded-full shadow-lg z-10 cursor-pointer"></div>
+<div class="marker-tooltip absolute bottom-full mb-3 px-3 py-2 glass-panel rounded-lg shadow-xl opacity-0 whitespace-nowrap double-bezel">
+<p class="text-xs font-bold text-tertiary">BRAZIL (PLANNED)</p>
+<p class="text-[10px] text-secondary">Market Research Phase</p>
+</div>
+</div>
+</div>
+<!-- Map Controls -->
+<div class="absolute bottom-lg right-margin-desktop z-10 flex flex-col gap-2">
+<button class="w-12 h-12 glass-panel rounded-xl flex items-center justify-center hover:bg-white transition-colors double-bezel">
+<span class="material-symbols-outlined text-secondary">add</span>
+</button>
+<button class="w-12 h-12 glass-panel rounded-xl flex items-center justify-center hover:bg-white transition-colors double-bezel">
+<span class="material-symbols-outlined text-secondary">remove</span>
+</button>
+<button class="w-12 h-12 glass-panel rounded-xl flex items-center justify-center hover:bg-white transition-colors double-bezel">
+<span class="material-symbols-outlined text-secondary">my_location</span>
+</button>
+</div>
+<!-- Summary Stats (Bento Grid Style) -->
+<div class="absolute bottom-lg left-margin-desktop z-10 grid grid-cols-2 gap-md w-[480px]">
+<div class="glass-panel p-md rounded-xl double-bezel bg-white/40">
+<p class="text-label-caps text-secondary">TOTAL ENTERED</p>
+<div class="flex items-end gap-2 mt-1">
+<span class="font-satoshi text-3xl font-black text-primary">12</span>
+<span class="text-xs text-secondary mb-1">COUNTRIES</span>
+</div>
+</div>
+<div class="glass-panel p-md rounded-xl double-bezel bg-white/40">
+<p class="text-label-caps text-secondary">PLANNED ENTRY</p>
+<div class="flex items-end gap-2 mt-1">
+<span class="font-satoshi text-3xl font-black text-tertiary">08</span>
+<span class="text-xs text-secondary mb-1">REGIONS</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="w-full flex flex-col md:flex-row justify-between items-center px-margin-desktop py-xl bg-surface-container-lowest border-t border-outline-variant gap-md">
+<div class="flex flex-col md:flex-row items-center gap-lg">
+<span class="font-headline-md font-bold text-secondary">Global Market Diagnostic</span>
+<p class="text-label-caps text-on-surface-variant opacity-60">© 2024 Global Market Diagnostic. All rights reserved.</p>
+</div>
+<nav class="flex gap-lg">
+<a class="text-label-caps text-on-surface-variant hover:text-primary underline transition-all" href="#">이용약관</a>
+<a class="text-label-caps text-on-surface-variant hover:text-primary underline transition-all" href="#">개인정보처리방침</a>
+<a class="text-label-caps text-on-surface-variant hover:text-primary underline transition-all" href="#">고객지원</a>
+<a class="text-label-caps text-on-surface-variant hover:text-primary underline transition-all" href="#">데이터 출처</a>
+</nav>
+</footer>
+</main>
+<!-- Floating Action Button (Contextual) -->
+<button class="fixed bottom-xxl right-margin-desktop z-50 group flex items-center gap-2 bg-primary text-white px-6 py-4 rounded-full shadow-[0_8px_30px_rgb(0,74,198,0.4)] hover:scale-105 active:scale-95 transition-all duration-300">
+<span class="font-body-bold">진단 레포트 생성</span>
+<div class="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">add_chart</span>
+</div>
+</button>
+<script>
+        function toggleDropdown(id) {
+            const dropdown = document.getElementById(id);
+            dropdown.classList.toggle('hidden');
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function close(e) {
+                if (!e.target.closest('.relative')) {
+                    dropdown.classList.add('hidden');
+                    document.removeEventListener('click', close);
+                }
+            });
+        }
+
+        function selectRegion(region) {
+            document.getElementById('selected-region').innerText = region;
+            document.getElementById('region-dropdown').classList.add('hidden');
+            
+            // Interaction: Show visual feedback
+            console.log('Zooming into region: ' + region);
+            // In a real app, this would trigger a map zoom animation
+        }
+
+        // Add micro-interaction for markers
+        const markers = document.querySelectorAll('.marker-hover');
+        markers.forEach(marker => {
+            marker.addEventListener('mouseenter', () => {
+                marker.style.zIndex = "50";
+            });
+            marker.addEventListener('mouseleave', () => {
+                marker.style.zIndex = "10";
+            });
+        });
+    </script>
+</body></html>

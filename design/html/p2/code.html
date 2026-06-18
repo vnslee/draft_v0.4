@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Market Entry Diagnostic - 국가 요약정보</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet"/>
+<link href="https://api.fontshare.com/v2/fonts/satoshi@1,2?display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@100..900&family=Satoshi:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-container": "#bdffdb",
+                    "outline-variant": "#c3c6d7",
+                    "on-surface-variant": "#434655",
+                    "tertiary-fixed": "#6ffbbe",
+                    "on-secondary-fixed-variant": "#3f465f",
+                    "primary": "#004ac6",
+                    "surface-container-low": "#f2f4f6",
+                    "primary-fixed": "#dbe1ff",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-container": "#d8defe",
+                    "on-secondary": "#ffffff",
+                    "on-primary-fixed": "#00174b",
+                    "secondary": "#575d78",
+                    "on-primary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "on-secondary-container": "#5b617d",
+                    "inverse-on-surface": "#eff1f3",
+                    "surface": "#f7f9fb",
+                    "on-background": "#191c1e",
+                    "error": "#ba1a1a",
+                    "inverse-primary": "#b4c5ff",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "on-primary-container": "#eeefff",
+                    "primary-container": "#2563eb",
+                    "tertiary": "#006242",
+                    "on-tertiary-fixed": "#002113",
+                    "surface-dim": "#d8dadc",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-highest": "#e0e3e5",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "on-error-container": "#93000a",
+                    "inverse-surface": "#2d3133",
+                    "background": "#f7f9fb",
+                    "surface-variant": "#e0e3e5",
+                    "surface-container": "#eceef0",
+                    "secondary-fixed": "#dce1ff",
+                    "error-container": "#ffdad6",
+                    "surface-bright": "#f7f9fb",
+                    "outline": "#737686",
+                    "surface-tint": "#0053db",
+                    "tertiary-container": "#007d55",
+                    "on-surface": "#191c1e",
+                    "on-secondary-fixed": "#141a32",
+                    "secondary-fixed-dim": "#bfc5e4",
+                    "surface-container-high": "#e6e8ea"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit": "4px",
+                    "xxl": "48px",
+                    "sm": "8px",
+                    "lg": "24px",
+                    "section-md": "96px",
+                    "margin-desktop": "48px",
+                    "margin-mobile": "16px",
+                    "xl": "32px",
+                    "xs": "4px",
+                    "md": "16px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "display-lg": ["Satoshi"],
+                    "label-caps": ["Satoshi"],
+                    "body-bold": ["Pretendard"],
+                    "headline-md": ["Pretendard"],
+                    "stat-lg-mobile": ["Satoshi"],
+                    "headline-md-mobile": ["Pretendard"],
+                    "body-base": ["Pretendard"],
+                    "stat-lg": ["Satoshi"]
+            },
+            "fontSize": {
+                    "display-lg": ["44px", {"lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.15em", "fontWeight": "700"}],
+                    "body-bold": ["16px", {"lineHeight": "24px", "letterSpacing": "0", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "stat-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md-mobile": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "body-base": ["16px", {"lineHeight": "24px", "letterSpacing": "0", "fontWeight": "400"}],
+                    "stat-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Pretendard', sans-serif; background-color: #f7f9fb; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        
+        /* Double-Bezel Component Styling */
+        .double-bezel {
+            position: relative;
+            background: rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(115, 118, 134, 0.1);
+            padding: 2px;
+            border-radius: 1rem;
+        }
+        .double-bezel-inner {
+            background: #ffffff;
+            border: 1px solid rgba(115, 118, 134, 0.2);
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8);
+            border-radius: 0.875rem;
+            height: 100%;
+        }
+
+        /* Diagnostic Shimmer Animation */
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        .shimmer-bar {
+            position: relative;
+            overflow: hidden;
+        }
+        .shimmer-bar::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        /* Map Marker Pulse */
+        @keyframes mapPulse {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(3); opacity: 0; }
+        }
+        .pulse-orb::before {
+            content: '';
+            position: absolute;
+            width: 100%; height: 100%;
+            border-radius: 50%;
+            background: inherit;
+            animation: mapPulse 2s infinite;
+        }
+
+        /* Custom Spring Physics Hover */
+        .interactive-spring {
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .interactive-spring:hover {
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop bg-surface/90 backdrop-blur-xl border-b border-outline-variant h-20 shadow-sm">
+<div class="flex items-center gap-xl">
+<span class="font-display-lg text-display-lg font-black text-primary">Market Entry Diagnostic</span>
+<nav class="hidden md:flex gap-lg">
+<a class="text-on-surface-variant font-body-base hover:text-primary transition-colors duration-300" href="#">메인</a>
+<a class="text-primary font-body-bold border-b-2 border-primary pb-1" href="#">상세 진단</a>
+<a class="text-on-surface-variant font-body-base hover:text-primary transition-colors duration-300" href="#">보고서</a>
+<a class="text-on-surface-variant font-body-base hover:text-primary transition-colors duration-300" href="#">환경 설정</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<span class="text-on-surface-variant font-label-caps tracking-widest px-md py-xs bg-surface-container rounded-full">KR/UK</span>
+<div class="flex items-center gap-sm">
+<button class="p-sm text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined">notifications</span></button>
+<button class="p-sm text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined">account_circle</span></button>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas (Map Simulation) -->
+<main class="pt-24 min-h-screen px-margin-desktop pb-xl overflow-hidden relative">
+<!-- Background Atmospheric Element -->
+<div class="absolute top-1/4 right-1/4 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] pointer-events-none"></div>
+<div class="mb-lg">
+<h1 class="font-display-lg text-display-lg text-on-surface mb-xs">시장 진단 클러스터</h1>
+<p class="text-on-surface-variant font-body-base">글로벌 마켓 엔트리 상태를 실시간으로 모니터링하고 분석합니다.</p>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-gutter">
+<!-- World Map Container (Faked Background for Pop-up Focus) -->
+<div class="col-span-12 lg:col-span-12 h-[700px] relative rounded-xl border border-outline-variant bg-surface-container-low overflow-hidden">
+<div class="absolute inset-0 grayscale opacity-40 mix-blend-multiply" data-alt="A sophisticated digital world map with a technical, architectural aesthetic. The map features a minimalist vector style in muted steel blues and cool greys, illuminated by a soft ambient glow. Fine grid lines and latitude/longitude markers crisscross the continents, suggesting high-precision data analysis and global connectivity in a premium light-mode corporate setting." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAWMY2bRq0B5TxcyPlApsZcRjBN6QMoB9OHLAAF2hcBijgUD4eYfFe7qilU2O54-pVW5oGsfTv3-PoexF_D3lMKaqU9zHYTdYIS-3kht2f7kGOvyHi2OXbryNrYQlHFjFvnei5y6tk9eYkbKDMymrH_8FgAN8rFVb0NRkc9pS0kxkrecLqUb8S-ZtH85FPQIiBTJeMrMGSlx4baO9_J0UIjI8saDuchffYrW5m3wTMobSnZJOSlNbPSirt_Ejs0jqOCaU1nWwJjST4')"></div>
+<!-- Pulsing Interactive Marker (South Korea) -->
+<div class="absolute top-[42%] left-[81%] group cursor-pointer">
+<div class="w-4 h-4 bg-primary rounded-full pulse-orb relative z-10"></div>
+<div class="absolute -top-1 -left-1 w-6 h-6 border-2 border-primary rounded-full animate-ping opacity-20"></div>
+</div>
+<!-- OVERLAY: The P2 Country Summary Popup (Central focus of the task) -->
+<div class="absolute inset-0 flex items-center justify-center bg-black/5 backdrop-blur-[2px]">
+<div class="w-full max-w-[480px] double-bezel interactive-spring shadow-2xl">
+<div class="double-bezel-inner p-xl flex flex-col gap-lg">
+<!-- Popup Header -->
+<div class="flex items-center justify-between border-b border-outline-variant pb-md">
+<div class="flex items-center gap-md">
+<div class="w-12 h-8 rounded-sm overflow-hidden border border-outline-variant bg-surface-variant">
+<img class="w-full h-full object-cover" data-alt="A high-resolution, crisp image of the South Korean flag, Taegeukgi, with vibrant red and blue colors on a clean white background. The flag is depicted with a slight fabric texture, professionally lit to emphasize its official and prestigious nature within a global business diagnostic context." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGg13SUX4b6lVPa2kBbpTyXGfxVJcKEicCXD3CwzTi1_1KcQNafiy5Y5MSqWRGkebC6fr49upXsoa1i0XmOfowpQ7qyceiDcmd7FBzAHHBn9WYjz0G08vMeT2YuFCOgVY6ImLOrIB-t3O98vVFqVOTr5kjw9TJR2zAWF6cvJ04kVvEif5F0d95bGYD2Iow96tLDhJVJHzeRgCf0cooZjMTZTEojDr8zKuIupPnHvlBUhBOi1L616HTOFD_8CILmQaVEQzfDPX0_II"/>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-xs">
+<h2 class="font-headline-md text-headline-md text-on-surface">대한민국</h2>
+<span class="text-on-surface-variant font-body-base opacity-60">KR</span>
+</div>
+<span class="text-on-surface-variant font-label-caps uppercase tracking-wider">Republic of Korea</span>
+</div>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">close</span>
+</button>
+</div>
+<!-- Key Metrics Body (Analytical Rows) -->
+<div class="space-y-md">
+<!-- Entrance Status -->
+<div class="flex items-center justify-between p-md bg-surface-container-low rounded-lg border border-outline-variant/30">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">login</span>
+<span class="font-body-bold text-on-surface-variant">진출 현황</span>
+</div>
+<span class="px-sm py-xs bg-tertiary-container text-on-tertiary-container text-[12px] font-bold rounded-full">진출 완료</span>
+</div>
+<!-- Market Status Grid -->
+<div class="grid grid-cols-2 gap-md">
+<div class="p-md bg-surface-container-low rounded-lg border border-outline-variant/30">
+<p class="font-label-caps text-outline mb-xs">MARKET SCORE</p>
+<div class="flex items-end gap-xs">
+<span class="font-display-lg text-[32px] text-primary leading-none">8.4</span>
+<span class="text-on-surface-variant text-[14px] mb-1">/ 10</span>
+</div>
+</div>
+<div class="p-md bg-surface-container-low rounded-lg border border-outline-variant/30">
+<p class="font-label-caps text-outline mb-xs">RISK LEVEL</p>
+<div class="flex items-center gap-xs">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="font-body-bold text-tertiary">LOW</span>
+</div>
+</div>
+</div>
+<!-- Regulations & Requirements -->
+<div class="space-y-sm">
+<div class="flex flex-col gap-xs">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">gavel</span>
+<span class="font-label-caps text-on-surface-variant">주요 규제</span>
+</div>
+<p class="text-body-base text-on-surface pl-6 leading-relaxed">금융보안 및 개인정보 보호법(GDPR 준수 수준) 강화 적용</p>
+</div>
+<div class="flex flex-col gap-xs">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">verified</span>
+<span class="font-label-caps text-on-surface-variant">특이 사항</span>
+</div>
+<p class="text-body-base text-on-surface pl-6 leading-relaxed">현지 데이터 센터 구축 및 망 분리 보안 요건 필수</p>
+</div>
+</div>
+</div>
+<!-- Diagnostic Progress Bar -->
+<div class="space-y-xs pt-xs">
+<div class="flex justify-between font-label-caps text-outline">
+<span>DIAGNOSTIC COMPLETION</span>
+<span>92%</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full w-[92%] bg-primary shimmer-bar"></div>
+</div>
+</div>
+<!-- Footer Action -->
+<div class="flex justify-end pt-md border-t border-outline-variant">
+<button class="group flex items-center gap-md bg-primary text-on-primary px-lg py-md rounded-full font-body-bold hover:bg-primary-container transition-all duration-500 shadow-md">
+<span>상세보기</span>
+<div class="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors">
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</div>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-xl border-t border-outline-variant bg-surface-container-lowest flex flex-col md:flex-row justify-between items-center px-margin-desktop gap-md">
+<span class="font-headline-md text-headline-md font-bold text-secondary">Global Market Diagnostic</span>
+<div class="flex gap-lg">
+<a class="text-on-surface-variant font-label-caps hover:text-primary transition-all" href="#">이용약관</a>
+<a class="text-on-surface-variant font-label-caps hover:text-primary transition-all" href="#">개인정보처리방침</a>
+<a class="text-on-surface-variant font-label-caps hover:text-primary transition-all" href="#">고객지원</a>
+<a class="text-on-surface-variant font-label-caps hover:text-primary transition-all" href="#">데이터 출처</a>
+</div>
+<p class="text-on-surface-variant font-label-caps">© 2024 Global Market Diagnostic. All rights reserved.</p>
+</footer>
+<script>
+        // Micro-interaction for popup entrance
+        document.addEventListener('DOMContentLoaded', () => {
+            const popup = document.querySelector('.double-bezel');
+            popup.style.opacity = '0';
+            popup.style.transform = 'scale(0.95) translateY(20px)';
+            
+            setTimeout(() => {
+                popup.style.transition = 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+                popup.style.opacity = '1';
+                popup.style.transform = 'scale(1) translateY(0)';
+            }, 300);
+        });
+
+        // Toggle hover effect on the marker when interacting with popup elements
+        const detailBtn = document.querySelector('button.group');
+        const orb = document.querySelector('.pulse-orb');
+        
+        detailBtn.addEventListener('mouseenter', () => {
+            orb.style.transform = 'scale(1.5)';
+            orb.style.boxShadow = '0 0 20px rgba(0, 74, 198, 0.6)';
+        });
+        detailBtn.addEventListener('mouseleave', () => {
+            orb.style.transform = 'scale(1)';
+            orb.style.boxShadow = 'none';
+        });
+    </script>
+</body></html>
