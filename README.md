@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-# draft_v0.4
-초안 버전 4
-=======
 # 오토파이낸스 해외진출 진단 에이전트
 
 한국 캐피탈사의 신규 국가 진출 의사결정 지원 도구. 진출국(베이스) 실적을 기준으로 미진출국의 진출 난이도·비용을 유사도 기반으로 추정한다.
@@ -34,18 +30,32 @@ reports/     보고서 생성
    ├─ 폴란드_경영진보고서.html    경영진용
    └─ 폴란드_상세보고서.html      실무용
 
-design/      설계 문서
-└─ 01_설계문서.md ~ 06_점수계산_상세산식.md
+design/      설계 문서 + 화면 설계/디자인 산출물
+├─ 01_설계문서.md ~ 06_점수계산_상세산식.md   설계·데이터·산식 문서
+├─ ui_design_guide.md           UI 디자인 가이드 (화면별 디자인·기능 정의)
+├─ 04_화면설계_흐름.md          화면 간 이동 구조(IA)·전환 정의
+└─ html/                        화면 ID별 목업 (각 폴더에 code.html + screen.png)
+   ├─ m1 ~ m7                   풀사이즈 화면 (메인·상세·보고서·설정·국가리스트)
+   ├─ p1 ~ p4                   팝업·모달 (요약/프로그레스/룰셋)
+   └─ guide_md/DESIGN.md        디자인 토큰(색·타이포·간격·컴포넌트) 가이드
 
 research/     국가 조사 문서
 ├─ 07_폴란드_상세조사.md / 08_영국_상세조사.md
 └─ 국가조사_프롬프트.md       새 나라 조사용 재사용 프롬프트
-
-prototype/   대시보드 프로토타입 (목업)
-└─ 오토금융진출진단_프로토타입.html
-
-README_통합가이드.md   대시보드 연결 방법 (데이터 읽기·엔진 호출·화면별 연결)
 ```
+
+## 화면 ID 매핑
+
+`design/html/` 아래 11개 화면 목업. 화면 흐름(IA)은 `design/04_화면설계_흐름.md` 참조.
+
+| ID | 화면 | ID | 화면 |
+|---|---|---|---|
+| M1 | 메인 / 세계지도 | M7 | 국가 리스트 보기 |
+| M2 | 권역 상세정보 | P1 | 권역 요약정보 팝업 |
+| M3 | 국가 상세정보 | P2 | 국가 요약정보 팝업 |
+| M4 | 권역 진출 진단 보고서 | P3 | 프로그레스 팝업 |
+| M5 | 국가 진출 진단 보고서 | P4 | 가중치 룰셋 팝업 |
+| M6 | 설정 (가중치) | | |
 
 ## 데이터 흐름
 
@@ -67,7 +77,7 @@ node engine/similarity.js   # 영국 기준 폴란드 진단 출력
 node reports/src/render_report.js reports/templates/report_def_executive.json reports/output/out.html
 ```
 
-대시보드 연결은 `README_통합가이드.md` 참조. 로컬 실행 시 `file://` 더블클릭은 CORS에 막히므로 로컬 서버(`python3 -m http.server`)로 띄울 것.
+로컬 실행 시 `file://` 더블클릭은 CORS에 막히므로 로컬 서버(`python3 -m http.server`)로 띄울 것.
 
 ## 핵심 설계 원칙
 
@@ -81,5 +91,4 @@ node reports/src/render_report.js reports/templates/report_def_executive.json re
 
 - 나머지 국가(미국·호주·스페인·뉴질랜드·인도) `data/{코드}.json` 작성 → `index.json`에 추가하면 자동 반영
 - `render_report.js`를 브라우저용으로 변환(파일 읽기 → fetch)
-- 프로토타입 버튼에 실제 엔진 연결
->>>>>>> c71e864 (Update README.md)
+- `design/html/` 목업을 실제 프로토타입(React 등)으로 구현하고 엔진 연결
