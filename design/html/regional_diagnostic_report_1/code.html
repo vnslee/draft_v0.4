@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Zenith Orbit | Regional Entry Diagnostic Report</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Geist:wght@100..900&amp;family=JetBrains+Mono:wght@700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Inter:wght@100..900&amp;family=JetBrains+Mono:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<style>
+        .glass-surface {
+            background: rgba(10, 13, 20, 0.7);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(30, 41, 59, 0.5);
+        }
+        .double-bezel {
+            border: 1px solid rgba(30, 41, 59, 0.8);
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.12);
+        }
+        .neon-glow-primary {
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.15);
+        }
+        .data-pulse {
+            position: relative;
+        }
+        .data-pulse::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: inherit;
+            box-shadow: 0 0 0 0 rgba(76, 215, 246, 0.4);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(76, 215, 246, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(76, 215, 246, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(76, 215, 246, 0); }
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #040508; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #334155; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#ffdad6",
+                        "error": "#ffb4ab",
+                        "outline-variant": "#3d494c",
+                        "tertiary-container": "#1bbd85",
+                        "on-background": "#e3e2e8",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "inverse-on-surface": "#2f3035",
+                        "secondary-container": "#0566d9",
+                        "on-primary-container": "#00424f",
+                        "on-tertiary-container": "#00452e",
+                        "tertiary": "#4edea3",
+                        "primary-container": "#06b6d4",
+                        "on-secondary-fixed": "#001a42",
+                        "surface-dim": "#121317",
+                        "on-tertiary-fixed": "#002113",
+                        "on-primary-fixed-variant": "#004e5c",
+                        "on-primary-fixed": "#001f26",
+                        "surface-container-lowest": "#0d0e12",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "primary": "#4cd7f6",
+                        "background": "#040508",
+                        "error-container": "#93000a",
+                        "on-surface": "#e3e2e8",
+                        "surface-variant": "#333539",
+                        "tertiary-fixed": "#6ffbbe",
+                        "on-secondary-fixed-variant": "#004395",
+                        "on-primary": "#003640",
+                        "surface": "#121317",
+                        "on-secondary-container": "#e6ecff",
+                        "primary-fixed-dim": "#4cd7f6",
+                        "inverse-primary": "#00687a",
+                        "primary-fixed": "#acedff",
+                        "surface-container-high": "#292a2e",
+                        "surface-container-highest": "#333539",
+                        "surface-tint": "#4cd7f6",
+                        "on-tertiary": "#003824",
+                        "secondary": "#adc6ff",
+                        "inverse-surface": "#e3e2e8",
+                        "outline": "#869397",
+                        "surface-container": "#1e1f24",
+                        "on-secondary": "#002e6a",
+                        "surface-container-low": "#1a1b20",
+                        "on-surface-variant": "#bcc9cd",
+                        "on-error": "#690005",
+                        "surface-bright": "#38393e",
+                        "secondary-fixed": "#d8e2ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "20px",
+                        "gutter": "24px",
+                        "2xl": "48px",
+                        "md": "16px",
+                        "unit": "4px",
+                        "lg": "24px",
+                        "xs": "4px",
+                        "margin-desktop": "40px",
+                        "sm": "8px",
+                        "xl": "32px"
+                    },
+                    "fontFamily": {
+                        "body-base": ["Inter"],
+                        "display-lg": ["Geist"],
+                        "headline-md": ["Geist"],
+                        "label-caps": ["JetBrains Mono"],
+                        "body-sm": ["Inter"],
+                        "display-lg-mobile": ["Geist"],
+                        "stat-lg": ["Geist"]
+                    },
+                    "fontSize": {
+                        "body-base": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.15em", "fontWeight": "700"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "display-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "stat-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-base overflow-x-hidden">
+<!-- TopNavBar -->
+<nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-20 bg-surface/70 backdrop-blur-2xl border-b border-outline-variant/20 shadow-[0_0_20px_rgba(6,182,212,0.15)]">
+<div class="flex items-center gap-4">
+<span class="font-display-lg text-display-lg-mobile tracking-tighter text-primary">Zenith Orbit</span>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Main Menu</a>
+<a class="font-label-caps text-label-caps text-primary border-b-2 border-primary pb-1" href="#">Detail</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Report</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Settings</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">language</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">translate</button>
+<div class="w-10 h-10 rounded-full border border-primary/30 overflow-hidden">
+<img alt="User profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyIbvXz2cbTfOlGDmQYkbLWStSsX5b4_ZP37yxx9NfPMwpFMkwNO1KwgEWtkVNV0K5lrEJ0C8X1zsnb1dgYr3NWh3R70cYUBo5fDZ9eE4qhs_fL0xjcI14gBxAa_S8d8UW-r1p7IY7-zOWZMFbosoeaTLzdQKkqezre08_Xihi2lkMa6EhO8NPqMCbD_EV_e_bH3K4EvS8nJx2mHaa3UFoHuJogCS__d6pERYoaiPLhVzL9ursel9OQC31l0iSx5p6rHQGony4yv0"/>
+</div>
+</div>
+</nav>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full z-40 flex flex-col pt-24 pb-10 bg-surface-container-low/80 backdrop-blur-3xl border-r border-outline-variant/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)] w-72 hidden md:flex">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3 mb-1">
+<span class="material-symbols-outlined text-primary text-3xl">rocket_launch</span>
+<span class="font-display-lg text-[20px] text-primary">Zenith Orbit</span>
+</div>
+<span class="font-label-caps text-[10px] text-on-surface-variant uppercase tracking-widest">Global Strategy Command</span>
+</div>
+<nav class="flex-1 px-4 space-y-2">
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-variant/30 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">explore</span>
+<span class="font-label-caps text-label-caps">Expansion Radar</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg bg-primary-container/20 text-primary border-r-4 border-primary translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-caps text-label-caps">Market Analysis</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-variant/30 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">security</span>
+<span class="font-label-caps text-label-caps">Risk Assessment</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-variant/30 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-caps text-label-caps">Global Settings</span>
+</a>
+</nav>
+<div class="px-6 mt-auto">
+<button class="w-full py-3 rounded-full bg-gradient-to-r from-primary to-secondary-container text-on-primary font-label-caps text-label-caps hover:scale-[1.02] active:scale-95 transition-transform shadow-[0_0_15px_rgba(76,215,246,0.3)]">
+                Launch Simulation
+            </button>
+<div class="mt-8 space-y-4">
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-sm">help</span>
+<span class="font-body-sm text-body-sm">Help Center</span>
+</a>
+<a class="flex items-center gap-3 text-error/80 hover:text-error transition-colors" href="#">
+<span class="material-symbols-outlined text-sm">logout</span>
+<span class="font-body-sm text-body-sm">Log Out</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="md:ml-72 pt-28 px-margin-desktop pb-20 min-h-screen">
+<!-- Header Section -->
+<header class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-12">
+<div>
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-primary text-4xl" style="font-variation-settings: 'FILL' 1;">public</span>
+<span class="font-label-caps text-label-caps text-primary bg-primary/10 px-3 py-1 rounded-full border border-primary/20">Active Diagnostic</span>
+</div>
+<h1 class="font-display-lg text-display-lg text-on-surface max-w-2xl leading-tight">Europe (Europe) Region Quick-Win Analysis Report</h1>
+</div>
+<div class="flex flex-col items-end gap-2">
+<div class="text-right">
+<p class="font-label-caps text-label-caps text-on-surface-variant">REPORT ID: <span class="text-on-surface">ZO-EU-2024-992</span></p>
+<p class="font-label-caps text-label-caps text-on-surface-variant">GENERATED: <span class="text-on-surface">OCT 24, 2024</span></p>
+</div>
+<button class="flex items-center gap-2 bg-surface-container-high hover:bg-surface-bright text-primary border border-primary/30 px-6 py-2 rounded-full font-label-caps text-label-caps transition-all group">
+<span class="material-symbols-outlined text-sm">download</span>
+                    Download PDF
+                    <span class="material-symbols-outlined text-xs group-hover:translate-y-0.5 transition-transform">arrow_downward</span>
+</button>
+</div>
+</header>
+<!-- Tabbed Interface -->
+<div class="mb-8 overflow-x-auto">
+<div class="flex border-b border-outline-variant/10 min-w-max">
+<button class="px-8 py-4 font-label-caps text-label-caps text-primary border-b-2 border-primary transition-all">Summary</button>
+<button class="px-8 py-4 font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-all">Market Analysis</button>
+<button class="px-8 py-4 font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-all">Regulation Radar</button>
+<button class="px-8 py-4 font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-all">Product Fit</button>
+<button class="px-8 py-4 font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-all">System Health</button>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Key Performance Metrics -->
+<div class="md:col-span-8 glass-surface double-bezel p-8 rounded-xl relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4">
+<span class="material-symbols-outlined text-primary/20 text-6xl group-hover:text-primary/40 transition-colors">insights</span>
+</div>
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-6 flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                    Opportunity Index Analysis
+                </h3>
+<div class="flex flex-wrap items-end gap-12">
+<div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Composite Score</p>
+<p class="font-display-lg text-[64px] text-primary tracking-tight">8.4<span class="text-2xl text-on-surface-variant">/10</span></p>
+</div>
+<div class="flex-1 min-w-[200px]">
+<div class="flex justify-between font-label-caps text-[10px] mb-2">
+<span class="text-on-surface-variant">Market Readiness</span>
+<span class="text-primary">92%</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary to-secondary-container w-[92%] relative">
+<div class="absolute right-0 top-0 h-full w-2 bg-white blur-[2px]"></div>
+</div>
+</div>
+<div class="flex justify-between font-label-caps text-[10px] mt-4 mb-2">
+<span class="text-on-surface-variant">Regulatory Alignment</span>
+<span class="text-tertiary">78%</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-tertiary to-tertiary-container w-[78%] relative"></div>
+</div>
+</div>
+</div>
+<p class="mt-8 font-body-base text-body-base text-on-surface-variant leading-relaxed max-w-2xl">
+                    Europe shows a significant upward trend in technical readiness following the Q3 infrastructure rollout. Regulatory alignment remains the primary friction point for rapid expansion.
+                </p>
+</div>
+<!-- Regional Heatmap Placeholder -->
+<div class="md:col-span-4 glass-surface double-bezel p-8 rounded-xl flex flex-col justify-between">
+<div>
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-4 flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                        Regional Saturation
+                    </h3>
+<div class="aspect-square w-full rounded-lg bg-surface-container-low flex items-center justify-center relative overflow-hidden">
+
+<img alt="Regional Saturation Map" class="relative z-10 w-full h-full object-contain mix-blend-screen opacity-80" data-alt="A dark, high-contrast digital map of the European continent featuring glowing neon cyan outlines and data nodes. The map sits on a deep black background with a subtle grid pattern. Strategic hubs are highlighted with pulsing orange and green light indicators, suggesting high market activity and diagnostic results. The aesthetic is futuristic, reminiscent of a command center interface with sharp, microscopic details." data-location="Europe" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDotUaCpVQaVYwYz1zJMJM6csPchPScXSStBwV0eLwJwT83BcNA4x69605Yy8Ey4BcuV4vT4nzoowlxtlqc7esyws3l_NOi9UidRGStDV6-nainmV2LRtG6HKLWgKSWeXWF3y8h9zxnigHghSIqoCJNotITwpJbzrimxn_LIi1IQQwNAeRq4ILluVBRGxCJAHbL7kkipBZxfubJ3pO-KhTwU2321aBkMDrR8X4PVC56omV7-fFHrXevRrp6om41VCHShOdRi0RF034"/>
+</div>
+</div>
+<div class="mt-6 flex justify-between items-center">
+<div class="flex gap-2">
+<div class="w-3 h-3 rounded-full bg-tertiary"></div>
+<div class="w-3 h-3 rounded-full bg-primary"></div>
+<div class="w-3 h-3 rounded-full bg-error"></div>
+</div>
+<span class="font-label-caps text-[10px] text-on-surface-variant">Active Nodes: 1,240</span>
+</div>
+</div>
+<!-- Detailed Analysis Table -->
+<div class="md:col-span-12 glass-surface double-bezel rounded-xl overflow-hidden">
+<div class="p-6 border-b border-outline-variant/10 flex justify-between items-center bg-surface-container-low/50">
+<h3 class="font-label-caps text-label-caps text-primary tracking-widest">SUB-REGION PERFORMANCE DIAGNOSTIC</h3>
+<div class="flex gap-2">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">filter_list</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">search</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface-container-highest/20">
+<th class="px-8 py-4 font-label-caps text-[10px] text-on-surface-variant uppercase">Territory</th>
+<th class="px-8 py-4 font-label-caps text-[10px] text-on-surface-variant uppercase">Entry Score</th>
+<th class="px-8 py-4 font-label-caps text-[10px] text-on-surface-variant uppercase">Market Velocity</th>
+<th class="px-8 py-4 font-label-caps text-[10px] text-on-surface-variant uppercase">Barrier Rating</th>
+<th class="px-8 py-4 font-label-caps text-[10px] text-on-surface-variant uppercase">Action State</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="px-8 py-6">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-sm">location_city</span>
+</div>
+<div>
+<p class="font-body-base text-on-surface font-medium">Western Europe</p>
+<p class="text-[11px] text-on-surface-variant font-label-caps">GER, FRA, BENELUX</p>
+</div>
+</div>
+</td>
+<td class="px-8 py-6">
+<span class="font-stat-lg text-lg text-on-surface">9.2</span>
+</td>
+<td class="px-8 py-6">
+<div class="flex items-center gap-2 text-tertiary">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span class="font-body-sm font-medium">+12.4%</span>
+</div>
+</td>
+<td class="px-8 py-6">
+<div class="flex gap-1">
+<div class="h-1.5 w-6 rounded-full bg-tertiary"></div>
+<div class="h-1.5 w-6 rounded-full bg-tertiary"></div>
+<div class="h-1.5 w-6 rounded-full bg-surface-variant"></div>
+<div class="h-1.5 w-6 rounded-full bg-surface-variant"></div>
+</div>
+</td>
+<td class="px-8 py-6">
+<button class="px-4 py-1.5 rounded-full border border-primary/40 text-primary font-label-caps text-[10px] hover:bg-primary hover:text-on-primary transition-all uppercase tracking-tighter">Immediate Entry</button>
+</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="px-8 py-6">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-tertiary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary text-sm">euro_symbol</span>
+</div>
+<div>
+<p class="font-body-base text-on-surface font-medium">Nordics</p>
+<p class="text-[11px] text-on-surface-variant font-label-caps">SWE, NOR, FIN, DNK</p>
+</div>
+</div>
+</td>
+<td class="px-8 py-6">
+<span class="font-stat-lg text-lg text-on-surface">8.7</span>
+</td>
+<td class="px-8 py-6">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span class="font-body-sm font-medium">+8.1%</span>
+</div>
+</td>
+<td class="px-8 py-6">
+<div class="flex gap-1">
+<div class="h-1.5 w-6 rounded-full bg-tertiary"></div>
+<div class="h-1.5 w-6 rounded-full bg-surface-variant"></div>
+<div class="h-1.5 w-6 rounded-full bg-surface-variant"></div>
+<div class="h-1.5 w-6 rounded-full bg-surface-variant"></div>
+</div>
+</td>
+<td class="px-8 py-6">
+<button class="px-4 py-1.5 rounded-full border border-primary/40 text-primary font-label-caps text-[10px] hover:bg-primary hover:text-on-primary transition-all uppercase tracking-tighter">Strategic Scalping</button>
+</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="px-8 py-6">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-error/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-error text-sm">warning</span>
+</div>
+<div>
+<p class="font-body-base text-on-surface font-medium">Southern Europe</p>
+<p class="text-[11px] text-on-surface-variant font-label-caps">ITA, ESP, GRC</p>
+</div>
+</div>
+</td>
+<td class="px-8 py-6">
+<span class="font-stat-lg text-lg text-on-surface">5.4</span>
+</td>
+<td class="px-8 py-6">
+<div class="flex items-center gap-2 text-error">
+<span class="material-symbols-outlined text-sm">trending_flat</span>
+<span class="font-body-sm font-medium">-1.2%</span>
+</div>
+</td>
+<td class="px-8 py-6">
+<div class="flex gap-1">
+<div class="h-1.5 w-6 rounded-full bg-error"></div>
+<div class="h-1.5 w-6 rounded-full bg-error"></div>
+<div class="h-1.5 w-6 rounded-full bg-error"></div>
+<div class="h-1.5 w-6 rounded-full bg-surface-variant"></div>
+</div>
+</td>
+<td class="px-8 py-6">
+<button class="px-4 py-1.5 rounded-full border border-outline-variant/30 text-on-surface-variant font-label-caps text-[10px] hover:bg-surface-variant transition-all uppercase tracking-tighter">Hold Analysis</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Risk Landscape Card -->
+<div class="md:col-span-6 glass-surface double-bezel p-8 rounded-xl">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-6 flex items-center justify-between">
+                    Regulatory Risk Vectors
+                    <span class="text-[10px] text-tertiary">Real-time sync active</span>
+</h3>
+<div class="space-y-6">
+<div>
+<div class="flex justify-between mb-2">
+<span class="font-body-sm text-on-surface">GDPR 2.0 Compliance</span>
+<span class="font-label-caps text-primary">LOW RISK</span>
+</div>
+<div class="h-1 bg-surface-container-highest rounded-full">
+<div class="h-full bg-primary w-[15%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-2">
+<span class="font-body-sm text-on-surface">Cross-border Taxation</span>
+<span class="font-label-caps text-error">CRITICAL</span>
+</div>
+<div class="h-1 bg-surface-container-highest rounded-full">
+<div class="h-full bg-error w-[85%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-2">
+<span class="font-body-sm text-on-surface">AI Act Implementation</span>
+<span class="font-label-caps text-primary">MODERATE</span>
+</div>
+<div class="h-1 bg-surface-container-highest rounded-full">
+<div class="h-full bg-primary w-[45%]"></div>
+</div>
+</div>
+</div>
+<div class="mt-8 p-4 bg-primary/5 border border-primary/10 rounded-lg">
+<p class="text-[12px] text-primary/80 italic leading-relaxed">
+                        "Note: The recent amendment to Section 4C significantly reduces our liability in Baltic states."
+                    </p>
+</div>
+</div>
+<!-- Strategic Action Card -->
+<div class="md:col-span-6 bg-gradient-to-br from-primary-container/20 to-secondary-container/10 border border-primary/30 p-8 rounded-xl relative overflow-hidden">
+<div class="absolute -right-12 -top-12 w-48 h-48 bg-primary/10 blur-[80px] rounded-full"></div>
+<h3 class="font-label-caps text-label-caps text-primary mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">auto_awesome</span>
+                    Recommended Next Phase
+                </h3>
+<h4 class="font-headline-md text-headline-md text-on-surface mb-4">Vertical Integration in DACH Markets</h4>
+<ul class="space-y-3 mb-8">
+<li class="flex items-start gap-3 text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-[16px] mt-1">check_circle</span>
+                        Establish central operations hub in Berlin (Tax incentives pending).
+                    </li>
+<li class="flex items-start gap-3 text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-[16px] mt-1">check_circle</span>
+                        Acquire secondary licenses for algorithmic trading in Frankfurt.
+                    </li>
+<li class="flex items-start gap-3 text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-[16px] mt-1">check_circle</span>
+                        Onboard regional compliance experts for ESE oversight.
+                    </li>
+</ul>
+<button class="w-full py-4 rounded-lg bg-primary text-on-primary font-label-caps text-label-caps hover:bg-primary-fixed transition-all shadow-[0_0_20px_rgba(76,215,246,0.3)] flex items-center justify-center gap-2 group">
+                    INITIATE MARKET ENTRY FLOW
+                    <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Footer / Simulation Status -->
+<footer class="mt-12 flex flex-col md:flex-row justify-between items-center py-6 border-t border-outline-variant/10 text-on-surface-variant font-label-caps text-[10px] tracking-widest uppercase">
+<div class="flex gap-8 mb-4 md:mb-0">
+<span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span> Orbit Engine v4.2.1 Stable</span>
+<span>Latency: 42ms</span>
+</div>
+<div class="flex gap-4">
+<a class="hover:text-primary transition-colors" href="#">Documentation</a>
+<a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-primary transition-colors" href="#">Diagnostic Logs</a>
+</div>
+</footer>
+</main>
+<!-- FAB (Suppressed on Detail Screen as per instructions, but adding small support helper) -->
+<div class="fixed bottom-8 right-8 z-50">
+<button class="w-14 h-14 rounded-full glass-surface border border-primary/40 flex items-center justify-center text-primary shadow-2xl hover:scale-110 active:scale-95 transition-all group">
+<span class="material-symbols-outlined group-hover:rotate-12 transition-transform">support_agent</span>
+</button>
+</div>
+<script>
+        // Simple tab switching simulation
+        const tabs = document.querySelectorAll('.font-label-caps');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function(e) {
+                if (this.closest('.flex.border-b')) {
+                    const activeTab = this.parentNode.querySelector('.text-primary');
+                    if (activeTab) {
+                        activeTab.classList.remove('text-primary', 'border-b-2', 'border-primary');
+                        activeTab.classList.add('text-on-surface-variant');
+                    }
+                    this.classList.remove('text-on-surface-variant');
+                    this.classList.add('text-primary', 'border-b-2', 'border-primary');
+                }
+            });
+        });
+
+        // Micro-interaction for table rows
+        const rows = document.querySelectorAll('tbody tr');
+        rows.forEach(row => {
+            row.addEventListener('mouseenter', () => {
+                row.style.transform = 'translateX(4px)';
+                row.style.transition = 'transform 0.2s ease-out';
+            });
+            row.addEventListener('mouseleave', () => {
+                row.style.transform = 'translateX(0)';
+            });
+        });
+    </script>
+</body></html>

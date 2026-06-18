@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;family=Geist:wght@600;700;800&amp;family=JetBrains+Mono:wght@700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error-container": "#ffdad6",
+                    "error": "#ffb4ab",
+                    "outline-variant": "#3d494c",
+                    "tertiary-container": "#1bbd85",
+                    "on-background": "#e3e2e8",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "secondary-fixed-dim": "#adc6ff",
+                    "inverse-on-surface": "#2f3035",
+                    "secondary-container": "#0566d9",
+                    "on-primary-container": "#00424f",
+                    "on-tertiary-container": "#00452e",
+                    "tertiary": "#4edea3",
+                    "primary-container": "#06b6d4",
+                    "on-secondary-fixed": "#001a42",
+                    "surface-dim": "#121317",
+                    "on-tertiary-fixed": "#002113",
+                    "on-primary-fixed-variant": "#004e5c",
+                    "on-primary-fixed": "#001f26",
+                    "surface-container-lowest": "#0d0e12",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "primary": "#4cd7f6",
+                    "background": "#121317",
+                    "error-container": "#93000a",
+                    "on-surface": "#e3e2e8",
+                    "surface-variant": "#333539",
+                    "tertiary-fixed": "#6ffbbe",
+                    "on-secondary-fixed-variant": "#004395",
+                    "on-primary": "#003640",
+                    "surface": "#121317",
+                    "on-secondary-container": "#e6ecff",
+                    "primary-fixed-dim": "#4cd7f6",
+                    "inverse-primary": "#00687a",
+                    "primary-fixed": "#acedff",
+                    "surface-container-high": "#292a2e",
+                    "surface-container-highest": "#333539",
+                    "surface-tint": "#4cd7f6",
+                    "on-tertiary": "#003824",
+                    "secondary": "#adc6ff",
+                    "inverse-surface": "#e3e2e8",
+                    "outline": "#869397",
+                    "surface-container": "#1e1f24",
+                    "on-secondary": "#002e6a",
+                    "surface-container-low": "#1a1b20",
+                    "on-surface-variant": "#bcc9cd",
+                    "on-error": "#690005",
+                    "surface-bright": "#38393e",
+                    "secondary-fixed": "#d8e2ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "20px",
+                    "gutter": "24px",
+                    "2xl": "48px",
+                    "md": "16px",
+                    "unit": "4px",
+                    "lg": "24px",
+                    "xs": "4px",
+                    "margin-desktop": "40px",
+                    "sm": "8px",
+                    "xl": "32px"
+            },
+            "fontFamily": {
+                    "body-base": ["Inter"],
+                    "display-lg": ["Geist"],
+                    "headline-md": ["Geist"],
+                    "label-caps": ["JetBrains Mono"],
+                    "body-sm": ["Inter"],
+                    "display-lg-mobile": ["Geist"],
+                    "stat-lg": ["Geist"]
+            },
+            "fontSize": {
+                    "body-base": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.15em", "fontWeight": "700"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "display-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "stat-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #040508;
+            color: #e3e2e8;
+            overflow: hidden;
+        }
+        .glass-panel {
+            background: rgba(10, 13, 20, 0.7);
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(30, 41, 59, 0.5);
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.12);
+        }
+        .glow-cyan {
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.15);
+        }
+        .neon-gradient {
+            background: linear-gradient(90deg, #4cd7f6 0%, #0566d9 100%);
+        }
+        .ruleset-value-animate {
+            animation: slideIn 0.4s ease-out forwards;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        #top-nav {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        #top-nav.nav-hidden {
+            transform: translateY(-100%);
+        }
+    </style>
+</head>
+<body class="antialiased font-body-base">
+<!-- Background Atmospheric Layer -->
+<div class="fixed inset-0 z-0">
+<div class="absolute inset-0 bg-gradient-to-tr from-background via-transparent to-primary/5"></div>
+</div>
+<!-- Toggleable Top Navigation Bar -->
+<nav class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-outline-variant/20 px-margin-desktop py-md flex items-center justify-between" id="top-nav">
+<div class="flex items-center gap-md">
+<div class="w-8 h-8 neon-gradient rounded-sm flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary text-xl">deployed_code</span>
+</div>
+<span class="font-label-caps text-on-surface tracking-[0.2em]">ZENITH ORBIT</span>
+</div>
+<div class="flex items-center gap-xl">
+<button class="font-label-caps text-[10px] text-outline hover:text-primary transition-colors">DASHBOARD</button>
+<button class="font-label-caps text-[10px] text-primary border-b border-primary">SIMULATIONS</button>
+<button class="font-label-caps text-[10px] text-outline hover:text-primary transition-colors">ANALYTICS</button>
+<div class="h-4 w-px bg-outline-variant/30"></div>
+<button class="flex items-center gap-sm font-label-caps text-[10px] text-outline hover:text-on-surface transition-colors" id="nav-hide-trigger">
+                HIDE INTERFACE <span class="material-symbols-outlined text-sm">visibility_off</span>
+</button>
+</div>
+</nav>
+<!-- Nav Toggle Button (Visible when nav is hidden) -->
+<button class="fixed top-4 right-margin-desktop z-50 p-sm glass-panel rounded-full text-primary opacity-0 pointer-events-none transition-opacity hover:scale-110" id="nav-show-trigger">
+<span class="material-symbols-outlined">expand_more</span>
+</button>
+<!-- Main Content Shell -->
+<main class="relative z-10 w-screen h-screen flex items-center justify-center px-margin-mobile md:px-margin-desktop">
+<!-- Modal Container (Ruleset Selection) -->
+<div class="glass-panel w-full max-w-2xl rounded-xl p-lg md:p-xl relative overflow-hidden group">
+<!-- Modal Header -->
+<div class="flex flex-col gap-xs mb-xl">
+<span class="font-label-caps text-label-caps text-primary tracking-widest">COMMAND INTERFACE</span>
+<h1 class="font-headline-md text-headline-md text-on-surface">Strategic Ruleset Deployment</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Define the analytical bias for the current expansion simulation.</p>
+</div>
+<!-- Dropdown Section -->
+<div class="flex flex-col gap-md mb-xl">
+<label class="font-label-caps text-label-caps text-on-surface-variant">SELECT ACTIVE RULESET</label>
+<div class="relative">
+<select class="w-full bg-surface-container-lowest border border-outline-variant/30 rounded-lg py-md px-lg appearance-none text-on-surface focus:ring-2 focus:ring-primary/40 focus:border-primary transition-all cursor-pointer font-body-base" id="ruleset-selector">
+<option disabled="" selected="" value="none">Select an optimization model...</option>
+<option value="aggressive">Aggressive Market Penetration (High Risk)</option>
+<option value="conservative">Sustained Growth Protocol (Low Risk)</option>
+<option value="balanced">Balanced Geographic Alpha (Standard)</option>
+<option value="regulatory">Regulatory Compliance Focus</option>
+</select>
+<span class="material-symbols-outlined absolute right-md top-1/2 -translate-y-1/2 pointer-events-none text-outline">
+                        expand_more
+                    </span>
+</div>
+</div>
+<!-- Values Display Area -->
+<div class="min-h-[240px] border-t border-outline-variant/10 pt-xl" id="values-container">
+<!-- Initial Empty State -->
+<div class="flex flex-col items-center justify-center h-full text-center py-xl" id="empty-state">
+<span class="material-symbols-outlined text-outline-variant text-4xl mb-md">
+                        analytics
+                    </span>
+<p class="font-body-sm text-body-sm text-outline">Select a ruleset to preview weighted vector coefficients.</p>
+</div>
+<!-- Values Grid (Hidden by Default) -->
+<div class="hidden flex-col gap-lg" id="ruleset-values">
+<h3 class="font-label-caps text-label-caps text-primary" id="selected-title">AGGRESSIVE PENETRATION VALUES</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-md">
+<div class="bg-surface-container-low/50 p-md rounded-lg border border-outline-variant/10">
+<span class="block font-label-caps text-[10px] text-outline mb-xs uppercase">Volatility Bias</span>
+<span class="font-stat-lg text-stat-lg text-on-surface">0.82</span>
+</div>
+<div class="bg-surface-container-low/50 p-md rounded-lg border border-outline-variant/10">
+<span class="block font-label-caps text-[10px] text-outline mb-xs uppercase">Liquidity Depth</span>
+<span class="font-stat-lg text-stat-lg text-on-surface">1.45</span>
+</div>
+<div class="bg-surface-container-low/50 p-md rounded-lg border border-outline-variant/10">
+<span class="block font-label-caps text-[10px] text-outline mb-xs uppercase">Asset Density</span>
+<span class="font-stat-lg text-stat-lg text-on-surface">0.90</span>
+</div>
+<div class="bg-surface-container-low/50 p-md rounded-lg border border-outline-variant/10">
+<span class="block font-label-caps text-[10px] text-outline mb-xs uppercase">Latency Tolerance</span>
+<span class="font-stat-lg text-stat-lg text-on-surface">2.1ms</span>
+</div>
+</div>
+<!-- Progress Bar Representation -->
+<div class="flex flex-col gap-sm">
+<div class="flex justify-between items-end">
+<span class="font-label-caps text-[10px] text-outline">SIMULATION INTENSITY</span>
+<span class="font-label-caps text-primary" id="intensity-val">85%</span>
+</div>
+<div class="h-1 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full neon-gradient shadow-[0_0_8px_#4cd7f6] transition-all duration-700 ease-in-out" id="intensity-bar" style="width: 85%;"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Modal Footer / Actions -->
+<div class="mt-xl flex items-center justify-between">
+<button class="font-label-caps text-label-caps text-outline hover:text-on-surface transition-colors">
+                    CANCEL
+                </button>
+<div class="flex gap-md">
+<button class="opacity-40 flex items-center gap-sm px-xl py-md rounded-full neon-gradient text-on-primary font-label-caps text-label-caps shadow-lg hover:scale-105 active:scale-95 transition-all cursor-not-allowed" disabled="" id="execute-btn">
+                        EXECUTE
+                        <span class="material-symbols-outlined text-[18px]">
+                            rocket_launch
+                        </span>
+</button>
+</div>
+</div>
+<!-- Background Decorative Ornament -->
+<div class="absolute -bottom-12 -right-12 w-48 h-48 bg-primary/10 blur-[80px] rounded-full group-hover:bg-primary/20 transition-all duration-1000"></div>
+</div>
+</main>
+<script>
+        // Nav Toggling Logic
+        const topNav = document.getElementById('top-nav');
+        const hideTrigger = document.getElementById('nav-hide-trigger');
+        const showTrigger = document.getElementById('nav-show-trigger');
+
+        hideTrigger.addEventListener('click', () => {
+            topNav.classList.add('nav-hidden');
+            showTrigger.classList.remove('opacity-0', 'pointer-events-none');
+        });
+
+        showTrigger.addEventListener('click', () => {
+            topNav.classList.remove('nav-hidden');
+            showTrigger.classList.add('opacity-0', 'pointer-events-none');
+        });
+
+        // Ruleset Interface Logic
+        const selector = document.getElementById('ruleset-selector');
+        const emptyState = document.getElementById('empty-state');
+        const valuesArea = document.getElementById('ruleset-values');
+        const executeBtn = document.getElementById('execute-btn');
+        const selectedTitle = document.getElementById('selected-title');
+        const intensityBar = document.getElementById('intensity-bar');
+        const intensityVal = document.getElementById('intensity-val');
+
+        const rulesetData = {
+            aggressive: {
+                title: "AGGRESSIVE PENETRATION VALUES",
+                intensity: 92,
+                values: ["0.82", "1.45", "0.90", "2.1ms"]
+            },
+            conservative: {
+                title: "SUSTAINED GROWTH VALUES",
+                intensity: 34,
+                values: ["0.15", "0.45", "1.12", "12.5ms"]
+            },
+            balanced: {
+                title: "BALANCED ALPHA VALUES",
+                intensity: 65,
+                values: ["0.45", "0.90", "0.95", "6.2ms"]
+            },
+            regulatory: {
+                title: "COMPLIANCE BIAS VALUES",
+                intensity: 15,
+                values: ["0.05", "1.85", "0.20", "25.0ms"]
+            }
+        };
+
+        selector.addEventListener('change', (e) => {
+            const key = e.target.value;
+            const data = rulesetData[key];
+
+            emptyState.classList.add('hidden');
+            valuesArea.classList.remove('hidden');
+            valuesArea.classList.add('ruleset-value-animate');
+            
+            executeBtn.disabled = false;
+            executeBtn.classList.remove('opacity-40', 'cursor-not-allowed');
+            executeBtn.classList.add('cursor-pointer');
+
+            selectedTitle.textContent = data.title;
+            intensityVal.textContent = `${data.intensity}%`;
+            intensityBar.style.width = `${data.intensity}%`;
+
+            const statDisplays = valuesArea.querySelectorAll('.font-stat-lg');
+            statDisplays.forEach((el, index) => {
+                el.textContent = data.values[index];
+            });
+
+            valuesArea.style.animation = 'none';
+            valuesArea.offsetHeight; 
+            valuesArea.style.animation = null;
+        });
+
+        executeBtn.addEventListener('click', () => {
+            if(!executeBtn.disabled) {
+                executeBtn.innerHTML = `
+                    <span class="animate-spin material-symbols-outlined text-[18px]">
+                        autorenew
+                    </span>
+                    INITIALIZING...
+                `;
+                setTimeout(() => {
+                    alert('Redirecting to Simulation Progress (P3)...');
+                }, 800);
+            }
+        });
+    </script>
+</body></html>

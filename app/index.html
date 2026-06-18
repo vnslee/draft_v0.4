@@ -1,0 +1,1524 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>오토파이낸스 해외진출 진단</title>
+<style>
+
+:root {
+  --accent: #1f5c4a;
+  --accent-soft: #d9e7e0;
+  --amber: #b88324;
+  --signal: #c5562e;
+  --ink: #16201c;
+  --soft: #4a5550;
+  --bg: #faf9f6;
+  --card: #ffffff;
+  --border: #e7e3d8;
+  --grid: #f3f1ec;
+  --radius: 12px;
+  --shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: -apple-system, 'Pretendard', sans-serif; background: var(--bg); color: var(--ink); line-height: 1.5; }
+.app { display: flex; min-height: 100vh; }
+.sidebar { width: 240px; background: var(--ink); color: #fff; padding: 24px 0; position: fixed; height: 100vh; overflow-y: auto; }
+.sidebar h1 { font-size: 14px; padding: 0 20px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 12px; font-weight: 600; letter-spacing: -0.3px; }
+.sidebar h1 span { display: block; font-size: 11px; opacity: 0.5; margin-top: 4px; font-weight: 400; }
+.nav-item { padding: 10px 20px; cursor: pointer; font-size: 13px; display: flex; align-items: center; gap: 10px; transition: background 0.15s; border-left: 3px solid transparent; }
+.nav-item:hover { background: rgba(255,255,255,0.06); }
+.nav-item.active { background: rgba(255,255,255,0.1); border-left-color: var(--accent-soft); font-weight: 600; }
+.nav-item .icon { width: 18px; text-align: center; }
+.main { margin-left: 240px; flex: 1; padding: 32px; max-width: 1200px; }
+.screen { display: none; }
+.screen.active { display: block; }
+.page-title { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+.page-desc { font-size: 13px; color: var(--soft); margin-bottom: 24px; }
+
+/* Cards */
+.card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 16px; box-shadow: var(--shadow); }
+.card-title { font-size: 14px; font-weight: 600; margin-bottom: 12px; color: var(--ink); }
+.card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+
+/* Dashboard cards */
+.dash-card { cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; }
+.dash-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+.dash-card .big-num { font-size: 28px; font-weight: 700; }
+.dash-card .label { font-size: 12px; color: var(--soft); margin-top: 4px; }
+
+/* Stat row */
+.stat-row { display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+.stat-box { flex: 1; min-width: 140px; background: var(--grid); border-radius: 8px; padding: 14px; text-align: center; }
+.stat-box .val { font-size: 20px; font-weight: 700; }
+.stat-box .lbl { font-size: 11px; color: var(--soft); margin-top: 2px; }
+
+/* Select & Buttons */
+select, button, input { font-family: inherit; font-size: 13px; }
+select { padding: 8px 12px; border: 1px solid var(--border); border-radius: 6px; background: #fff; }
+.btn { padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; transition: background 0.15s; }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover { background: #174a3b; }
+.btn-secondary { background: var(--grid); color: var(--ink); border: 1px solid var(--border); }
+.btn-secondary:hover { background: var(--border); }
+
+/* Table */
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { text-align: left; padding: 10px 12px; background: var(--grid); font-weight: 600; border-bottom: 2px solid var(--border); }
+td { padding: 10px 12px; border-bottom: 1px solid var(--border); }
+tr:hover td { background: rgba(31,92,74,0.03); }
+
+/* Badge */
+.badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+.badge-green { background: var(--accent-soft); color: var(--accent); }
+.badge-amber { background: #fef3cd; color: var(--amber); }
+.badge-red { background: #fde8e4; color: var(--signal); }
+.badge-gray { background: #eee; color: #666; }
+
+/* Verdict */
+.verdict-box { text-align: center; padding: 20px; border-radius: var(--radius); margin: 16px 0; }
+.verdict-box.TRANSPLANTABLE { background: var(--accent-soft); }
+.verdict-box.DEEP_RESEARCH { background: #fef3cd; }
+.verdict-box.BLOCKED { background: #fde8e4; }
+.verdict-label { font-size: 12px; color: var(--soft); }
+.verdict-text { font-size: 20px; font-weight: 700; margin-top: 4px; }
+
+/* Bar chart inline */
+.bar-inline { display: flex; align-items: center; gap: 8px; margin: 4px 0; }
+.bar-bg { flex: 1; height: 20px; background: var(--grid); border-radius: 4px; overflow: hidden; position: relative; }
+.bar-fill { height: 100%; border-radius: 4px; transition: width 0.4s; }
+.bar-val { font-size: 12px; font-weight: 600; width: 36px; text-align: right; }
+
+/* Killswitch */
+.ks-item { display: flex; align-items: center; gap: 8px; padding: 6px 0; font-size: 13px; }
+.ks-dot { width: 10px; height: 10px; border-radius: 50%; }
+.ks-pass { background: var(--accent); }
+.ks-fail { background: var(--signal); }
+
+/* Settings */
+.setting-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--grid); }
+.setting-row label { width: 140px; font-size: 13px; font-weight: 500; }
+.setting-row input[type=number] { width: 80px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px; }
+.setting-row input[type=range] { flex: 1; }
+
+/* Data management */
+.data-item { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--grid); }
+.data-item:last-child { border-bottom: none; }
+
+/* Report */
+.report-section { margin-bottom: 20px; }
+.report-section h3 { font-size: 14px; font-weight: 600; margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+
+/* Tabs */
+.tab-bar { display: flex; gap: 0; margin-bottom: 20px; border-bottom: 2px solid var(--border); }
+.tab { padding: 10px 18px; font-size: 13px; font-weight: 500; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.15s; }
+.tab:hover { color: var(--accent); }
+.tab.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+
+/* Tooltip */
+.info-tip { display: inline-block; width: 16px; height: 16px; background: var(--border); border-radius: 50%; text-align: center; line-height: 16px; font-size: 10px; cursor: help; color: var(--soft); }
+
+/* Report (detailed format) */
+.rpt-header { padding: 24px 0 16px; border-bottom: 2px solid var(--ink); margin-bottom: 16px; }
+.rpt-eyebrow { font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--soft); font-weight: 600; }
+.rpt-title { font-size: 22px; font-weight: 700; margin: 6px 0; }
+.rpt-meta { font-size: 12px; color: var(--soft); }
+.rpt-meta b { color: var(--ink); }
+
+.rpt-verdict { display: grid; grid-template-columns: repeat(5, 1fr); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin: 16px 0; }
+.rpt-vc { padding: 14px 12px; border-right: 1px solid var(--border); background: var(--card); text-align: center; }
+.rpt-vc:last-child { border-right: none; }
+.rpt-vk { font-size: 10px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--soft); }
+.rpt-vv { font-size: 18px; font-weight: 700; margin-top: 4px; }
+.rpt-vs { font-size: 10px; color: var(--soft); margin-top: 2px; }
+
+.rpt-summary { background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 14px; border-radius: 0 8px 8px 0; font-size: 13px; margin-bottom: 20px; }
+
+.rpt-cat { margin-top: 28px; }
+.rpt-cat-head { display: flex; align-items: center; gap: 10px; padding-bottom: 8px; border-bottom: 2px solid var(--accent); margin-bottom: 12px; }
+.rpt-cat-icon { width: 26px; height: 26px; background: var(--accent); color: #fff; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; }
+.rpt-cat-name { font-size: 18px; font-weight: 700; flex: 1; }
+.rpt-cat-score { font-size: 12px; color: var(--accent); font-weight: 600; background: var(--accent-soft); padding: 3px 10px; border-radius: 16px; }
+
+.rpt-hbar-section { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 14px; margin-bottom: 14px; }
+.rpt-hbar-title { font-size: 13px; font-weight: 600; margin-bottom: 10px; }
+.rpt-hbar-row { display: flex; align-items: center; gap: 8px; margin: 5px 0; }
+.rpt-hbar-label { width: 140px; font-size: 11px; color: var(--soft); text-align: right; flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rpt-hbar-bg { flex: 1; height: 16px; background: var(--grid); border-radius: 3px; overflow: hidden; }
+.rpt-hbar-fill { height: 100%; border-radius: 3px; }
+.rpt-hbar-val { width: 30px; font-size: 11px; font-weight: 600; }
+.rpt-hbar-skip { flex: 1; text-align: center; color: var(--border); font-size: 12px; }
+
+.rpt-sub-title { font-size: 11px; font-weight: 700; color: var(--soft); text-transform: uppercase; letter-spacing: 0.04em; margin: 16px 0 8px; padding-bottom: 4px; border-bottom: 1px solid var(--border); }
+
+.rpt-item { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; margin-bottom: 10px; }
+.rpt-item-action { border-left: 3px solid var(--amber); }
+.rpt-item-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 5px; }
+.rpt-item-name { font-size: 14px; font-weight: 650; }
+.rpt-ks { font-size: 10px; font-weight: 700; background: #fde8e4; color: var(--signal); padding: 2px 7px; border-radius: 4px; }
+.rpt-sim { font-size: 11px; font-weight: 600; background: var(--grid); color: var(--soft); padding: 2px 8px; border-radius: 12px; margin-left: auto; }
+.rpt-item-val { font-size: 13px; margin-bottom: 5px; }
+.rpt-gap-text { color: var(--amber); font-style: italic; }
+.rpt-item-detail { font-size: 12px; color: var(--soft); background: var(--grid); border-radius: 6px; padding: 8px 10px; margin: 6px 0; line-height: 1.5; }
+.rpt-item-src { font-size: 11px; color: var(--soft); margin-top: 6px; }
+.rpt-tag { font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: 600; }
+.rpt-t1 { background: var(--accent-soft); color: var(--accent); }
+.rpt-t2 { background: #fef3cd; color: var(--amber); }
+.rpt-t3 { background: var(--grid); color: var(--soft); }
+.rpt-gap { background: #fde8e4; color: var(--signal); }
+.rpt-gap-flag { color: var(--signal); font-weight: 600; }
+
+.rpt-actions { margin-top: 8px; background: #fef3cd; border-radius: 6px; padding: 10px 12px; }
+.rpt-actions-title { font-size: 11px; font-weight: 700; color: var(--amber); margin-bottom: 4px; }
+.rpt-actions ul { margin: 0; padding-left: 16px; }
+.rpt-actions li { font-size: 12px; margin-bottom: 3px; }
+
+.rpt-ts { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 12px; margin: 8px 0; }
+.rpt-ts-title { font-size: 12px; font-weight: 600; margin-bottom: 2px; }
+.rpt-ts-sub { font-size: 11px; color: var(--soft); margin-bottom: 8px; }
+.rpt-ts-bars { display: flex; align-items: flex-end; gap: 4px; height: 60px; }
+.rpt-ts-bar { flex: 1; display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end; }
+.rpt-ts-bar-fill { width: 100%; max-width: 28px; background: var(--accent); border-radius: 3px 3px 0 0; min-height: 2px; }
+.rpt-ts-bar-yr { font-size: 9px; color: var(--soft); margin-top: 3px; }
+
+.rpt-checklist { margin-top: 28px; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
+.rpt-checklist h2 { font-size: 18px; margin-bottom: 4px; }
+.rpt-cl-sub { font-size: 12px; color: var(--soft); margin-bottom: 14px; }
+.rpt-ck-item { margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--grid); }
+.rpt-ck-item:last-child { border-bottom: none; }
+.rpt-ck-name { font-size: 13px; font-weight: 650; color: var(--accent); margin-bottom: 4px; }
+.rpt-ck-item ul { margin: 0; padding-left: 16px; }
+.rpt-ck-item li { font-size: 12px; margin-bottom: 3px; color: var(--soft); }
+
+.rpt-footer { margin-top: 24px; padding-top: 14px; border-top: 1px solid var(--border); font-size: 11px; color: var(--soft); }
+
+/* Executive report extras */
+.rpt-section { margin-top: 28px; }
+.rpt-part-num { display: inline-block; font-size: 11px; font-weight: 700; color: var(--accent); background: var(--accent-soft); padding: 3px 10px; border-radius: 16px; margin-bottom: 8px; }
+.rpt-section h2 { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+.rpt-lead { font-size: 13px; color: var(--soft); margin-bottom: 14px; }
+
+.rpt-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 14px 0; }
+.rpt-kpi { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
+.rpt-kpi-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--soft); }
+.rpt-kpi-big { font-size: 18px; font-weight: 700; margin: 4px 0 2px; }
+.rpt-kpi-trend { font-size: 11px; font-weight: 600; }
+.rpt-kpi-trend.up { color: var(--accent); }
+.rpt-kpi-trend.down { color: var(--signal); }
+.rpt-kpi-note { font-size: 11px; color: var(--soft); }
+
+.rpt-cat-bars { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 14px; margin: 14px 0; }
+
+.rpt-insight { background: var(--accent-soft); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; padding: 12px 14px; margin: 10px 0; font-size: 13px; }
+.rpt-insight b { color: var(--accent); }
+.rpt-insight-warn { background: #fef3cd; border-left: 3px solid var(--amber); border-radius: 0 8px 8px 0; padding: 12px 14px; margin: 10px 0; font-size: 13px; }
+.rpt-insight-warn b { color: var(--amber); }
+
+.rpt-warning-red { padding: 10px 14px; background: #fde8e4; border-radius: 8px; font-size: 13px; margin: 10px 0; color: var(--signal); font-weight: 500; }
+.rpt-warning-amber { padding: 10px 14px; background: #fef3cd; border-radius: 8px; font-size: 13px; margin: 10px 0; color: var(--amber); font-weight: 500; }
+
+.rpt-reco { display: flex; gap: 12px; padding: 14px; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 10px; background: var(--card); }
+.rpt-reco-n { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; }
+.rpt-reco-body { font-size: 13px; }
+.rpt-reco-body b { display: block; margin-bottom: 2px; font-size: 14px; }
+
+.num { text-align: right; font-variant-numeric: tabular-nums; }
+
+.rpt-chart-box { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+.rpt-chart-title { font-size: 13px; font-weight: 650; margin-bottom: 3px; }
+.rpt-chart-sub { font-size: 11px; color: var(--soft); margin-bottom: 10px; }
+.rpt-legend { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 8px; font-size: 11px; color: var(--soft); }
+.rpt-legend span { display: inline-flex; align-items: center; gap: 5px; }
+.rpt-legend i { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sidebar { display: none; }
+  .main { margin-left: 0; padding: 16px; }
+  .card-grid { grid-template-columns: 1fr; }
+  .rpt-verdict { grid-template-columns: repeat(2, 1fr); }
+  .rpt-hbar-label { width: 100px; }
+}
+
+</style>
+</head>
+<body>
+
+<div class="app">
+  <nav class="sidebar">
+    <h1>오토파이낸스<br>해외진출 진단<span>Auto Finance Global Expansion</span></h1>
+    <div class="nav-item active" data-screen="s0"><span class="icon">📊</span> 대시보드</div>
+    <div class="nav-item" data-screen="s1"><span class="icon">🔍</span> 단일 국가 진단</div>
+    <div class="nav-item" data-screen="s2"><span class="icon">🏆</span> 권역 순위</div>
+    <div class="nav-item" data-screen="s3"><span class="icon">⚙️</span> 설정</div>
+    <div class="nav-item" data-screen="s4"><span class="icon">📋</span> 보고서 뷰어</div>
+    <div class="nav-item" data-screen="s5"><span class="icon">💾</span> 데이터 관리</div>
+  </nav>
+
+  <main class="main">
+    <!-- S0: 메인 대시보드 -->
+    <section id="s0" class="screen active">
+      <h2 class="page-title">대시보드</h2>
+      <p class="page-desc">진입점 · 기능 선택 · 최근 분석 요약</p>
+
+      <div class="card-grid" style="margin-bottom:20px;">
+        <div class="card dash-card" data-nav="s1">
+          <div style="font-size:24px;margin-bottom:8px;">🔍</div>
+          <div style="font-weight:600;font-size:14px;">단일 국가 진단</div>
+          <div style="font-size:12px;color:var(--soft);margin-top:4px;">국가별 유사도 분석 및 진출 판정</div>
+        </div>
+        <div class="card dash-card" data-nav="s2">
+          <div style="font-size:24px;margin-bottom:8px;">🏆</div>
+          <div style="font-weight:600;font-size:14px;">권역 순위</div>
+          <div style="font-size:12px;color:var(--soft);margin-top:4px;">권역 내 국가 비교 순위표</div>
+        </div>
+        <div class="card dash-card" data-nav="s3">
+          <div style="font-size:24px;margin-bottom:8px;">⚙️</div>
+          <div style="font-weight:600;font-size:14px;">설정</div>
+          <div style="font-size:12px;color:var(--soft);margin-top:4px;">가중치·임계값·게이트·킬스위치</div>
+        </div>
+        <div class="card dash-card" data-nav="s5">
+          <div style="font-size:24px;margin-bottom:8px;">💾</div>
+          <div style="font-weight:600;font-size:14px;">데이터 관리</div>
+          <div style="font-size:12px;color:var(--soft);margin-top:4px;">진출국 실적 입력, 조사 데이터 갱신</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">최근 분석 결과</div>
+        <div id="dash-recent"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">등록 국가 현황</div>
+        <div id="dash-countries"></div>
+      </div>
+    </section>
+
+    <!-- S1: 단일 국가 진단 -->
+    <section id="s1" class="screen">
+      <h2 class="page-title">단일 국가 진단</h2>
+      <p class="page-desc">기능1 · 국가 입력 → 유사도 결과 + 판정 + 비용</p>
+
+      <div class="card">
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+          <div>
+            <label style="font-size:12px;color:var(--soft);display:block;margin-bottom:4px;">비교 기준(진출국)</label>
+            <select id="s1-base"></select>
+          </div>
+          <div>
+            <label style="font-size:12px;color:var(--soft);display:block;margin-bottom:4px;">분석 대상(미진출국)</label>
+            <select id="s1-target"></select>
+          </div>
+          <div style="padding-top:16px;">
+            <button class="btn btn-primary" id="s1-run">분석 실행</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="s1-result" style="display:none;">
+        <div class="stat-row" id="s1-stats"></div>
+
+        <div id="s1-verdict-box" class="verdict-box">
+          <div class="verdict-label">최종 판정</div>
+          <div class="verdict-text" id="s1-verdict"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">카테고리별 유사도</div>
+          <div id="s1-categories"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">킬스위치 점검</div>
+          <div id="s1-killswitch"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">항목별 상세 유사도</div>
+          <div class="tab-bar" id="s1-cat-tabs"></div>
+          <div id="s1-items-table"></div>
+        </div>
+
+        <div style="margin-top:12px;display:flex;gap:8px;">
+          <button class="btn btn-primary" id="s1-to-report">보고서 보기</button>
+          <button class="btn btn-secondary" id="s1-to-settings">가중치 바꿔 재실행</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- S2: 권역 순위 -->
+    <section id="s2" class="screen">
+      <h2 class="page-title">권역 순위</h2>
+      <p class="page-desc">기능2 · 권역 선택 → 순위표(카테고리 분해)</p>
+
+      <div class="card">
+        <div style="display:flex;gap:12px;align-items:center;">
+          <div>
+            <label style="font-size:12px;color:var(--soft);display:block;margin-bottom:4px;">권역 선택</label>
+            <select id="s2-region">
+              <option value="EUROPE">유럽</option>
+              <option value="ASIA">아시아</option>
+              <option value="AMERICAS">아메리카</option>
+              <option value="OCEANIA">오세아니아</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:12px;color:var(--soft);display:block;margin-bottom:4px;">비교 기준</label>
+            <select id="s2-base"></select>
+          </div>
+          <div style="padding-top:16px;">
+            <button class="btn btn-primary" id="s2-run">순위 분석</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="s2-result" style="display:none;">
+        <div class="card">
+          <div class="card-title">권역 내 순위표</div>
+          <table id="s2-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>국가</th>
+                <th>종합</th>
+                <th>시장</th>
+                <th>규제</th>
+                <th>금융</th>
+                <th>시스템</th>
+                <th>판정</th>
+              </tr>
+            </thead>
+            <tbody id="s2-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- S3: 설정 -->
+    <section id="s3" class="screen">
+      <h2 class="page-title">설정</h2>
+      <p class="page-desc">가중치 · 임계값 · 게이트 · 킬스위치 · 화이트리스트</p>
+
+      <div class="card">
+        <div class="card-title">카테고리 가중치</div>
+        <p style="font-size:11px;color:var(--soft);margin-bottom:12px;">합계 = 1.0 (변경 시 자동 정규화)</p>
+        <div id="s3-weights"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">임계값</div>
+        <div id="s3-thresholds"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">룰셋 정보</div>
+        <div id="s3-ruleset"></div>
+      </div>
+
+      <div style="margin-top:12px;display:flex;gap:8px;">
+        <button class="btn btn-primary" id="s3-save">설정 저장</button>
+        <button class="btn btn-secondary" id="s3-reset">기본값 복원</button>
+      </div>
+    </section>
+
+    <!-- S4: 보고서 뷰어 -->
+    <section id="s4" class="screen">
+      <div id="s4-empty" class="card" style="text-align:center;padding:40px;">
+        <div style="font-size:32px;margin-bottom:12px;">📋</div>
+        <div style="font-weight:600;">분석을 실행하면 보고서가 생성됩니다</div>
+        <div style="font-size:12px;color:var(--soft);margin-top:6px;">S1(단일 국가 진단) 또는 S2(권역 순위)에서 분석 후 이동</div>
+      </div>
+      <div id="s4-content" style="display:none;">
+        <div class="tab-bar">
+          <div class="tab active" onclick="switchReportMode('executive')">경영진 보고서</div>
+          <div class="tab" onclick="switchReportMode('detailed')">실무 상세</div>
+        </div>
+        <div id="s4-report-body"></div>
+        <div style="margin-top:16px;display:flex;gap:8px;">
+          <button class="btn btn-secondary" onclick="navigate('s1')">원본 분석으로</button>
+          <button class="btn btn-secondary" onclick="navigate('s3')">가중치 조정</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- S5: 데이터 관리 -->
+    <section id="s5" class="screen">
+      <h2 class="page-title">데이터 관리</h2>
+      <p class="page-desc">진출국 실적 입력 · 조사 데이터 갱신 · 이력</p>
+
+      <div class="card">
+        <div class="card-title">등록 국가 목록</div>
+        <div id="s5-countries"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">데이터 품질 현황</div>
+        <div id="s5-quality"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">항목별 데이터 현황</div>
+        <div style="margin-bottom:12px;">
+          <select id="s5-country-select"></select>
+        </div>
+        <div id="s5-items" style="max-height:400px;overflow-y:auto;"></div>
+      </div>
+
+      <div style="margin-top:12px;">
+        <button class="btn btn-primary" id="s5-to-diag">이 국가 진단하기</button>
+      </div>
+    </section>
+  </main>
+</div>
+
+
+<script>
+var DATA_INDEX = {"base_default": "GB", "weights": {"MARKET": 0.25, "REGULATORY": 0.25, "FINANCIAL": 0.2, "SYSTEM": 0.3}, "thresholds": {"entry": 70, "systemGate": 50, "lowConfidence": 0.6}, "countries": [{"code": "GB", "name": "United Kingdom", "name_ko": "영국", "role": "base", "region": "EUROPE", "flag": "🇬🇧"}, {"code": "PL", "name": "Poland", "name_ko": "폴란드", "role": "target", "region": "EUROPE", "flag": "🇵🇱"}]};
+var DATA_COUNTRIES = {"GB": {"country_code": "GB", "country_name": "United Kingdom", "region": "EUROPE", "survey_date": "2025-12", "data_kind": "CURRENT", "schema_version": "v0.2", "report": "UK-PL 비교보고서 2025", "summary": {"total_items": 69, "tier1_count": 23, "score_items": 53, "normalized_filled": 46, "normalized_gap": 7, "official_ratio": 0.333, "research_detail_filled": 21, "source_detail_filled": 60}, "items": [{"catalog_item_id": "MKT_CAR_SALES", "category_id": "MARKET", "name": "자동차 판매대수(연간)", "data_type": "NUMBER", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "신차 2,020,520대(+3.5%); 중고 7,807,872건", "value_normalized": {"new": 2020520, "used": 7807872}, "source_tier": "TIER2", "source_name": "SMMT 2025", "is_official": false, "official_gap_flag": false, "confidence_grade": "SEMI_OFFICIAL", "confidence_coef": 0.8, "note": "", "research_detail": "2025년 신차 등록 2,020,520대로 팬데믹 이후 처음 200만 대를 돌파(+3.5%). 중고차 거래는 7,807,872건(+2.2%)으로 3년 연속 성장. 신차:중고 약 1:3.9. (SMMT)", "source_detail": "SMMT, New Car Registrations 2025 (2026.1 발표)", "timeseries": {"data": {"2019": 2311140, "2020": 1631064, "2021": 1647181, "2022": 1614063, "2023": 1903054, "2024": 1952778, "2025": 2020520}, "unit": "대", "source": "SMMT 연도별 신차 등록", "source_tier": "TIER2", "cagr": -2.2, "cagr_period": "2019-2025", "cagr_2019base": -2.2, "forecast_2030": 1807829, "forecast_basis": "CAGR -2.2% 적용"}, "source_type": "ASSOCIATION", "survey_date": "2025-12"}, {"catalog_item_id": "MKT_NEW_USED_RATIO", "category_id": "MARKET", "name": "신차/중고차 비율", "data_type": "PERCENT", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "1:3.9", "value_normalized": 3.9, "source_tier": "TIER2", "source_name": "SMMT", "is_official": false, "official_gap_flag": false, "confidence_grade": "SEMI_OFFICIAL", "confidence_coef": 0.8, "note": "", "research_detail": null, "source_detail": "SMMT", "source_type": "ASSOCIATION", "survey_date": "2025-12"}, {"catalog_item_id": "MKT_AF_SIZE", "category_id": "MARKET", "name": "오토금융 시장규모", "data_type": "NUMBER", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "소비자 POS 카파이낸스 £41bn+; 신차+중고 지원 £55bn", "value_normalized": {"value_gbp_bn": 41.0}, "source_tier": "TIER2", "source_name": "FLA 2025", "is_official": false, "official_gap_flag": false, "confidence_grade": "SEMI_OFFICIAL", "confidence_coef": 0.8, "note": "정의: POS 소비자신규취급", "research_detail": "FLA 기준 2025년 소비자 POS 카파이낸스 신규취급 £41bn 초과(약 2.1백만 명 지원). 신차+중고차 구매 지원 합계 £55bn. 정의: POS 소비자 신규취급액.", "source_detail": "FLA, Consumer & SME Finance Review 2025", "timeseries": {"data": {"2022": 40.7, "2023": 39.0, "2024": 39.0, "2025": 41.0}, "unit": "£bn(POS 소비자 카파이낸스)", "source": "FLA 소비자 카파이낸스 신규취급", "source_tier": "TIER2", "cagr": 0.2, "cagr_period": "2022-2025", "cagr_2019base": null, "forecast_2030": 41, "forecast_basis": "CAGR 0.2% 적용"}, "source_type": "ASSOCIATION", "survey_date": "2025-12"}, {"catalog_item_id": "MKT_AF_CAGR", "category_id": "MARKET", "name": "오토금융 성장률(CAGR)", "data_type": "PERCENT", "similarity_type": "REFERENCE", "is_killswitch": false, "value_raw": "소비자 카파이낸스 가치 +6%, 물량 +2%", "value_normalized": 6.0, "source_tier": "TIER2", "source_name": "FLA 2025", "is_official": false, "official_gap_flag": false, "confidence_grade": "SEMI_OFFICIAL", "confidence_coef": 0.8, "note": "", "research_detail": null, "source_detail": "FLA, Consumer Car Finance 월간통계 2025", "source_type": "ASSOCIATION", "survey_date": "2025-12"}, {"catalog_item_id": "MKT_PEN_NEW", "category_id": "MARKET", "name": "금융 침투율(신차)", "data_type": "PERCENT", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "민간 신차등록의 85% 초과 금융조달", "value_normalized": 85.0, "source_tier": "TIER2", "source_name": "FLA(정의=민간등록 분모)", "is_official": false, "official_gap_flag": false, "confidence_grade": "SEMI_OFFICIAL", "confidence_coef": 0.8, "note": "정의 상이 주의", "research_detail": "FLA: 민간 신차등록의 85% 초과가 금융조달. 분모=민간 등록대수(779,587대). 영국은 개인 리테일 금융 침투가 매우 높음.", "source_detail": "FLA, Motor Finance 통계 2025 (정의: % of private new car registrations)", "timeseries": {"data": {"2023": 78.0, "2024": 80.0, "2025": 85.0}, "unit": "%", "source": "FLA 민간 신차 POS 금융침투율(2023~ 추세만)", "source_tier": "TIER2", "cagr": 4.4, "cagr_period": "2023-2025", "cagr_2019base": null, "forecast_2030": null, "forecast_basis": "침투율은 비율(상한 100%)이라 CAGR 외삽 부적절 — 추세만 표시"}, "source_type": "ASSOCIATION", "survey_date": "2025-12"}, {"catalog_item_id": "MKT_PEN_USED", "category_id": "MARKET", "name": "금융 침투율(중고차)", "data_type": "PERCENT", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "신차보다 낮음(정확값 미공표)", "value_normalized": null, "source_tier": "GAP", "source_name": "FCA/FLA", "is_official": false, "official_gap_flag": true, "confidence_grade": "NONE", "confidence_coef": 0.0, "note": "조사필요", "research_detail": null, "source_detail": "FCA/FLA", "source_type": "REGULATOR", "survey_date": "2025-12"}, {"catalog_item_id": "MKT_BRAND_TOP10", "category_id": "MARKET", "name": "브랜드 Top10", "data_type": "RANK", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "VW, Ford, Kia, Nissan, Hyundai", "value_normalized": ["VW", "FORD", "KIA", "NISSAN", "HYUNDAI"], "source_tier": "TIER2", "source_name": "SMMT 2025", "is_official": false, "official_gap_flag": false, "confidence_grade": "SEMI_OFFICIAL", "confidence_coef": 0.8, "note": "", "research_detail": null, "source_detail": "SMMT, Best-selling models/brands 2025", "source_type": "ASSOCIATION", "survey_date": "2025-12"}, {"catalog_item_id": "MKT_MODEL_TOP10", "category_id": "MARKET", "name": "차종 Top10", "data_type": "RANK", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": null, "value_normalized": null, "source_tier": "GAP", "source_name": "미매핑", "is_official": false, "official_gap_flag": true, "confidence_grade": "NONE", "confidence_coef": 0.0, "note": "조사필요", "research_detail": null, "source_detail": "미매핑", "source_type": null, "survey_date": "2025-12"}, {"catalog_item_id": "MKT_OEM_RANK", "category_id": "MARKET", "name": "OEM 순위", "data_type": "RANK", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "VW그룹·Ford·현대기아 순", "value_normalized": ["VW_GROUP", "FORD", "HYUNDAI_KIA"], "source_tier": "TIER2", "source_name": "SMMT", "is_official": false, "official_gap_flag": false, "confidence_grade": "SEMI_OFFICIAL", "confidence_coef": 0.8, "note": "", "research_detail": null, "source_detail": "SMMT, 그룹별 등록 2025", "source_type": "ASSOCIATION", "survey_date": "2025-12"}, {"catalog_item_id": "MKT_REPLACE_CYCLE", "category_id": "MARKET", "name": "평균 구매주기", "data_type": "NUMBER", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "리스/PCP 통상 3~4년", "value_normalized": 3.5, "source_tier": "TIER3", "source_name": "업계 통상", "is_official": false, "official_gap_flag": false, "confidence_grade": "ESTIMATED", "confidence_coef": 0.5, "note": "", "research_detail": null, "source_detail": "업계 통상치 (출처 미특정)", "source_type": "SECONDARY", "survey_date": "2025-12"}, {"catalog_item_id": "MKT_AVG_PRICE", "category_id": "MARKET", "name": "평균 차량가격", "data_type": "NUMBER", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "중형 평균 약 £28,840(~$38,900)", "value_normalized": {"new_usd": 38900}, "source_tier": "TIER3", "source_name": "NimbleFins 2025", "is_official": false, "official_gap_flag": false, "confidence_grade": "ESTIMATED", "confidence_coef": 0.5, "note": "", "research_detail": null, "source_detail": "NimbleFins, UK Average Car Price 2025 (상업조사)", "source_type": "SECONDARY", "survey_date": "2025-12"}, {"catalog_item_id": "MKT_PURCHASE_PATTERN", "category_id": "MARKET", "name": "구매 패턴(현금:할부:리스)", "data_type": "RATIO", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "PCP 중심 리테일", "value_normalized": null, "source_tier": "GAP", "source_name": "조사필요", "is_official": false, "official_gap_flag": true, "confidence_grade": "NONE", "confidence_coef": 0.0, "note": "", "research_detail": null, "source_detail": "조사필요", "source_type": "SECONDARY", "survey_date": "2025-12"}, {"catalog_item_id": "MKT_PURCHASE_PROCESS", "category_id": "MARKET", "name": "구매 프로세스", "data_type": "TEXT", "similarity_type": "REFERENCE", "is_killswitch": false, "value_raw": "딜러 POS 중심", "value_normalized": null, "source_tier": "GAP", "source_name": "조사필요", "is_official": false, "official_gap_flag": true, "confidence_grade": "NONE", "confidence_coef": 0.0, "note": "", "research_detail": null, "source_detail": "조사필요", "source_type": "SECONDARY", "survey_date": "2025-12"}, {"catalog_item_id": "MKT_SEG_RETAIL_CORP", "category_id": "MARKET", "name": "고객 세그먼트(개인:법인 비율)", "data_type": "RATIO", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "개인 38.6%, 플릿 59.1%, 비즈 2.3%", "value_normalized": {"retail": 38.6, "corp": 61.4}, "source_tier": "TIER2", "source_name": "SMMT 2025", "is_official": false, "official_gap_flag": false, "confidence_grade": "SEMI_OFFICIAL", "confidence_coef": 0.8, "note": "", "research_detail": "SMMT 2025: 개인 38.6%(779,587대), 플릿 59.1%(1,194,545대), 비즈니스 2.3%(46,388대). 개인:법인 약 39:61.", "source_detail": "SMMT, Registrations by buyer type 2025 (private/fleet/business)", "source_type": "ASSOCIATION", "survey_date": "2025-12"}, {"catalog_item_id": "MKT_SEG_OTHER", "category_id": "MARKET", "name": "고객 세그먼트(기타 특성)", "data_type": "MULTI", "similarity_type": "REFERENCE", "is_killswitch": false, "value_raw": "리테일 PCP 선호", "value_normalized": null, "source_tier": "GAP", "source_name": "조사필요", "is_official": false, "official_gap_flag": true, "confidence_grade": "NONE", "confidence_coef": 0.0, "note": "", "research_detail": null, "source_detail": "조사필요", "source_type": "SECONDARY", "survey_date": "2025-12"}, {"catalog_item_id": "MKT_DLR_TYPE", "category_id": "MARKET", "name": "딜러 유형 구조", "data_type": "CODE", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "프랜차이즈+독립 혼재, 캡티브가 신차 대부분", "value_normalized": "FRANCHISE_INDEPENDENT_MIX", "source_tier": "TIER1", "source_name": "FCA", "is_official": true, "official_gap_flag": false, "confidence_grade": "OFFICIAL", "confidence_coef": 1.0, "note": "", "research_detail": null, "source_detail": "FCA, Motor Finance Market Study(CP25/27 Technical Annex) 2025", "source_type": "REGULATOR", "survey_date": "2025-12"}, {"catalog_item_id": "MKT_DLR_MULTIBRAND", "category_id": "MARKET", "name": "멀티브랜드 여부", "data_type": "CODE", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "멀티브랜드 그룹 일반", "value_normalized": "COMMON", "source_tier": "TIER3", "source_name": "업계", "is_official": false, "official_gap_flag": false, "confidence_grade": "ESTIMATED", "confidence_coef": 0.5, "note": "", "research_detail": null, "source_detail": "업계 일반 (출처 미특정)", "source_type": "SECONDARY", "survey_date": "2025-12"}, {"catalog_item_id": "MKT_DLR_CONCENTRATION", "category_id": "MARKET", "name": "딜러 집중도", "data_type": "PERCENT", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "신차 모터파이낸스 상위3=47%, 상위5=63%, 상위10=90%", "value_normalized": 47.0, "source_tier": "TIER1", "source_name": "FCA 2023", "is_official": true, "official_gap_flag": false, "confidence_grade": "OFFICIAL", "confidence_coef": 1.0, "note": "상위3 기준", "research_detail": null, "source_detail": "FCA, CP25/27 Technical Annex 2(상위 대주 집중도, 2023 기준)", "source_type": "REGULATOR", "survey_date": "2025-12"}, {"catalog_item_id": "MKT_CH_NEW", "category_id": "MARKET", "name": "신차 채널 비중", "data_type": "RATIO", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "딜러 POS 중심", "value_normalized": null, "source_tier": "GAP", "source_name": "조사필요", "is_official": false, "official_gap_flag": true, "confidence_grade": "NONE", "confidence_coef": 0.0, "note": "", "research_detail": null, "source_detail": "조사필요", "source_type": "SECONDARY", "survey_date": "2025-12"}, {"catalog_item_id": "MKT_CH_USED", "category_id": "MARKET", "name": "중고차 채널 비중", "data_type": "RATIO", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "프랜차이즈 일부", "value_normalized": null, "source_tier": "GAP", "source_name": "조사필요", "is_official": false, "official_gap_flag": true, "confidence_grade": "NONE", "confidence_coef": 0.0, "note": "", "research_detail": null, "source_detail": "조사필요", "source_type": "SECONDARY", "survey_date": "2025-12"}, {"catalog_item_id": "MKT_DLR_FI", "category_id": "MARKET", "name": "딜러 금융취급 관행(F&I)", "data_type": "CODE", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "딜러 POS originations 71.3%, 캡티브 신차 대부분", "value_normalized": "POS_DOMINANT", "source_tier": "TIER3", "source_name": "Mordor/FCA", "is_official": false, "official_gap_flag": false, "confidence_grade": "ESTIMATED", "confidence_coef": 0.5, "note": "", "research_detail": null, "source_detail": "FCA CP25/27 / Mordor Intelligence UK Auto Finance 2025", "source_type": "REGULATOR", "survey_date": "2025-12"}, {"catalog_item_id": "MKT_DLR_SETTLE", "category_id": "MARKET", "name": "딜러-금융사 정산 구조", "data_type": "TEXT", "similarity_type": "REFERENCE", "is_killswitch": false, "value_raw": "커미션 기반(스캔들 이슈)", "value_normalized": null, "source_tier": "GAP", "source_name": "조사필요", "is_official": false, "official_gap_flag": true, "confidence_grade": "NONE", "confidence_coef": 0.0, "note": "", "research_detail": null, "source_detail": "조사필요", "source_type": "SECONDARY", "survey_date": "2025-12"}, {"catalog_item_id": "MKT_DLR_DIGITAL", "category_id": "MARKET", "name": "디지털 딜러 성숙도", "data_type": "CODE", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "온라인 originations 성장중, 딜러 POS 71.3% 유지", "value_normalized": "MEDIUM_HIGH", "source_tier": "TIER3", "source_name": "Mordor", "is_official": false, "official_gap_flag": false, "confidence_grade": "ESTIMATED", "confidence_coef": 0.5, "note": "", "research_detail": null, "source_detail": "Mordor Intelligence, UK Auto Finance 2025", "source_type": "INTL_ORG", "survey_date": "2025-12"}, {"catalog_item_id": "REG_LICENSE_TYPE", "category_id": "REGULATORY", "name": "라이선스 종류", "data_type": "TEXT", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "FCA consumer credit 인가(Full/Limited)", "value_normalized": "FCA_CONSUMER_CREDIT", "source_tier": "TIER1", "source_name": "FCA/FSMA", "is_official": true, "official_gap_flag": false, "confidence_grade": "OFFICIAL", "confidence_coef": 1.0, "note": "", "research_detail": "FCA consumer credit 인가(Full/Limited Permission). FSMA 2000·CCA 1974 근거. PCP/PCH 대출은 Full Permission. Connect 시스템으로 신청.", "source_detail": "FCA Handbook(FSMA 2000, CCA 1974); FCA 인가 안내", "source_type": "LAW", "survey_date": "2025-12"}, {"catalog_item_id": "REG_AUTHORITY", "category_id": "REGULATORY", "name": "소관 규제기관", "data_type": "TEXT", "similarity_type": "REFERENCE", "is_killswitch": false, "value_raw": "FCA(+PRA)", "value_normalized": "FCA", "source_tier": "TIER1", "source_name": "FCA", "is_official": true, "official_gap_flag": false, "confidence_grade": "OFFICIAL", "confidence_coef": 1.0, "note": "", "research_detail": null, "source_detail": "FCA / PRA 공식", "source_type": "REGULATOR", "survey_date": "2025-12"}, {"catalog_item_id": "REG_FOREIGN_OWNERSHIP", "category_id": "REGULATORY", "name": "외국인 지분 한도", "data_type": "PERCENT", "similarity_type": "BINARY", "is_killswitch": true, "value_raw": "제한 없음(비EU 포함)", "value_normalized": true, "source_tier": "TIER1", "source_name": "FCA", "is_official": true, "official_gap_flag": false, "confidence_grade": "OFFICIAL", "confidence_coef": 1.0, "note": "", "research_detail": null, "source_detail": "FCA, controller 승인 규정", "source_type": "REGULATOR", "survey_date": "2025-12"}, {"catalog_item_id": "REG_LICENSE_PERIOD", "category_id": "REGULATORY", "name": "인허가 처리기간", "data_type": "NUMBER", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "Consumer credit full 통상 3~6개월", "value_normalized": {"min": 90, "max": 180}, "source_tier": "TIER1", "source_name": "FCA", "is_official": true, "official_gap_flag": false, "confidence_grade": "OFFICIAL", "confidence_coef": 1.0, "note": "", "research_detail": null, "source_detail": "FCA, Authorisation 처리 안내(FSMA 법정한도)", "source_type": "LAW", "survey_date": "2025-12"}, {"catalog_item_id": "REG_MIN_CAPITAL", "category_id": "REGULATORY", "name": "최저자본금", "data_type": "NUMBER", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "일반 소비자신용사 별도 최저자본 없음(적정자원 요건)", "value_normalized": {"fixed": null, "type": "proportional"}, "source_tier": "TIER1", "source_name": "FCA", "is_official": true, "official_gap_flag": false, "confidence_grade": "OFFICIAL", "confidence_coef": 1.0, "note": "", "research_detail": "일반 소비자신용사는 별도 최저자본 요건 없음. Threshold Condition상 적정 재무자원·지급능력 입증. (debt management만 £5,000 또는 부채의 0.25%)", "source_detail": "FCA CONC / Threshold Conditions(COND)", "source_type": "REGULATOR", "survey_date": "2025-12"}, {"catalog_item_id": "REG_ENTITY_FORM", "category_id": "REGULATORY", "name": "현지 법인형태 요건", "data_type": "CODE", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "Ltd/PLC", "value_normalized": "LTD_PLC", "source_tier": "TIER1", "source_name": "FCA", "is_official": true, "official_gap_flag": false, "confidence_grade": "OFFICIAL", "confidence_coef": 1.0, "note": "", "research_detail": null, "source_detail": "Companies Act 2006(Ltd/PLC)", "source_type": "LAW", "survey_date": "2025-12"}, {"catalog_item_id": "REG_CORP_TAX", "category_id": "REGULATORY", "name": "법인세율", "data_type": "PERCENT", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "main 25%, small 19%, 한계 26.5%", "value_normalized": 25.0, "source_tier": "TIER2", "source_name": "PwC 2025", "is_official": false, "official_gap_flag": false, "confidence_grade": "SEMI_OFFICIAL", "confidence_coef": 0.8, "note": "", "research_detail": "법인세 main rate 25%(이익 £250k 초과), small profits rate 19%(£50k 이하), 그 사이 marginal relief(실효 약 26.5%).", "source_detail": "PwC Worldwide Tax Summaries 2025 / HMRC", "source_type": "REGULATOR", "survey_date": "2025-12"}, {"catalog_item_id": "REG_WHT_INTEREST", "category_id": "REGULATORY", "name": "이자소득 원천징수", "data_type": "PERCENT", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "20%(27.4부터 22%, 예외多)", "value_normalized": 20.0, "source_tier": "TIER2", "source_name": "PwC", "is_official": false, "official_gap_flag": false, "confidence_grade": "SEMI_OFFICIAL", "confidence_coef": 0.8, "note": "", "research_detail": null, "source_detail": "PwC WWTS 2025", "source_type": "INTL_ORG", "survey_date": "2025-12"}, {"catalog_item_id": "REG_WHT_DIVIDEND", "category_id": "REGULATORY", "name": "배당 송금 원천징수", "data_type": "PERCENT", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "0%(일반 배당 WHT 없음)", "value_normalized": 0.0, "source_tier": "TIER1", "source_name": "PwC/GOV.UK", "is_official": true, "official_gap_flag": false, "confidence_grade": "OFFICIAL", "confidence_coef": 1.0, "note": "본국 송금 유리", "research_detail": "비거주자 배당 원천징수 0%(일반 회사). REIT의 PID만 20%. 본사 자금회수에 유리.", "source_detail": "PwC WWTS 2025 / GOV.UK", "source_type": "INTL_ORG", "survey_date": "2025-12"}, {"catalog_item_id": "REG_RATE_CAP", "category_id": "REGULATORY", "name": "금리 상한(우수라)", "data_type": "PERCENT", "similarity_type": "BINARY", "is_killswitch": true, "value_raw": "일반 금리상한 없음(모터파이낸스 무상한)", "value_normalized": true, "source_tier": "TIER1", "source_name": "FCA", "is_official": true, "official_gap_flag": false, "confidence_grade": "OFFICIAL", "confidence_coef": 1.0, "note": "", "research_detail": "모터파이낸스 일반 금리상한 없음(HCSTC만 0.8%/일 등 별도 규제). Consumer Duty fair value 규율 적용.", "source_detail": "FCA Handbook(HCSTC price cap), Consumer Duty", "source_type": "REGULATOR", "survey_date": "2025-12"}, {"catalog_item_id": "REG_FX_REMIT", "category_id": "REGULATORY", "name": "외환 송금 규제", "data_type": "TEXT", "similarity_type": "BINARY", "is_killswitch": true, "value_raw": "완전 자유", "value_normalized": true, "source_tier": "TIER2", "source_name": "—", "is_official": false, "official_gap_flag": false, "confidence_grade": "SEMI_OFFICIAL", "confidence_coef": 0.8, "note": "", "research_detail": null, "source_detail": "—(제한 없음)", "source_type": "SECONDARY", "survey_date": "2025-12"}, {"catalog_item_id": "REG_DIV_REMIT", "category_id": "REGULATORY", "name": "배당 송금 제한", "data_type": "TEXT", "similarity_type": "BINARY", "is_killswitch": true, "value_raw": "완전 자유", "value_normalized": true, "source_tier": "TIER2", "source_name": "—", "is_official": false, "official_gap_flag": false, "confidence_grade": "SEMI_OFFICIAL", "confidence_coef": 0.8, "note": "", "research_detail": null, "source_detail": "—(제한 없음)", "source_type": "SECONDARY", "survey_date": "2025-12"}, {"catalog_item_id": "REG_PRIVACY_LAW", "category_id": "REGULATORY", "name": "개인정보보호법", "data_type": "TEXT", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "UK GDPR + DPA 2018(ICO)", "value_normalized": "UK_GDPR", "source_tier": "TIER1", "source_name": "ICO", "is_official": true, "official_gap_flag": false, "confidence_grade": "OFFICIAL", "confidence_coef": 1.0, "note": "", "research_detail": "UK GDPR + Data Protection Act 2018, ICO 감독. Data (Use and Access) Act 2025 시행(2025.6.19). EU 적정성 보유(~2031).", "source_detail": "UK GDPR + Data Protection Act 2018; ICO; Data(Use and Access) Act 2025", "source_type": "LAW", "survey_date": "2025-12"}, {"catalog_item_id": "REG_DATA_LOCAL", "category_id": "REGULATORY", "name": "데이터 현지화 의무", "data_type": "CODE", "similarity_type": "BINARY", "is_killswitch": true, "value_raw": "현지화 의무 없음", "value_normalized": true, "source_tier": "TIER1", "source_name": "ICO", "is_official": true, "official_gap_flag": false, "confidence_grade": "OFFICIAL", "confidence_coef": 1.0, "note": "", "research_detail": null, "source_detail": "ICO 가이드", "source_type": "REGULATOR", "survey_date": "2025-12"}, {"catalog_item_id": "REG_DATA_TRANSFER", "category_id": "REGULATORY", "name": "국외이전 제한", "data_type": "TEXT", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "적정성·SCC로 역외이전", "value_normalized": "ADEQUACY_SCC", "source_tier": "TIER1", "source_name": "ICO", "is_official": true, "official_gap_flag": false, "confidence_grade": "OFFICIAL", "confidence_coef": 1.0, "note": "", "research_detail": null, "source_detail": "ICO, International transfer(adequacy/IDTA)", "source_type": "REGULATOR", "survey_date": "2025-12"}, {"catalog_item_id": "REG_PROVISION", "category_id": "REGULATORY", "name": "충당금 적립 기준", "data_type": "TEXT", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "IFRS9", "value_normalized": "IFRS9", "source_tier": "TIER2", "source_name": "—", "is_official": false, "official_gap_flag": false, "confidence_grade": "SEMI_OFFICIAL", "confidence_coef": 0.8, "note": "", "research_detail": null, "source_detail": "영국 채택 IFRS 9", "source_type": "SECONDARY", "survey_date": "2025-12"}, {"catalog_item_id": "REG_NPL_CLASS", "category_id": "REGULATORY", "name": "연체 분류 기준", "data_type": "NUMBER", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "90일 기준", "value_normalized": 90, "source_tier": "TIER1", "source_name": "FCA CONC", "is_official": true, "official_gap_flag": false, "confidence_grade": "OFFICIAL", "confidence_coef": 1.0, "note": "", "research_detail": null, "source_detail": "FCA CONC 7", "source_type": "REGULATOR", "survey_date": "2025-12"}, {"catalog_item_id": "REG_CB_INFRA", "category_id": "REGULATORY", "name": "신용정보 조회(CB) 인프라", "data_type": "TEXT", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "Experian/Equifax/TransUnion 3사", "value_normalized": "PRIVATE_3BUREAU", "source_tier": "TIER3", "source_name": "업계", "is_official": false, "official_gap_flag": false, "confidence_grade": "ESTIMATED", "confidence_coef": 0.5, "note": "", "research_detail": "Experian, Equifax, TransUnion 3사 경쟁 체제. 부정정보 6년 보존.", "source_detail": "Experian/Equifax/TransUnion(상업 CB) / ICO", "source_type": "REGULATOR", "survey_date": "2025-12"}, {"catalog_item_id": "REG_COLLECTION", "category_id": "REGULATORY", "name": "추심 규제", "data_type": "TEXT", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "FCA CONC 규제기반", "value_normalized": "FCA_CONC", "source_tier": "TIER1", "source_name": "FCA", "is_official": true, "official_gap_flag": false, "confidence_grade": "OFFICIAL", "confidence_coef": 1.0, "note": "", "research_detail": null, "source_detail": "FCA CONC 7(Arrears, default, recovery)", "source_type": "REGULATOR", "survey_date": "2025-12"}, {"catalog_item_id": "REG_REPOSSESS", "category_id": "REGULATORY", "name": "차량회수(repossession) 절차", "data_type": "TEXT", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "CCA 1974: 1/3룰(법원명령), voluntary termination(1/2 반환권)", "value_normalized": "CCA_PROTECTED_GOODS", "source_tier": "TIER1", "source_name": "CCA 1974", "is_official": true, "official_gap_flag": false, "confidence_grade": "OFFICIAL", "confidence_coef": 1.0, "note": "", "research_detail": "CCA 1974 s.90 '1/3룰': 총액 1/3 납부 시 protected goods가 되어 법원명령 또는 동의 없이 회수 불가(위반 시 계약무효+기납입금 반환+손해배상). s.99/100 voluntary termination: 1/2 납부 시 반환권.", "source_detail": "Consumer Credit Act 1974 s.90/s.99/s.100", "source_type": "LAW", "survey_date": "2025-12"}, {"catalog_item_id": "REG_RECOVERY_PERIOD", "category_id": "REGULATORY", "name": "법적 회수 소요기간", "data_type": "NUMBER", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "법원 명령 경로(일수 미확인)", "value_normalized": null, "source_tier": "GAP", "source_name": "조사필요", "is_official": false, "official_gap_flag": true, "confidence_grade": "NONE", "confidence_coef": 0.0, "note": "", "research_detail": null, "source_detail": "조사 필요(법원명령 경로)", "source_type": "LAW", "survey_date": "2025-12"}, {"catalog_item_id": "REG_AUTO_INS", "category_id": "REGULATORY", "name": "자동차 의무보험", "data_type": "CODE", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "제3자 책임보험 의무(Road Traffic Act)", "value_normalized": "MANDATORY", "source_tier": "TIER1", "source_name": "법령", "is_official": true, "official_gap_flag": false, "confidence_grade": "OFFICIAL", "confidence_coef": 1.0, "note": "", "research_detail": null, "source_detail": "Road Traffic Act 1988", "source_type": "LAW", "survey_date": "2025-12"}, {"catalog_item_id": "REG_CREDIT_LIFE", "category_id": "REGULATORY", "name": "신용생명보험 가능 여부", "data_type": "CODE", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "가능(GAP 엄격)", "value_normalized": "ALLOWED_STRICT", "source_tier": "TIER1", "source_name": "FCA", "is_official": true, "official_gap_flag": false, "confidence_grade": "OFFICIAL", "confidence_coef": 1.0, "note": "", "research_detail": null, "source_detail": "FCA(GAP insurance 규제 2024)", "source_type": "REGULATOR", "survey_date": "2025-12"}, {"catalog_item_id": "REG_INS_TYING", "category_id": "REGULATORY", "name": "보험 끼워팔기 규제", "data_type": "TEXT", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "FCA add-on 규제", "value_normalized": "REGULATED_DUTY", "source_tier": "TIER1", "source_name": "FCA", "is_official": true, "official_gap_flag": false, "confidence_grade": "OFFICIAL", "confidence_coef": 1.0, "note": "", "research_detail": null, "source_detail": "FCA add-on insurance 규제 + Consumer Duty", "source_type": "REGULATOR", "survey_date": "2025-12"}, {"catalog_item_id": "FIN_LENDER_RANK", "category_id": "FINANCIAL", "name": "금융사 순위", "data_type": "RANK", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "Black Horse, VWFS UK, Santander Consumer, Close Brothers, Toyota FS", "value_normalized": ["BLACK_HORSE", "VWFS", "SANTANDER", "CLOSE_BROTHERS", "TOYOTA_FS"], "source_tier": "TIER3", "source_name": "Mordor/FCA", "is_official": false, "official_gap_flag": false, "confidence_grade": "ESTIMATED", "confidence_coef": 0.5, "note": "", "research_detail": "Black Horse(Lloyds), VWFS UK, Santander Consumer UK, Close Brothers Motor Finance, Toyota FS UK. 신차 상위5는 모두 캡티브. 신차 모터파이낸스 상위3/5/10 = 47%/63%/90%.", "source_detail": "FCA CP25/27 / Mordor Intelligence 2025", "source_type": "REGULATOR", "survey_date": "2025-12"}, {"catalog_item_id": "FIN_CAPTIVE_TYPE", "category_id": "FINANCIAL", "name": "캡티브/논캡티브 구분", "data_type": "CODE", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "논캡티브 은행계 40.6%, 캡티브 신차 대부분", "value_normalized": "CAPTIVE_DOMINANT_NEW", "source_tier": "TIER3", "source_name": "Mordor", "is_official": false, "official_gap_flag": false, "confidence_grade": "ESTIMATED", "confidence_coef": 0.5, "note": "", "research_detail": null, "source_detail": "Mordor Intelligence UK Auto Finance 2025", "source_type": "INTL_ORG", "survey_date": "2025-12"}, {"catalog_item_id": "FIN_CAPTIVE_STRENGTH", "category_id": "FINANCIAL", "name": "캡티브 강도", "data_type": "PERCENT", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "캡티브 신차 대부분(논캡티브 은행계 40.6%)", "value_normalized": 59.0, "source_tier": "TIER3", "source_name": "Mordor", "is_official": false, "official_gap_flag": false, "confidence_grade": "ESTIMATED", "confidence_coef": 0.5, "note": "신차 캡티브 추정", "research_detail": null, "source_detail": "Mordor Intelligence 2025(추정)", "source_type": "INTL_ORG", "survey_date": "2025-12"}, {"catalog_item_id": "FIN_PRODUCT_MIX", "category_id": "FINANCIAL", "name": "상품판매 현황", "data_type": "TEXT", "similarity_type": "REFERENCE", "is_killswitch": false, "value_raw": "PCP 신차 최다, HP, 개인리스", "value_normalized": "PCP_HP_DOMINANT", "source_tier": "TIER1", "source_name": "FCA", "is_official": true, "official_gap_flag": false, "confidence_grade": "OFFICIAL", "confidence_coef": 1.0, "note": "", "research_detail": "PCP가 신차 최다(전체 계약 절반 이상, 평균 APR 약 5%, balloon payment 구조), HP(중고 주력, fully amortising), Conditional Sale, 개인리스.", "source_detail": "FCA CP25/27 Motor Finance Market Study 2025", "source_type": "REGULATOR", "survey_date": "2025-12"}, {"catalog_item_id": "FIN_AVG_RATE", "category_id": "FINANCIAL", "name": "평균 금리", "data_type": "PERCENT", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "PCP 평균 APR 약 5%", "value_normalized": {"new": 5.0}, "source_tier": "TIER1", "source_name": "FCA", "is_official": true, "official_gap_flag": false, "confidence_grade": "OFFICIAL", "confidence_coef": 1.0, "note": "", "research_detail": "PCP 평균 APR 약 5%(신차 가중평균 5.9%, 0% 무이자가 신차계약의 19%). 프라임 HP/PCP 8.9~9.9%, 서브프라임 가중평균 33%.", "source_detail": "FCA CP25/27(신차 APR, 2023 기준)", "source_type": "REGULATOR", "survey_date": "2025-12"}, {"catalog_item_id": "FIN_AVG_TERM", "category_id": "FINANCIAL", "name": "평균 대출기간", "data_type": "NUMBER", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "통상 36~48개월", "value_normalized": {"min": 36, "max": 48}, "source_tier": "TIER3", "source_name": "업계", "is_official": false, "official_gap_flag": false, "confidence_grade": "ESTIMATED", "confidence_coef": 0.5, "note": "", "research_detail": null, "source_detail": "업계 통상치", "source_type": "SECONDARY", "survey_date": "2025-12"}, {"catalog_item_id": "FIN_AVG_LTV", "category_id": "FINANCIAL", "name": "평균 LTV(선수금)", "data_type": "PERCENT", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "미확인", "value_normalized": null, "source_tier": "GAP", "source_name": "조사필요", "is_official": false, "official_gap_flag": true, "confidence_grade": "NONE", "confidence_coef": 0.0, "note": "", "research_detail": null, "source_detail": "조사 필요", "source_type": "SECONDARY", "survey_date": "2025-12"}, {"catalog_item_id": "FIN_FUNDING", "category_id": "FINANCIAL", "name": "펀딩 구조", "data_type": "TEXT", "similarity_type": "REFERENCE", "is_killswitch": false, "value_raw": "은행예금 + Auto ABS 증권화", "value_normalized": "DEPOSIT_ABS", "source_tier": "TIER1", "source_name": "FCA", "is_official": true, "official_gap_flag": false, "confidence_grade": "OFFICIAL", "confidence_coef": 1.0, "note": "", "research_detail": null, "source_detail": "FCA CP25/27(Auto ABS 동향)", "source_type": "REGULATOR", "survey_date": "2025-12"}, {"catalog_item_id": "FIN_COUNTRY_NOTE", "category_id": "FINANCIAL", "name": "해당국 특징", "data_type": "TEXT", "similarity_type": "REFERENCE", "is_killswitch": false, "value_raw": null, "value_normalized": null, "source_tier": "GAP", "source_name": "미매핑", "is_official": false, "official_gap_flag": true, "confidence_grade": "NONE", "confidence_coef": 0.0, "note": "조사필요", "research_detail": "2024-25 모터파이낸스 커미션 스캔들이 시장 지배. 2025.8.1 대법원 판결 후 FCA redress 스킴 PS26/3(2026.3.30)에서 총 보상 약 £7.5bn, 적격 약정 1,210만 건, 업계 총비용 약 £9.1bn 확정. 2026.5 법적 도전 제기.", "source_detail": "FCA PS26/3 Motor finance redress(2026.3.30) / UKSC [2025] UKSC 33", "source_type": null, "survey_date": "2025-12"}, {"catalog_item_id": "SYS_VENDORS", "category_id": "SYSTEM", "name": "주요 솔루션사", "data_type": "MULTI", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "Alfa(FTSE250, 37개국), NETSOL, FIS, SBS", "value_normalized": ["ALFA", "NETSOL", "FIS", "SBS"], "source_tier": "TIER2", "source_name": "Alfa/업계", "is_official": false, "official_gap_flag": false, "confidence_grade": "SEMI_OFFICIAL", "confidence_coef": 0.8, "note": "", "research_detail": "Alfa(Alfa Systems, 1990설립, 런던 FTSE250 상장, 37개국 가동), NETSOL, FIS(구 Ambit), SBS. SaaS/패키지/SI 형태.", "source_detail": "Alfa Financial Software 공시 / 업계", "source_type": "SECONDARY", "survey_date": "2025-12"}, {"catalog_item_id": "SYS_SOL_TYPE", "category_id": "SYSTEM", "name": "솔루션 유형", "data_type": "CODE", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "패키지+SaaS(Alfa Cloud)+SI", "value_normalized": "PACKAGE_SAAS_SI", "source_tier": "TIER2", "source_name": "Alfa", "is_official": false, "official_gap_flag": false, "confidence_grade": "SEMI_OFFICIAL", "confidence_coef": 0.8, "note": "", "research_detail": null, "source_detail": "Alfa 공시", "source_type": "SECONDARY", "survey_date": "2025-12"}, {"catalog_item_id": "SYS_VENDOR_LOCKIN", "category_id": "SYSTEM", "name": "코어시스템 벤더 락인", "data_type": "CODE", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "Alfa/글로벌 벤더, 캡티브 그룹표준", "value_normalized": "HIGH_GROUP_STD", "source_tier": "TIER3", "source_name": "업계", "is_official": false, "official_gap_flag": false, "confidence_grade": "ESTIMATED", "confidence_coef": 0.5, "note": "", "research_detail": null, "source_detail": "업계(출처 미특정)", "source_type": "SECONDARY", "survey_date": "2025-12"}, {"catalog_item_id": "SYS_DIGITAL_MATURITY", "category_id": "SYSTEM", "name": "디지털 채널 성숙도", "data_type": "CODE", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "originations·servicing·collections 자동화, ML 신용판단", "value_normalized": "HIGH", "source_tier": "TIER2", "source_name": "Alfa", "is_official": false, "official_gap_flag": false, "confidence_grade": "SEMI_OFFICIAL", "confidence_coef": 0.8, "note": "", "research_detail": "originations·servicing·collections 자동화, ML 기반 신용판단. Blue Motor Finance는 신청 80%를 60초 내 자동결정.", "source_detail": "Alfa 공시 / Blue Motor Finance", "source_type": "SECONDARY", "survey_date": "2025-12"}, {"catalog_item_id": "SYS_PAYMENT_INFRA", "category_id": "SYSTEM", "name": "결제·정산 인프라", "data_type": "TEXT", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "BACS/Direct Debit", "value_normalized": "BACS_DD", "source_tier": "TIER2", "source_name": "—", "is_official": false, "official_gap_flag": false, "confidence_grade": "SEMI_OFFICIAL", "confidence_coef": 0.8, "note": "", "research_detail": "BACS/Direct Debit 기반 월납.", "source_detail": "업계(BACS)", "source_type": "SECONDARY", "survey_date": "2025-12"}, {"catalog_item_id": "CMP_LIST", "category_id": "SYSTEM", "name": "경쟁사 리스트", "data_type": "MULTI", "similarity_type": "REFERENCE", "is_killswitch": false, "value_raw": "Black Horse, VWFS UK, Santander, Close Brothers, Toyota FS, MotoNovo", "value_normalized": null, "source_tier": "TIER3", "source_name": "업계", "is_official": false, "official_gap_flag": false, "confidence_grade": "ESTIMATED", "confidence_coef": 0.5, "note": "", "research_detail": null, "source_detail": "업계 / FCA", "source_type": "REGULATOR", "survey_date": "2025-12"}, {"catalog_item_id": "CMP_RATE_RANGE", "category_id": "SYSTEM", "name": "경쟁사 금리 현황", "data_type": "RANGE", "similarity_type": "REFERENCE", "is_killswitch": false, "value_raw": "PCP 평균 ~5%, 캡티브 0% 보조도", "value_normalized": null, "source_tier": "TIER1", "source_name": "FCA", "is_official": true, "official_gap_flag": false, "confidence_grade": "OFFICIAL", "confidence_coef": 1.0, "note": "", "research_detail": null, "source_detail": "FCA CP25/27", "source_type": "REGULATOR", "survey_date": "2025-12"}, {"catalog_item_id": "CMP_MARKET_SHARE", "category_id": "SYSTEM", "name": "경쟁사 시장 점유율", "data_type": "PERCENT", "similarity_type": "REFERENCE", "is_killswitch": false, "value_raw": "단일사 originations 20% 미만, Black Horse 최대", "value_normalized": null, "source_tier": "TIER3", "source_name": "Mordor", "is_official": false, "official_gap_flag": false, "confidence_grade": "ESTIMATED", "confidence_coef": 0.5, "note": "", "research_detail": null, "source_detail": "Mordor Intelligence 2025", "source_type": "INTL_ORG", "survey_date": "2025-12"}, {"catalog_item_id": "CMP_ENTRY_FORM", "category_id": "SYSTEM", "name": "경쟁사 진출 형태", "data_type": "CODE", "similarity_type": "REFERENCE", "is_killswitch": false, "value_raw": "캡티브+은행계+독립/챌린저", "value_normalized": null, "source_tier": "TIER3", "source_name": "업계", "is_official": false, "official_gap_flag": false, "confidence_grade": "ESTIMATED", "confidence_coef": 0.5, "note": "", "research_detail": null, "source_detail": "업계", "source_type": "SECONDARY", "survey_date": "2025-12"}, {"catalog_item_id": "CMP_SYSTEM", "category_id": "SYSTEM", "name": "경쟁사 사용 시스템", "data_type": "TEXT", "similarity_type": "REFERENCE", "is_killswitch": false, "value_raw": "Alfa 등", "value_normalized": null, "source_tier": "TIER3", "source_name": "업계", "is_official": false, "official_gap_flag": false, "confidence_grade": "ESTIMATED", "confidence_coef": 0.5, "note": "", "research_detail": null, "source_detail": "업계", "source_type": "SECONDARY", "survey_date": "2025-12"}, {"catalog_item_id": "CMP_HISTORY", "category_id": "SYSTEM", "name": "경쟁사 업력", "data_type": "NUMBER", "similarity_type": "REFERENCE", "is_killswitch": false, "value_raw": "Alfa 1990; VWFS AG 1948; Toyota FS UK 장기", "value_normalized": null, "source_tier": "TIER2", "source_name": "업계", "is_official": false, "official_gap_flag": false, "confidence_grade": "SEMI_OFFICIAL", "confidence_coef": 0.8, "note": "", "research_detail": "Alfa 1990 설립. VWFS AG 1948~. Toyota FS UK 장기 운영. MotoNovo 40년+.", "source_detail": "Companies House 등기 / Alfa 공시", "source_type": "FINANCIAL_STATEMENT", "survey_date": "2025-12"}, {"catalog_item_id": "CMP_DEALER_NET", "category_id": "SYSTEM", "name": "경쟁사 딜러망 규모", "data_type": "NUMBER", "similarity_type": "REFERENCE", "is_killswitch": false, "value_raw": "Black Horse 4,500~5,000딜러", "value_normalized": null, "source_tier": "TIER2", "source_name": "Lloyds", "is_official": false, "official_gap_flag": false, "confidence_grade": "SEMI_OFFICIAL", "confidence_coef": 0.8, "note": "", "research_detail": null, "source_detail": "Lloyds 공시", "source_type": "SECONDARY", "survey_date": "2025-12"}, {"catalog_item_id": "CMP_HEADCOUNT", "category_id": "SYSTEM", "name": "경쟁사 직원수", "data_type": "NUMBER", "similarity_type": "REFERENCE", "is_killswitch": false, "value_raw": "Alfa 글로벌 500+", "value_normalized": null, "source_tier": "TIER3", "source_name": "Alfa", "is_official": false, "official_gap_flag": false, "confidence_grade": "ESTIMATED", "confidence_coef": 0.5, "note": "", "research_detail": "Alfa 글로벌 500명+. 개별사는 Companies House 확인 필요.", "source_detail": "Companies House 재무제표", "source_type": "FINANCIAL_STATEMENT", "survey_date": "2025-12"}]}, "PL": {"country_code": "PL", "country_name": "Poland", "region": "EUROPE", "survey_date": "2025-12", "data_kind": "CURRENT", "schema_version": "v0.2", "report": "UK-PL 비교보고서 2025", "summary": {"total_items": 69, "tier1_count": 15, "score_items": 53, "normalized_filled": 51, "normalized_gap": 2, "official_ratio": 0.217, "research_detail_filled": 31, "source_detail_filled": 60, "rescan_note": "2025-12 재조사로 공백 11개 보강 (Tier3 허용)"}, "items": [{"catalog_item_id": "MKT_CAR_SALES", "category_id": "MARKET", "name": "자동차 판매대수(연간)", "data_type": "NUMBER", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "신차 597,400대(+8.3%); 중고수입 857,600대", "value_normalized": {"new": 597400, "used": 857600}, "source_tier": "TIER2", "source_name": "PZPM/KPMG 2025", "is_official": false, "official_gap_flag": false, "confidence_grade": "SEMI_OFFICIAL", "confidence_coef": 0.8, "note": "", "research_detail": "2025년 신차 승용차 등록 597,400~597,435대로 25년래 최고치(+8.3%). 수입 중고차는 857,600대로 전년 대비 처음 감소(-2.8%). (PZPM/KPMG)", "source_detail": "PZPM·KPMG, Rynek motoryzacyjny 2025 / IBRM SAMAR 등록통계 (2026.1)", "timeseries": {"data": {"2019": 555598, "2020": 428300, "2021": 446600, "2022": 419700, "2023": 475000, "2024": 551600, "2025": 597400}, "unit": "대", "source": "PZPM/SAMAR 연도별 신차 승용차 등록", "source_tier": "TIER2", "cagr": 1.2, "cagr_period": "2019-2025", "cagr_2019base": 1.2, "forecast_2030": 634115, "forecast_basis": "CAGR 1.2% 적용"}, "source_type": "ASSOCIATION", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "MKT_NEW_USED_RATIO", "category_id": "MARKET", "name": "신차/중고차 비율", "data_type": "PERCENT", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "신차 597,400대 vs 중고 3,345,928대 (약 5.6배)", "value_normalized": 5.6, "source_tier": "TIER3", "source_name": "조사필요", "is_official": false, "official_gap_flag": false, "confidence_grade": "ESTIMATED", "confidence_coef": 0.5, "note": "공통정의 데이터 부족", "research_detail": "AAA Auto(Aures Holdings) 기준 2025년 중고차 거래 3,345,928대(-2.8%), 신차 597,400대 → 약 5.6배. 영국(약 3.8배)보다 중고차 편중 심함. 수입 중고차 연 85만 대(독일 52%)가 시장 지속 공급.", "source_detail": "AAA Auto Barometr 2025 / PZPM·KPMG (상업·준공식 혼합)", "source_type": "ASSOCIATION", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "MKT_AF_SIZE", "category_id": "MARKET", "name": "오토금융 시장규모", "data_type": "NUMBER", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "리스+리스대출 119.5bn PLN(차량 73.8%, 경차량 67.4bn)", "value_normalized": {"value_pln_bn": 67.4}, "source_tier": "TIER2", "source_name": "ZPL 2026.2", "is_official": false, "official_gap_flag": false, "confidence_grade": "SEMI_OFFICIAL", "confidence_coef": 0.8, "note": "정의: 경차량 리스취급액 — UK와 정의 다름", "research_detail": "ZPL 기준 2025년 리스+리스대출 총 119.5bn PLN(약 $30bn, +8.1%). 차량 비중 73.8%, 경차량(승용+3.5톤 이하)은 67.4bn PLN(+11.6%). 정의: 리스 취급액 — 영국과 집계기준 다름.", "source_detail": "ZPL(Związek Polskiego Leasingu), Wyniki rynku leasingu 2025 (2026.2.5 발표)", "timeseries": {"data": {"2020": 70.1, "2021": 88.0, "2022": 88.1, "2023": 100.1, "2024": 110.5, "2025": 119.5}, "unit": "PLN bn(전체 리스)", "source": "ZPL 리스 신규취급", "source_tier": "TIER2", "cagr": 11.3, "cagr_period": "2020-2025", "cagr_2019base": null, "forecast_2030": 204, "forecast_basis": "CAGR 11.3% 적용"}, "source_type": "ASSOCIATION", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "MKT_AF_CAGR", "category_id": "MARKET", "name": "오토금융 성장률(CAGR)", "data_type": "PERCENT", "similarity_type": "REFERENCE", "is_killswitch": false, "value_raw": "리스 전체 +8.1%, 경차량 +11.6%", "value_normalized": 11.6, "source_tier": "TIER2", "source_name": "ZPL 2025", "is_official": false, "official_gap_flag": false, "confidence_grade": "SEMI_OFFICIAL", "confidence_coef": 0.8, "note": "", "research_detail": null, "source_detail": "ZPL, Wyniki rynku leasingu 2025 (2026.2.5)", "source_type": "ASSOCIATION", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "MKT_PEN_NEW", "category_id": "MARKET", "name": "금융 침투율(신차)", "data_type": "PERCENT", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "신차 약 절반이 리스+렌탈(co drugi auto)", "value_normalized": 50.0, "source_tier": "TIER2", "source_name": "ZPL(정의=리스+렌탈 등록)", "is_official": false, "official_gap_flag": false, "confidence_grade": "SEMI_OFFICIAL", "confidence_coef": 0.8, "note": "정의 상이 주의", "research_detail": "ZPL: 2025년 리스+렌탈이 신차 두 대 중 한 대(약 50%)의 등록을 담당. 분모=신차 등록 전체. 법인이 신차의 약 69% 구매하는 B2B 구조. 영국과 분모·정의 상이.", "source_detail": "ZPL, Wyniki rynku leasingu 2025 (정의: 리스+렌탈 등록대수)", "timeseries": {"data": {"2020": 66.5, "2025": 50.0}, "unit": "%", "source": "ZPL/PZWLP 신차 중 리스+렌탈", "source_tier": "TIER2", "cagr": -5.5, "cagr_period": "2020-2025", "cagr_2019base": null, "forecast_2030": null, "forecast_basis": "침투율은 비율(상한 100%)이라 CAGR 외삽 부적절 — 추세만 표시"}, "source_type": "ASSOCIATION", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "MKT_PEN_USED", "category_id": "MARKET", "name": "금융 침투율(중고차)", "data_type": "PERCENT", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "16%(설문)~27~30%(딜러채널) [추정]", "value_normalized": 23.0, "source_tier": "TIER3", "source_name": "조사필요", "is_official": false, "official_gap_flag": false, "confidence_grade": "ESTIMATED", "confidence_coef": 0.5, "note": "", "research_detail": "단일 공식 통계 없음. Santander/IBRiS 설문(전체 구매자, 사인간 현금거래 포함)은 16%, Otomoto KLIK 딜러채널 데이터는 12개월 평균 27%. 신차(약 46~50% 금융)보다 현저히 낮음. 현금 선호·고차령·사인간 거래가 구조적 장벽. 정규화는 중간값 23% 사용.", "source_detail": "Santander Consumer/IBRiS 2024 / Otomoto KLIK (상업조사)", "source_type": "SECONDARY", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "MKT_BRAND_TOP10", "category_id": "MARKET", "name": "브랜드 Top10", "data_type": "RANK", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "Toyota, Skoda, VW, 현대/기아 + BYD·MG 진입", "value_normalized": ["TOYOTA", "SKODA", "VW", "KIA", "HYUNDAI"], "source_tier": "TIER2", "source_name": "PZPM 2025", "is_official": false, "official_gap_flag": false, "confidence_grade": "SEMI_OFFICIAL", "confidence_coef": 0.8, "note": "", "research_detail": null, "source_detail": "PZPM·IBRM SAMAR, 브랜드별 등록 2025", "source_type": "ASSOCIATION", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "MKT_MODEL_TOP10", "category_id": "MARKET", "name": "차종 Top10", "data_type": "RANK", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": null, "value_normalized": null, "source_tier": "GAP", "source_name": "미매핑", "is_official": false, "official_gap_flag": true, "confidence_grade": "NONE", "confidence_coef": 0.0, "note": "조사필요", "research_detail": null, "source_detail": "미매핑", "source_type": null, "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "MKT_OEM_RANK", "category_id": "MARKET", "name": "OEM 순위", "data_type": "RANK", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "Toyota·VW그룹·현대기아 + 중국브랜드 부상", "value_normalized": ["TOYOTA", "VW_GROUP", "HYUNDAI_KIA"], "source_tier": "TIER2", "source_name": "PZPM", "is_official": false, "official_gap_flag": false, "confidence_grade": "SEMI_OFFICIAL", "confidence_coef": 0.8, "note": "", "research_detail": null, "source_detail": "IBRM SAMAR, 그룹별 등록 2025", "source_type": "ASSOCIATION", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "MKT_REPLACE_CYCLE", "category_id": "MARKET", "name": "평균 구매주기", "data_type": "NUMBER", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "평균 보유 6.07년", "value_normalized": 6.07, "source_tier": "TIER3", "source_name": "PZWLP", "is_official": false, "official_gap_flag": false, "confidence_grade": "ESTIMATED", "confidence_coef": 0.5, "note": "", "research_detail": "carVertical 기준 1대당 평균 보유기간 6.07년(유럽 평균 4.18년보다 김, 유럽 2위). PZPM 인용 약 5~6년. 평균 차령(약 15년)과는 별개 개념. 영국(약 4.5년)보다 길고 연주행도 18,608km로 많음.", "source_detail": "carVertical 2025 / PZPM (상업조사)", "source_type": "ASSOCIATION", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "MKT_AVG_PRICE", "category_id": "MARKET", "name": "평균 차량가격", "data_type": "NUMBER", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "신차 평균 185,182 PLN (약 46,000 USD)", "value_normalized": {"new_local": 185182, "cur": "PLN", "new_usd": 46000}, "source_tier": "TIER3", "source_name": "조사필요", "is_official": false, "official_gap_flag": false, "confidence_grade": "ESTIMATED", "confidence_coef": 0.5, "note": "", "research_detail": "2025년 전체 평균 신차가격 185,182 PLN(전년말 대비 +약 4,200 PLN, 증가폭 둔화). 중국 브랜드 평균가 139,000 PLN 미만으로 시장평균 압박. 프리미엄 비중 21~24%. 영국 인기모델(£28,000~33,000)보다 낮음.", "source_detail": "IBRM SAMAR, Raport cenowy 2025.12 (상업데이터)", "source_type": "ASSOCIATION", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "MKT_PURCHASE_PATTERN", "category_id": "MARKET", "name": "구매 패턴(현금:할부:리스)", "data_type": "RATIO", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "신차 현금 54%; 중고차 현금 84%·대출 14%·리스 2%", "value_normalized": {"cash": 84, "loan": 14, "lease": 2}, "source_tier": "TIER3", "source_name": "조사필요", "is_official": false, "official_gap_flag": false, "confidence_grade": "ESTIMATED", "confidence_coef": 0.5, "note": "", "research_detail": "법인/신차는 약 50%가 리스·렌탈 등록, 현금 54%(ZPF/Cofidis). 개인/중고차는 84% 현금, 12% 현금대출, 2% 자동차대출, 2% 리스. 외부금융 이용자 중 리스 14%, 대출 86%. 소비자 리스는 리스시장의 4.1%. 정규화는 중고차 기준(현금:대출:리스).", "source_detail": "ZPF·Cofidis / Santander·IBRiS 2024 (상업조사)", "source_type": "SECONDARY", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "MKT_PURCHASE_PROCESS", "category_id": "MARKET", "name": "구매 프로세스", "data_type": "TEXT", "similarity_type": "REFERENCE", "is_killswitch": false, "value_raw": "딜러+직접+온라인", "value_normalized": null, "source_tier": "GAP", "source_name": "조사필요", "is_official": false, "official_gap_flag": true, "confidence_grade": "NONE", "confidence_coef": 0.0, "note": "", "research_detail": null, "source_detail": "조사필요", "source_type": "SECONDARY", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "MKT_SEG_RETAIL_CORP", "category_id": "MARKET", "name": "고객 세그먼트(개인:법인 비율)", "data_type": "RATIO", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "개인 약 31%, 법인 약 69%(411천대)", "value_normalized": {"retail": 31.0, "corp": 69.0}, "source_tier": "TIER2", "source_name": "PZPM/PZWLP 2025", "is_official": false, "official_gap_flag": false, "confidence_grade": "SEMI_OFFICIAL", "confidence_coef": 0.8, "note": "", "research_detail": "PZPM/PZWLP 2025: 법인/기관 약 69%(411,000대), 개인 약 31%(186,000대). MŚP(중소기업, 매출 20M PLN 이하)가 리스 주 고객(약 75%), 프리미엄 등록의 84%가 법인.", "source_detail": "PZPM·PZWLP, 구매주체별 신차등록 2025", "source_type": "ASSOCIATION", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "MKT_SEG_OTHER", "category_id": "MARKET", "name": "고객 세그먼트(기타 특성)", "data_type": "MULTI", "similarity_type": "REFERENCE", "is_killswitch": false, "value_raw": "MŚP 법인 중심", "value_normalized": null, "source_tier": "GAP", "source_name": "조사필요", "is_official": false, "official_gap_flag": true, "confidence_grade": "NONE", "confidence_coef": 0.0, "note": "", "research_detail": null, "source_detail": "조사필요", "source_type": "SECONDARY", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "MKT_DLR_TYPE", "category_id": "MARKET", "name": "딜러 유형 구조", "data_type": "CODE", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "딜러+직접+온라인 혼재", "value_normalized": "FRANCHISE_DIRECT_ONLINE_MIX", "source_tier": "TIER3", "source_name": "Ken Research", "is_official": false, "official_gap_flag": false, "confidence_grade": "ESTIMATED", "confidence_coef": 0.5, "note": "", "research_detail": null, "source_detail": "Ken Research, Poland Auto Finance 2025 (상업조사)", "source_type": "SECONDARY", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "MKT_DLR_MULTIBRAND", "category_id": "MARKET", "name": "멀티브랜드 여부", "data_type": "CODE", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "멀티브랜드 성장중", "value_normalized": "GROWING", "source_tier": "TIER3", "source_name": "업계", "is_official": false, "official_gap_flag": false, "confidence_grade": "ESTIMATED", "confidence_coef": 0.5, "note": "", "research_detail": null, "source_detail": "업계 일반 (출처 미특정)", "source_type": "SECONDARY", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "MKT_DLR_CONCENTRATION", "category_id": "MARKET", "name": "딜러 집중도", "data_type": "PERCENT", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "TOP50 딜러그룹이 신차의 약 59.5%", "value_normalized": 59.5, "source_tier": "TIER3", "source_name": "leason.pl", "is_official": false, "official_gap_flag": false, "confidence_grade": "ESTIMATED", "confidence_coef": 0.5, "note": "상위5 기준", "research_detail": "TOP50 딜러그룹이 2024년 신차 345,400대(+14.75%), 시장 약 59.5%. 1위 Cichy-Zasada 31,234대, 2위 PGD 21,569대, 3위 Plichta 21,159대. 빠르게 통합 중이나 여전히 분산적. 중고차는 사인간 거래 지배로 훨씬 분산.", "source_detail": "Miesięcznik Dealer / DCG-SAMAR, Lista TOP50 2024 (2차)", "source_type": "ASSOCIATION", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "MKT_CH_NEW", "category_id": "MARKET", "name": "신차 채널 비중", "data_type": "RATIO", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "딜러 중심", "value_normalized": null, "source_tier": "GAP", "source_name": "조사필요", "is_official": false, "official_gap_flag": true, "confidence_grade": "NONE", "confidence_coef": 0.0, "note": "", "research_detail": null, "source_detail": "조사필요", "source_type": "SECONDARY", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "MKT_CH_USED", "category_id": "MARKET", "name": "중고차 채널 비중", "data_type": "RATIO", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "중고차 사인간 거래 55%, 딜러/플랫폼 채널 성장중", "value_normalized": {"private": 55, "dealer": 45}, "source_tier": "TIER3", "source_name": "조사필요", "is_official": false, "official_gap_flag": false, "confidence_grade": "ESTIMATED", "confidence_coef": 0.5, "note": "", "research_detail": "중고차 구매자의 55%가 개인 간(사인간) 거래 이용. 딜러·플랫폼(Otomoto, AAA Auto) 채널이 조직화되며 성장 중이나 여전히 사인간 비중 높음 — 이것이 중고차 금융 침투율을 낮추는 구조적 요인.", "source_detail": "Santander·IBRiS 2024 (상업조사)", "source_type": "SECONDARY", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "MKT_DLR_FI", "category_id": "MARKET", "name": "딜러 금융취급 관행(F&I)", "data_type": "CODE", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "NaszEauto 신청 80% 리스·렌탈 선택", "value_normalized": "LEASE_DOMINANT", "source_tier": "TIER2", "source_name": "ZPL", "is_official": false, "official_gap_flag": false, "confidence_grade": "SEMI_OFFICIAL", "confidence_coef": 0.8, "note": "", "research_detail": null, "source_detail": "ZPL, NaszEauto 보조금 통계 2025", "source_type": "ASSOCIATION", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "MKT_DLR_SETTLE", "category_id": "MARKET", "name": "딜러-금융사 정산 구조", "data_type": "TEXT", "similarity_type": "REFERENCE", "is_killswitch": false, "value_raw": "커미션 기반", "value_normalized": null, "source_tier": "GAP", "source_name": "조사필요", "is_official": false, "official_gap_flag": true, "confidence_grade": "NONE", "confidence_coef": 0.0, "note": "", "research_detail": null, "source_detail": "조사필요", "source_type": "SECONDARY", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "MKT_DLR_DIGITAL", "category_id": "MARKET", "name": "디지털 딜러 성숙도", "data_type": "CODE", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "2025.7 전자계약 가능, 온라인 탐색 40%+", "value_normalized": "MEDIUM_HIGH", "source_tier": "TIER2", "source_name": "ZPL/Ken", "is_official": false, "official_gap_flag": false, "confidence_grade": "SEMI_OFFICIAL", "confidence_coef": 0.8, "note": "", "research_detail": null, "source_detail": "ZPL / Ken Research 2025", "source_type": "ASSOCIATION", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "REG_LICENSE_TYPE", "category_id": "REGULATORY", "name": "라이선스 종류", "data_type": "TEXT", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "KNF: 순수B2B리스 무라이선스, 소비자리스/대출은 instytucja pożyczkowa 등록", "value_normalized": "KNF_LENDER_REG", "source_tier": "TIER1", "source_name": "KNF", "is_official": true, "official_gap_flag": false, "confidence_grade": "OFFICIAL", "confidence_coef": 1.0, "note": "", "research_detail": "KNF 감독. 순수 B2B 리스는 무라이선스(상법상 영업). 소비자대출 또는 구매의무가 부과된 소비자리스는 instytucja pożyczkowa로 KNF 등록 의무(2024.1.1~).", "source_detail": "KNF, instytucja pożyczkowa 등록제 / 소비자신용법(2024.1.1 개정)", "source_type": "LAW", "survey_date": "2025-12", "action_items": ["순수 B2B 리스로 시작하면 KNF 라이선스 불요 — 진입장벽 최소화 경로", "소비자대출/소비자리스 병행 시 instytucja pożyczkowa(대출기관) KNF 등록 필수", "은행업 영위 계획이 없다면 리스·대출기관 형태로 한정 권장"]}, {"catalog_item_id": "REG_AUTHORITY", "category_id": "REGULATORY", "name": "소관 규제기관", "data_type": "TEXT", "similarity_type": "REFERENCE", "is_killswitch": false, "value_raw": "KNF(+NBP)", "value_normalized": "KNF", "source_tier": "TIER1", "source_name": "KNF", "is_official": true, "official_gap_flag": false, "confidence_grade": "OFFICIAL", "confidence_coef": 1.0, "note": "", "research_detail": null, "source_detail": "KNF / NBP 공식", "source_type": "REGULATOR", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "REG_FOREIGN_OWNERSHIP", "category_id": "REGULATORY", "name": "외국인 지분 한도", "data_type": "PERCENT", "similarity_type": "BINARY", "is_killswitch": true, "value_raw": "제한 없음(EU 자본자유)", "value_normalized": true, "source_tier": "TIER2", "source_name": "KNF", "is_official": false, "official_gap_flag": false, "confidence_grade": "SEMI_OFFICIAL", "confidence_coef": 0.8, "note": "", "research_detail": null, "source_detail": "EU 자본자유이동 원칙 / KNF", "source_type": "REGULATOR", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "REG_LICENSE_PERIOD", "category_id": "REGULATORY", "name": "인허가 처리기간", "data_type": "NUMBER", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "대출기관 등록 14일(완전한 신청서 접수 후)", "value_normalized": {"min": 14, "max": 14, "typical": 14}, "source_tier": "TIER1", "source_name": "조사필요", "is_official": true, "official_gap_flag": false, "confidence_grade": "OFFICIAL", "confidence_coef": 1.0, "note": "", "research_detail": "instytucja pożyczkowa는 완전한 신청서 접수 후 14일 이내 KNF 등록부 기재(등록일=영업개시일). 신청수수료 600 PLN. 단 자본금 확충·KRS 등기·서류구비에 실무상 수주~수개월 추가 소요 가능. 리스 자체는 인가 불요.", "source_detail": "KNF / 소비자신용법 §59aa~59ag (법령)", "source_type": "LAW", "survey_date": "2025-12", "action_items": ["KNF 등록은 완전한 신청서 접수 후 14일 — 빠름", "단 KRS 법인등기·서류구비(비범죄경력증명 등)에 수주~수개월 추가 소요 고려", "전체 셋업(법인설립→자본금→등록)에 3~6개월 리드타임 권장"]}, {"catalog_item_id": "REG_MIN_CAPITAL", "category_id": "REGULATORY", "name": "최저자본금", "data_type": "NUMBER", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "instytucja pożyczkowa 100만 PLN(~$250k) 현금; 순수리스는 없음", "value_normalized": {"local": 1000000, "cur": "PLN", "usd": 250000}, "source_tier": "TIER1", "source_name": "KNF", "is_official": true, "official_gap_flag": false, "confidence_grade": "OFFICIAL", "confidence_coef": 1.0, "note": "", "research_detail": "instytucja pożyczkowa 최저자본 1,000,000 PLN(약 $250,000) 전액 현금납입(차입·채권발행 불가) + 감사회 설치 의무. 순수 리스는 자본요건 없음. 과거 200,000 PLN 요건은 폐지.", "source_detail": "소비자신용법 §59a(instytucja pożyczkowa 최저자본 100만 PLN, 2022.12.18~)", "source_type": "LAW", "survey_date": "2025-12", "action_items": ["대출기관 등록 시 최저자본 100만 PLN(약 25만 USD) 전액 현금 출자 준비", "차입·채권발행 자금은 자본 인정 안 됨 — 순수 현금 확보 필요", "감사회(supervisory board) 구성 의무 — 이사회와 별도"]}, {"catalog_item_id": "REG_ENTITY_FORM", "category_id": "REGULATORY", "name": "현지 법인형태 요건", "data_type": "CODE", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "Sp. z o.o./S.A.", "value_normalized": "SPZOO_SA", "source_tier": "TIER1", "source_name": "KNF", "is_official": true, "official_gap_flag": false, "confidence_grade": "OFFICIAL", "confidence_coef": 1.0, "note": "", "research_detail": null, "source_detail": "상법전(KSH, Sp. z o.o./S.A.)", "source_type": "LAW", "survey_date": "2025-12", "action_items": ["Sp. z o.o.(유한회사, 감사회 설치) 또는 S.A.(주식회사) 중 선택", "대출기관은 감사회 설치가 의무라 지배구조 설계 필요"]}, {"catalog_item_id": "REG_CORP_TAX", "category_id": "REGULATORY", "name": "법인세율", "data_type": "PERCENT", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "19% 표준, 9% 소규모", "value_normalized": 19.0, "source_tier": "TIER2", "source_name": "PwC 2025", "is_official": false, "official_gap_flag": false, "confidence_grade": "SEMI_OFFICIAL", "confidence_coef": 0.8, "note": "", "research_detail": "CIT 표준 19%, 소규모·신규기업(매출 €2m 이하) 9%.", "source_detail": "PwC Worldwide Tax Summaries 2025 / 폴란드 재무부", "source_type": "INTL_ORG", "survey_date": "2025-12", "action_items": ["법인세 19%(영국 25%보다 유리), 소규모는 9%", "이전가격(TP) 문서화 — 모회사 거래 시 EU 기준 준수"]}, {"catalog_item_id": "REG_WHT_INTEREST", "category_id": "REGULATORY", "name": "이자소득 원천징수", "data_type": "PERCENT", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "20%(조약·EU지침 감면)", "value_normalized": 20.0, "source_tier": "TIER2", "source_name": "PwC", "is_official": false, "official_gap_flag": false, "confidence_grade": "SEMI_OFFICIAL", "confidence_coef": 0.8, "note": "", "research_detail": null, "source_detail": "PwC WWTS 2025", "source_type": "INTL_ORG", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "REG_WHT_DIVIDEND", "category_id": "REGULATORY", "name": "배당 송금 원천징수", "data_type": "PERCENT", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "19%(조약·EU지침 감면)", "value_normalized": 19.0, "source_tier": "TIER2", "source_name": "PwC", "is_official": false, "official_gap_flag": false, "confidence_grade": "SEMI_OFFICIAL", "confidence_coef": 0.8, "note": "", "research_detail": "비거주자 배당 원천징수 19%. EU 모자회사지침 적용 시(10% 지분·2년 보유 등) 감면·면제 가능.", "source_detail": "PwC WWTS 2025 (EU 모자회사지침 포함)", "source_type": "INTL_ORG", "survey_date": "2025-12", "action_items": ["배당 송금 시 원천징수 19% — 본사 회수 비용 고려", "EU 모자회사지침 활용 시 면제 가능: 10% 지분·2년 보유 요건 — 지주구조 설계로 절감"]}, {"catalog_item_id": "REG_RATE_CAP", "category_id": "REGULATORY", "name": "금리 상한(우수라)", "data_type": "PERCENT", "similarity_type": "BINARY", "is_killswitch": true, "value_raw": "반우수라: 2025말 최고이자 15.0%, 비이자비용 상한 45%; 사업가능", "value_normalized": true, "source_tier": "TIER1", "source_name": "민법§359/소비자신용법§36a", "is_official": true, "official_gap_flag": false, "confidence_grade": "OFFICIAL", "confidence_coef": 1.0, "note": "", "research_detail": "반우수라법(2024.1.1 완전시행): 최고이자 = 2×(NBP기준+3.5%p) → 2025년말 15.0%(기준 4.00%). 연체 최고이자 19.0%. 비이자비용 상한 = 신용액의 45%.", "source_detail": "민법 §359(최고이자) / 소비자신용법 §36a(비이자비용 상한); 반우수라법 2024.1.1", "source_type": "LAW", "survey_date": "2025-12", "action_items": ["반우수라법 준수: 2025말 최고이자 15.0%(2×(NBP기준+3.5%p)) 상한", "비이자비용 상한 신용액의 45% — 수수료·보험 끼워팔기 단가 설계 시 반영", "NBP 기준금리 변동에 연동되므로 상한 모니터링 체계 필요"]}, {"catalog_item_id": "REG_FX_REMIT", "category_id": "REGULATORY", "name": "외환 송금 규제", "data_type": "TEXT", "similarity_type": "BINARY", "is_killswitch": true, "value_raw": "완전 자유(EU)", "value_normalized": true, "source_tier": "TIER2", "source_name": "—", "is_official": false, "official_gap_flag": false, "confidence_grade": "SEMI_OFFICIAL", "confidence_coef": 0.8, "note": "", "research_detail": null, "source_detail": "EU 자본자유이동(제한 없음)", "source_type": "SECONDARY", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "REG_DIV_REMIT", "category_id": "REGULATORY", "name": "배당 송금 제한", "data_type": "TEXT", "similarity_type": "BINARY", "is_killswitch": true, "value_raw": "완전 자유(EU)", "value_normalized": true, "source_tier": "TIER2", "source_name": "—", "is_official": false, "official_gap_flag": false, "confidence_grade": "SEMI_OFFICIAL", "confidence_coef": 0.8, "note": "", "research_detail": null, "source_detail": "—(제한 없음)", "source_type": "SECONDARY", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "REG_PRIVACY_LAW", "category_id": "REGULATORY", "name": "개인정보보호법", "data_type": "TEXT", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "EU GDPR(RODO, UODO)", "value_normalized": "EU_GDPR", "source_tier": "TIER1", "source_name": "UODO", "is_official": true, "official_gap_flag": false, "confidence_grade": "OFFICIAL", "confidence_coef": 1.0, "note": "", "research_detail": "EU GDPR(RODO) + 폴란드 이행법, UODO 감독. EU 회원국으로 역내 자유 이전.", "source_detail": "EU GDPR(RODO) + 폴란드 개인정보보호법; UODO", "source_type": "LAW", "survey_date": "2025-12", "action_items": ["EU GDPR(RODO) 준수 체계 구축, UODO 감독", "영국 UK GDPR과 거의 동일 수준 — 기존 EU 대응 경험 이전 가능"]}, {"catalog_item_id": "REG_DATA_LOCAL", "category_id": "REGULATORY", "name": "데이터 현지화 의무", "data_type": "CODE", "similarity_type": "BINARY", "is_killswitch": true, "value_raw": "현지화 의무 없음(EEA 자유)", "value_normalized": true, "source_tier": "TIER2", "source_name": "UODO", "is_official": false, "official_gap_flag": false, "confidence_grade": "SEMI_OFFICIAL", "confidence_coef": 0.8, "note": "", "research_detail": null, "source_detail": "UODO / EU GDPR", "source_type": "LAW", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "REG_DATA_TRANSFER", "category_id": "REGULATORY", "name": "국외이전 제한", "data_type": "TEXT", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "EEA 자유, 역외 GDPR 안전장치", "value_normalized": "EU_FREE", "source_tier": "TIER2", "source_name": "UODO", "is_official": false, "official_gap_flag": false, "confidence_grade": "SEMI_OFFICIAL", "confidence_coef": 0.8, "note": "", "research_detail": null, "source_detail": "EU GDPR Ch.V", "source_type": "LAW", "survey_date": "2025-12", "action_items": ["EU 역내 자유 이전 — 한국(본사) 이전 시 적정성·SCC 검토", "한국은 EU 적정성 보유국이나 금융데이터 별도 확인 권장"]}, {"catalog_item_id": "REG_PROVISION", "category_id": "REGULATORY", "name": "충당금 적립 기준", "data_type": "TEXT", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "IFRS9/현지", "value_normalized": "IFRS9", "source_tier": "TIER2", "source_name": "—", "is_official": false, "official_gap_flag": false, "confidence_grade": "SEMI_OFFICIAL", "confidence_coef": 0.8, "note": "", "research_detail": null, "source_detail": "IFRS 9 / 폴란드 회계기준", "source_type": "SECONDARY", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "REG_NPL_CLASS", "category_id": "REGULATORY", "name": "연체 분류 기준", "data_type": "NUMBER", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "90일 기준", "value_normalized": 90, "source_tier": "TIER2", "source_name": "BIK", "is_official": false, "official_gap_flag": false, "confidence_grade": "SEMI_OFFICIAL", "confidence_coef": 0.8, "note": "", "research_detail": null, "source_detail": "BIK / 감독기준", "source_type": "ASSOCIATION", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "REG_CB_INFRA", "category_id": "REGULATORY", "name": "신용정보 조회(CB) 인프라", "data_type": "TEXT", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "BIK(은행 98% 커버) + BIG InfoMonitor", "value_normalized": "BIK_CENTRAL", "source_tier": "TIER1", "source_name": "BIK", "is_official": true, "official_gap_flag": false, "confidence_grade": "OFFICIAL", "confidence_coef": 1.0, "note": "", "research_detail": "BIK(Biuro Informacji Kredytowej, 1997설립)가 은행 98% 커버하는 사실상 중앙집중형. 스코어 1~100 + 별점. BIG InfoMonitor 병행. 은행·SKOK·대출사·리스사 의무 보고.", "source_detail": "BIK(Biuro Informacji Kredytowej) 공식; BIG InfoMonitor", "source_type": "ASSOCIATION", "survey_date": "2025-12", "action_items": ["BIK(신용정보, 은행 98% 커버) 연동 필수 — 여신심사 핵심 인프라", "BIK 가입·API 연동 절차를 시스템 구축 요건에 포함", "BIG InfoMonitor 병행 검토"]}, {"catalog_item_id": "REG_COLLECTION", "category_id": "REGULATORY", "name": "추심 규제", "data_type": "TEXT", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "민사소송→komornik 집행", "value_normalized": "CIVIL_COURT_BAILIFF", "source_tier": "TIER1", "source_name": "민법", "is_official": true, "official_gap_flag": false, "confidence_grade": "OFFICIAL", "confidence_coef": 1.0, "note": "", "research_detail": null, "source_detail": "민법·민사소송법(KPC)", "source_type": "LAW", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "REG_REPOSSESS", "category_id": "REGULATORY", "name": "차량회수(repossession) 절차", "data_type": "TEXT", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "리스: 7일 cure→즉시해지→반환요구→강제회수(소유권 기반)", "value_normalized": "LEASE_OWNERSHIP", "source_tier": "TIER1", "source_name": "민법§709-13", "is_official": true, "official_gap_flag": false, "confidence_grade": "OFFICIAL", "confidence_coef": 1.0, "note": "", "research_detail": "리스 차량은 리스사 소유 → 회수가 상대적으로 용이. 7일 추가납부 최고 → 즉시 해지·반환요구 → 미반환 시 강제회수·민사소송(민법 §709-13). 소유권 기반이라 채무자 채권자의 압류 대상 아님.", "source_detail": "민법 §709-13(리스 해지·반환)", "source_type": "LAW", "survey_date": "2025-12", "action_items": ["리스는 소유권 기반 회수 — 영국 1/3룰보다 회수 유리", "단 komornik(집행관) 압류 시 1개월 제척기간 내 제3자 이의의 소 제기 체계 구축", "windykator(추심) 네트워크 사전 확보"]}, {"catalog_item_id": "REG_RECOVERY_PERIOD", "category_id": "REGULATORY", "name": "법적 회수 소요기간", "data_type": "NUMBER", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "통상 2~4개월(분쟁 시 6~12개월)", "value_normalized": {"min": 60, "max": 120, "typical": 90}, "source_tier": "TIER3", "source_name": "단일 법정기한 없음", "is_official": false, "official_gap_flag": false, "confidence_grade": "ESTIMATED", "confidence_coef": 0.5, "note": "", "research_detail": "리스(소유권 리스사 보유)는 해지 후 windykator 회수 가능, 채무자 협조 시 수일. komornik 경매 경로는 압류~경매 2~4개월, 소유권 분쟁 시 6~12개월. 리스사는 압류 인지 후 1개월(제척기간) 내 제3자 이의의 소(KPC 841조) 제기 필수. 영국보다 절차 표준화 낮음.", "source_detail": "법무법인 자료 / 민사소송법(KPC) (2차)", "source_type": "LAW", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "REG_AUTO_INS", "category_id": "REGULATORY", "name": "자동차 의무보험", "data_type": "CODE", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "OC 제3자 책임 의무", "value_normalized": "MANDATORY", "source_tier": "TIER1", "source_name": "강제보험법", "is_official": true, "official_gap_flag": false, "confidence_grade": "OFFICIAL", "confidence_coef": 1.0, "note": "", "research_detail": null, "source_detail": "강제보험법(2003.5.22)", "source_type": "LAW", "survey_date": "2025-12", "action_items": ["OC(자동차 의무보험) 연계 상품 설계 가능", "보험 끼워팔기는 소비자보호 규제 대상 — 단가에 반우수라 비이자비용 상한 반영"]}, {"catalog_item_id": "REG_CREDIT_LIFE", "category_id": "REGULATORY", "name": "신용생명보험 가능 여부", "data_type": "CODE", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "가능", "value_normalized": "ALLOWED", "source_tier": "TIER3", "source_name": "시장", "is_official": false, "official_gap_flag": false, "confidence_grade": "ESTIMATED", "confidence_coef": 0.5, "note": "", "research_detail": null, "source_detail": "시장(출처 미특정)", "source_type": "SECONDARY", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "REG_INS_TYING", "category_id": "REGULATORY", "name": "보험 끼워팔기 규제", "data_type": "TEXT", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "소비자보호 규제", "value_normalized": "CONSUMER_PROTECTED", "source_tier": "TIER3", "source_name": "시장", "is_official": false, "official_gap_flag": false, "confidence_grade": "ESTIMATED", "confidence_coef": 0.5, "note": "", "research_detail": null, "source_detail": "소비자보호 규제(출처 미특정)", "source_type": "SECONDARY", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "FIN_LENDER_RANK", "category_id": "FINANCIAL", "name": "금융사 순위", "data_type": "RANK", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "PKO Leasing(1위), EFL, Santander, Pekao, mLeasing", "value_normalized": ["PKO_LEASING", "EFL", "SANTANDER", "PEKAO", "MLEASING"], "source_tier": "TIER2", "source_name": "ZPL/leason", "is_official": false, "official_gap_flag": false, "confidence_grade": "SEMI_OFFICIAL", "confidence_coef": 0.8, "note": "", "research_detail": "리스 금액 기준 1.PKO Leasing(146억 PLN) 2.EFL(92.3억) 3.mLeasing. 차량 대수 기준 1.VW FS 2.Toyota Leasing 3.Arval. PKO Leasing 전체시장 약 11.5%.", "source_detail": "ZPL 리스랭킹 2025 / leason.pl", "source_type": "ASSOCIATION", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "FIN_CAPTIVE_TYPE", "category_id": "FINANCIAL", "name": "캡티브/논캡티브 구분", "data_type": "CODE", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "은행계 리스 우위 + 캡티브", "value_normalized": "BANK_LEASING_DOMINANT", "source_tier": "TIER3", "source_name": "leason", "is_official": false, "official_gap_flag": false, "confidence_grade": "ESTIMATED", "confidence_coef": 0.5, "note": "", "research_detail": null, "source_detail": "leason.pl 2025(2차)", "source_type": "SECONDARY", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "FIN_CAPTIVE_STRENGTH", "category_id": "FINANCIAL", "name": "캡티브 강도", "data_type": "PERCENT", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "은행계 우위, 캡티브 브랜드별 포진", "value_normalized": 40.0, "source_tier": "TIER3", "source_name": "leason", "is_official": false, "official_gap_flag": false, "confidence_grade": "ESTIMATED", "confidence_coef": 0.5, "note": "캡티브 비중 추정", "research_detail": null, "source_detail": "leason.pl(추정)", "source_type": "SECONDARY", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "FIN_PRODUCT_MIX", "category_id": "FINANCIAL", "name": "상품판매 현황", "data_type": "TEXT", "similarity_type": "REFERENCE", "is_killswitch": false, "value_raw": "리스 73.8%, 경차량 56.4%, 소비자리스 4.1%", "value_normalized": "LEASE_DOMINANT", "source_tier": "TIER2", "source_name": "ZPL", "is_official": false, "official_gap_flag": false, "confidence_grade": "SEMI_OFFICIAL", "confidence_coef": 0.8, "note": "", "research_detail": "차량 리스 73.8%(2024), 경차량 56.4%, 소비자리스 4.1%. 운용리스 우위. 장기렌탈(CFM) 플릿 약 276천 대(PZWLP).", "source_detail": "ZPL, Wyniki rynku leasingu 2025", "source_type": "ASSOCIATION", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "FIN_AVG_RATE", "category_id": "FINANCIAL", "name": "평균 금리", "data_type": "PERCENT", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "리스 RRSO 약 6.7%, 소비자 자동차대출 RRSO 9~15%", "value_normalized": {"lease": 6.7, "consumer_loan_min": 9, "consumer_loan_max": 15}, "source_tier": "TIER3", "source_name": "민법", "is_official": false, "official_gap_flag": false, "confidence_grade": "ESTIMATED", "confidence_coef": 0.5, "note": "상한만 확인", "research_detail": "NBP 기준금리 2025년 6회 인하(175bp) 5.75%→4.00%(2025.12.4), WIBOR 3M 약 5.8%→3.8%. 리스 RRSO 약 6.7%(변동, WIBOR+마진). 소비자 자동차대출 RRSO 9~15%(중고차 더 높음). 딜러 프로모션 0%(50/50)도 존재. 법인 리스가 소비자 대출보다 현저히 저렴.", "source_detail": "FmLeasing 2026 / BIK 2025 / NBP 기준금리 (2차+공식)", "source_type": "REGULATOR", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "FIN_AVG_TERM", "category_id": "FINANCIAL", "name": "평균 대출기간", "data_type": "NUMBER", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "최대 84개월, 표준 36~48", "value_normalized": {"min": 36, "max": 48}, "source_tier": "TIER3", "source_name": "업계", "is_official": false, "official_gap_flag": false, "confidence_grade": "ESTIMATED", "confidence_coef": 0.5, "note": "", "research_detail": null, "source_detail": "업계 통상치", "source_type": "SECONDARY", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "FIN_AVG_LTV", "category_id": "FINANCIAL", "name": "평균 LTV(선수금)", "data_type": "PERCENT", "similarity_type": "CONTINUOUS", "is_killswitch": false, "value_raw": "선수금 0~45%(통상 10~20%), 잔존가치 1~20%", "value_normalized": {"downpay_min": 0, "downpay_max": 45, "downpay_typical": 15}, "source_tier": "TIER3", "source_name": "EFL 등", "is_official": false, "official_gap_flag": false, "confidence_grade": "ESTIMATED", "confidence_coef": 0.5, "note": "", "research_detail": "선수금(opłata wstępna) 통상 0~45%, 일반적으로 10~20%(연말 절세 시 45%). 잔존가치(wykup) 1~20%(2년 계약 17~20%, 1%도 일반적). 자동차대출은 다수 은행 100% 금융 가능, 8~10년 초과 차량은 선수금 요구.", "source_detail": "주요 리스사 약관(PKO/EFL/mLeasing) (2차)", "source_type": "SECONDARY", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "FIN_FUNDING", "category_id": "FINANCIAL", "name": "펀딩 구조", "data_type": "TEXT", "similarity_type": "REFERENCE", "is_killswitch": false, "value_raw": "모회사 은행 펀딩 중심", "value_normalized": "PARENT_BANK", "source_tier": "TIER3", "source_name": "leason", "is_official": false, "official_gap_flag": false, "confidence_grade": "ESTIMATED", "confidence_coef": 0.5, "note": "", "research_detail": null, "source_detail": "leason.pl(모회사 펀딩)", "source_type": "SECONDARY", "survey_date": "2025-12", "action_items": ["캡티브는 모회사 그룹 차입, 대출기관은 자기자본·은행차입", "대출기관은 예금수취·채권발행 불가 — 펀딩 구조 사전 설계"]}, {"catalog_item_id": "FIN_COUNTRY_NOTE", "category_id": "FINANCIAL", "name": "해당국 특징", "data_type": "TEXT", "similarity_type": "REFERENCE", "is_killswitch": false, "value_raw": null, "value_normalized": null, "source_tier": "GAP", "source_name": "미매핑", "is_official": false, "official_gap_flag": true, "confidence_grade": "NONE", "confidence_coef": 0.0, "note": "조사필요", "research_detail": "법인 중심(신차 69% 법인), 동산 리스 침투율 유럽 최고(45%, 2023, 평균 28%), EU 5위 리스시장. SME 핵심고객. 세제(리스료 손비, 승용차 150천 PLN 한도)가 리스 강력 유인. 영국 같은 커미션 스캔들은 미확인, 2024 반우수라법으로 사전 규제.", "source_detail": "Leaseurope·ZPL 동산리스 침투율 / PZPM 법인구매 비중 2025", "source_type": null, "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "SYS_VENDORS", "category_id": "SYSTEM", "name": "주요 솔루션사", "data_type": "MULTI", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "Comarch(크라쿠프) + 글로벌 벤더(Alfa/NETSOL)", "value_normalized": ["COMARCH", "ALFA", "NETSOL"], "source_tier": "TIER2", "source_name": "Comarch/업계", "is_official": false, "official_gap_flag": false, "confidence_grade": "SEMI_OFFICIAL", "confidence_coef": 0.8, "note": "", "research_detail": "Comarch(1993설립, 크라쿠프; Loan Origination·Finance Platform)가 자국 벤더로 강세. 글로벌 벤더(Alfa/NETSOL) 병행.", "source_detail": "Comarch 공시 / 업계", "source_type": "SECONDARY", "survey_date": "2025-12", "action_items": ["Comarch 등 현지 벤더 생태계 검토 — BIK·CEPiK·KSeF 연동 기구축 강점", "영국 Alfa 코어 이식 시 현지 연동부 재구축 필요"]}, {"catalog_item_id": "SYS_SOL_TYPE", "category_id": "SYSTEM", "name": "솔루션 유형", "data_type": "CODE", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "패키지+SI+클라우드(Comarch)", "value_normalized": "PACKAGE_SI_CLOUD", "source_tier": "TIER2", "source_name": "Comarch", "is_official": false, "official_gap_flag": false, "confidence_grade": "SEMI_OFFICIAL", "confidence_coef": 0.8, "note": "", "research_detail": null, "source_detail": "Comarch 공시", "source_type": "SECONDARY", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "SYS_VENDOR_LOCKIN", "category_id": "SYSTEM", "name": "코어시스템 벤더 락인", "data_type": "CODE", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "Comarch 현지 SI 강세", "value_normalized": "HIGH_SI", "source_tier": "TIER3", "source_name": "업계", "is_official": false, "official_gap_flag": false, "confidence_grade": "ESTIMATED", "confidence_coef": 0.5, "note": "", "research_detail": null, "source_detail": "업계(출처 미특정)", "source_type": "SECONDARY", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "SYS_DIGITAL_MATURITY", "category_id": "SYSTEM", "name": "디지털 채널 성숙도", "data_type": "CODE", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "Comarch 자동스코어링+BIK 연동", "value_normalized": "MEDIUM_HIGH", "source_tier": "TIER2", "source_name": "Comarch", "is_official": false, "official_gap_flag": false, "confidence_grade": "SEMI_OFFICIAL", "confidence_coef": 0.8, "note": "", "research_detail": "Comarch Loan Origination 자동 스코어링·문서관리, BIK 연동. 2025.7.13 민법개정으로 리스계약 전자 문서형식 가능. 소비자 40%+ 온라인 탐색.", "source_detail": "Comarch 공시 / ZPL", "source_type": "ASSOCIATION", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "SYS_PAYMENT_INFRA", "category_id": "SYSTEM", "name": "결제·정산 인프라", "data_type": "TEXT", "similarity_type": "CATEGORICAL", "is_killswitch": false, "value_raw": "BIK/CEPiK/KSeF 연동", "value_normalized": "BIK_CEPIK_KSEF", "source_tier": "TIER2", "source_name": "업계", "is_official": false, "official_gap_flag": false, "confidence_grade": "SEMI_OFFICIAL", "confidence_coef": 0.8, "note": "", "research_detail": "BIK/CEPiK(차량등록·OC 확인)/KSeF(전자송장) 연동. 공적 인프라 연계가 시스템 요건.", "source_detail": "BIK/CEPiK/KSeF 공식 인프라", "source_type": "ASSOCIATION", "survey_date": "2025-12", "action_items": ["CEPiK(차량등록·OC 확인) 연동 — 리스 차량 등록 필수", "KSeF(전자송장) 연동 — 2026 의무화 대비", "BIK 신용조회 연동과 함께 3대 공적 인프라 연동 설계"]}, {"catalog_item_id": "CMP_LIST", "category_id": "SYSTEM", "name": "경쟁사 리스트", "data_type": "MULTI", "similarity_type": "REFERENCE", "is_killswitch": false, "value_raw": "PKO Leasing, EFL, mLeasing, VWFS Polska, Toyota Bank/Leasing, BMW FS, Ayvens", "value_normalized": null, "source_tier": "TIER3", "source_name": "업계", "is_official": false, "official_gap_flag": false, "confidence_grade": "ESTIMATED", "confidence_coef": 0.5, "note": "", "research_detail": null, "source_detail": "ZPL / SAMAR", "source_type": "ASSOCIATION", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "CMP_RATE_RANGE", "category_id": "SYSTEM", "name": "경쟁사 금리 현황", "data_type": "RANGE", "similarity_type": "REFERENCE", "is_killswitch": false, "value_raw": "반우수라 상한 15% 내 다양", "value_normalized": null, "source_tier": "TIER1", "source_name": "민법", "is_official": true, "official_gap_flag": false, "confidence_grade": "OFFICIAL", "confidence_coef": 1.0, "note": "", "research_detail": null, "source_detail": "민법 §359 상한", "source_type": "LAW", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "CMP_MARKET_SHARE", "category_id": "SYSTEM", "name": "경쟁사 시장 점유율", "data_type": "PERCENT", "similarity_type": "REFERENCE", "is_killswitch": false, "value_raw": "PKO Leasing 전체시장 11.5%(공시) / 18.4%(랭킹)", "value_normalized": null, "source_tier": "TIER1", "source_name": "PKO 공시", "is_official": true, "official_gap_flag": false, "confidence_grade": "OFFICIAL", "confidence_coef": 1.0, "note": "", "research_detail": null, "source_detail": "PKO BP 공시 / leason.pl", "source_type": "SECONDARY", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "CMP_ENTRY_FORM", "category_id": "SYSTEM", "name": "경쟁사 진출 형태", "data_type": "CODE", "similarity_type": "REFERENCE", "is_killswitch": false, "value_raw": "캡티브+은행계+CFM(Arval/Ayvens)", "value_normalized": null, "source_tier": "TIER3", "source_name": "업계", "is_official": false, "official_gap_flag": false, "confidence_grade": "ESTIMATED", "confidence_coef": 0.5, "note": "", "research_detail": null, "source_detail": "업계", "source_type": "SECONDARY", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "CMP_SYSTEM", "category_id": "SYSTEM", "name": "경쟁사 사용 시스템", "data_type": "TEXT", "similarity_type": "REFERENCE", "is_killswitch": false, "value_raw": "Comarch 등", "value_normalized": null, "source_tier": "TIER3", "source_name": "업계", "is_official": false, "official_gap_flag": false, "confidence_grade": "ESTIMATED", "confidence_coef": 0.5, "note": "", "research_detail": null, "source_detail": "업계", "source_type": "SECONDARY", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "CMP_HISTORY", "category_id": "SYSTEM", "name": "경쟁사 업력", "data_type": "NUMBER", "similarity_type": "REFERENCE", "is_killswitch": false, "value_raw": "VWFS Polska 2019(전신1997); Toyota Bank 2000, Toyota Leasing 2002", "value_normalized": null, "source_tier": "TIER1", "source_name": "KRS", "is_official": true, "official_gap_flag": false, "confidence_grade": "OFFICIAL", "confidence_coef": 1.0, "note": "", "research_detail": "VWFS Polska 현법인 2019(전신 VW Leasing Polska 1997). Toyota Bank Polska 2000~, Toyota Leasing Polska 2002~. Toyota Leasing FY2024/25 51,300건 리스계약(전년 39,900건).", "source_detail": "KRS 등기(VWFS Polska 0000803746, Toyota Bank/Leasing)", "source_type": "FINANCIAL_STATEMENT", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "CMP_DEALER_NET", "category_id": "SYSTEM", "name": "경쟁사 딜러망 규모", "data_type": "NUMBER", "similarity_type": "REFERENCE", "is_killswitch": false, "value_raw": "브랜드별 전국망", "value_normalized": null, "source_tier": "TIER3", "source_name": "업계", "is_official": false, "official_gap_flag": false, "confidence_grade": "ESTIMATED", "confidence_coef": 0.5, "note": "", "research_detail": null, "source_detail": "업계", "source_type": "SECONDARY", "survey_date": "2025-12", "action_items": null}, {"catalog_item_id": "CMP_HEADCOUNT", "category_id": "SYSTEM", "name": "경쟁사 직원수", "data_type": "NUMBER", "similarity_type": "REFERENCE", "is_killswitch": false, "value_raw": "VWFS Polska 약 436 FTE(2022)", "value_normalized": null, "source_tier": "TIER1", "source_name": "VWFS 보고서", "is_official": true, "official_gap_flag": false, "confidence_grade": "OFFICIAL", "confidence_coef": 1.0, "note": "", "research_detail": "VWFS Polska 약 436 FTE(2022, VWFS 보고서). Toyota 계열 직원수 조사 필요. (KRS 재무제표 기준)", "source_detail": "VWFS Polska 연차보고서 2022(KRS) / Toyota 조사 필요", "source_type": "FINANCIAL_STATEMENT", "survey_date": "2025-12", "action_items": null}], "insights": [{"title": "규제는 닮았고, 시장은 다르다", "body": "폴란드 규제 유사도 77점(EU 공통 GDPR·자유송금)으로 진입 제도 부담은 낮으나, 시장(64점)·금융(56점)은 영국과 구조가 달라 영국 PCP 모델 복제는 실패 위험이 크다."}, {"title": "법인 리스가 진짜 기회다", "body": "폴란드 신차의 69%를 법인이 구매하고 리스로 조달한다. 리스 시장 CAGR 11.3%, 차량이 전체 리스의 74%. 영국식 개인 할부가 아니라 B2B 리스/CFM이 핵심 진입로다."}, {"title": "시스템은 이식 가능하나 현지화가 필수다", "body": "시스템 게이트는 통과(57점)했으나, BIK·CEPiK·KSeF 연동과 Comarch 등 현지 벤더 생태계 대응이 필요하다. 영국 Alfa 기반 코어를 그대로 옮기긴 어렵다."}], "recommendations": [{"step": 1, "title": "법인 리스/CFM 중심 진입", "body": "개인 할부가 아닌 법인·SME 리스를 주력으로. 순수 B2B 리스는 KNF 무라이선스로 진입장벽도 낮다."}, {"step": 2, "title": "현지 시스템·신용 인프라 연동", "body": "BIK(신용조회 98% 커버)·CEPiK·KSeF 연동을 진출 요건으로 설계. 코어는 이식하되 연동부 재구축."}, {"step": 3, "title": "금리 인하기 활용", "body": "NBP 기준금리 5.75%→4.00% 인하 사이클. 리스 수요 확대 국면이므로 초기 고객 확보에 유리."}, {"step": 4, "title": "중고차 금융 미개척 영역 공략", "body": "중고차 금융침투율 16~30%로 낮음(현금 84%). 딜러·플랫폼 제휴로 차별화 가능."}], "risks": [{"sev": "hi", "title": "시장 구조 차이", "body": "영국 개인 리테일 경험이 폴란드 법인 리스에 직접 이식되지 않음. 사업모델 재설계 필요."}, {"sev": "md", "title": "데이터 신뢰도", "body": "폴란드 핵심 지표 다수가 참고(Tier3). 진출 확정 전 현지 1차 실사 필요(중고차 침투율, 회수기간 등)."}, {"sev": "md", "title": "경쟁 강도", "body": "PKO Leasing 등 은행계 리스와 VWFS·Toyota 캡티브가 장악. 비계열 외국사는 니치·디지털로 차별화 필수."}, {"sev": "lo", "title": "송금 세제", "body": "배당 원천징수 19%(영국 0% 대비 불리)이나 EU 모자회사지침으로 완화 가능."}], "exec_summary": "폴란드는 영국 대비 종합 유사도 63.5점으로 심층조사 권고 등급입니다. 규제 환경(77점)은 매우 유사하고 시스템 이식도 가능(게이트 통과)하나, 시장 구조(영국=개인 리테일 vs 폴란드=법인 리스)와 금융 상품이 달라 영국 모델의 직접 이식보다 현지 적응형 진입이 필요합니다. 다만 폴란드는 리스 시장 CAGR 11.3%로 구조적 성장 중이어서 중장기 매력도는 영국을 앞섭니다."}};
+var SEMANTIC_MATRIX = {"MKT_DLR_TYPE": {"FRANCHISE_INDEPENDENT_MIX": {"FRANCHISE_DIRECT_ONLINE_MIX": 0.6, "FRANCHISE_DOMINANT": 0.7}}, "MKT_DLR_MULTIBRAND": {"COMMON": {"GROWING": 0.6, "RARE": 0.2}}, "MKT_DLR_FI": {"POS_DOMINANT": {"LEASE_DOMINANT": 0.3, "BANK_SEPARATE": 0.2, "ESTABLISHED": 0.7}}, "REG_LICENSE_TYPE": {"FCA_CONSUMER_CREDIT": {"KNF_LENDER_REG": 0.4, "EU_PASSPORT": 0.5}}, "REG_ENTITY_FORM": {"LTD_PLC": {"SPZOO_SA": 0.7, "GMBH_AG": 0.8}}, "REG_PRIVACY_LAW": {"UK_GDPR": {"EU_GDPR": 0.9, "PDPA": 0.5, "CCPA": 0.4}, "EU_GDPR": {"PDPA": 0.5, "CCPA": 0.4}}, "REG_DATA_TRANSFER": {"ADEQUACY_SCC": {"EU_FREE": 0.7, "RESTRICTED": 0.2, "LOCALIZED": 0}, "EU_FREE": {"RESTRICTED": 0.3, "LOCALIZED": 0}}, "REG_PROVISION": {"IFRS9": {"LOCAL_GAAP": 0.5, "IFRS9_OR_LOCAL": 0.85}}, "REG_CB_INFRA": {"PRIVATE_3BUREAU": {"BIK_CENTRAL": 0.5, "NONE": 0, "STATE_REGISTRY": 0.4}}, "REG_COLLECTION": {"FCA_CONC": {"CIVIL_COURT_BAILIFF": 0.5, "SELF_HELP": 0.3, "COURT_ONLY": 0.4}}, "REG_REPOSSESS": {"CCA_PROTECTED_GOODS": {"LEASE_OWNERSHIP": 0.4, "FREE_REPO": 0.3, "COURT_ORDER": 0.6}}, "REG_AUTO_INS": {"MANDATORY": {"OPTIONAL": 0.2, "MANDATORY_PLUS": 0.9}}, "REG_CREDIT_LIFE": {"ALLOWED_STRICT": {"ALLOWED": 0.7, "BANNED": 0, "ALLOWED_FREE": 0.6}}, "REG_INS_TYING": {"REGULATED_DUTY": {"CONSUMER_PROTECTED": 0.6, "BANNED": 0.3, "FREE": 0.2}}, "FIN_CAPTIVE_TYPE": {"CAPTIVE_DOMINANT_NEW": {"BANK_LEASING_DOMINANT": 0.3, "CAPTIVE_DOMINANT": 0.8, "INDEPENDENT": 0.2}}, "SYS_SOL_TYPE": {"PACKAGE_SAAS_SI": {"PACKAGE_SI_CLOUD": 0.7, "SAAS_ONLY": 0.5, "FULL_INHOUSE": 0.2}}, "SYS_PAYMENT_INFRA": {"BACS_DD": {"BIK_CEPIK_KSEF": 0.4, "SEPA_DD": 0.7, "CARD_ONLY": 0.3}}};
+var DATA_CATALOG = {"version": "v0.1", "generated": "2026-06-14", "count": 69, "items": [{"catalog_item_id": "MKT_CAR_SALES", "category_id": "MARKET", "sub_category": "1-1 시장일반", "name": "자동차 판매대수(연간)", "similarity_type": "CONTINUOUS", "data_type": "NUMBER", "is_killswitch": false, "default_source_type": "ASSOCIATION", "note": "신차/중고 분리"}, {"catalog_item_id": "MKT_NEW_USED_RATIO", "category_id": "MARKET", "sub_category": "1-1 시장일반", "name": "신차/중고차 비율", "similarity_type": "CONTINUOUS", "data_type": "PERCENT", "is_killswitch": false, "default_source_type": "ASSOCIATION", "note": ""}, {"catalog_item_id": "MKT_AF_SIZE", "category_id": "MARKET", "sub_category": "1-1 시장일반", "name": "오토금융 시장규모", "similarity_type": "CONTINUOUS", "data_type": "NUMBER", "is_killswitch": false, "default_source_type": "REGULATOR", "note": "USD"}, {"catalog_item_id": "MKT_AF_CAGR", "category_id": "MARKET", "sub_category": "1-1 시장일반", "name": "오토금융 성장률(CAGR)", "similarity_type": "REFERENCE", "data_type": "PERCENT", "is_killswitch": false, "default_source_type": "REGULATOR", "note": "연도 명시, 시장 매력도 참고"}, {"catalog_item_id": "MKT_PEN_NEW", "category_id": "MARKET", "sub_category": "1-1 시장일반", "name": "금융 침투율(신차)", "similarity_type": "CONTINUOUS", "data_type": "PERCENT", "is_killswitch": false, "default_source_type": "ASSOCIATION", "note": "핵심지표"}, {"catalog_item_id": "MKT_PEN_USED", "category_id": "MARKET", "sub_category": "1-1 시장일반", "name": "금융 침투율(중고차)", "similarity_type": "CONTINUOUS", "data_type": "PERCENT", "is_killswitch": false, "default_source_type": "ASSOCIATION", "note": ""}, {"catalog_item_id": "MKT_BRAND_TOP10", "category_id": "MARKET", "sub_category": "1-1 시장일반", "name": "브랜드 Top10", "similarity_type": "CATEGORICAL", "data_type": "RANK", "is_killswitch": false, "default_source_type": "ASSOCIATION", "note": "순위+점유율"}, {"catalog_item_id": "MKT_MODEL_TOP10", "category_id": "MARKET", "sub_category": "1-1 시장일반", "name": "차종 Top10", "similarity_type": "CATEGORICAL", "data_type": "RANK", "is_killswitch": false, "default_source_type": "ASSOCIATION", "note": "순위+세그먼트"}, {"catalog_item_id": "MKT_OEM_RANK", "category_id": "MARKET", "sub_category": "1-1 시장일반", "name": "OEM 순위", "similarity_type": "CATEGORICAL", "data_type": "RANK", "is_killswitch": false, "default_source_type": "ASSOCIATION", "note": ""}, {"catalog_item_id": "MKT_REPLACE_CYCLE", "category_id": "MARKET", "sub_category": "1-1 시장일반", "name": "평균 구매주기", "similarity_type": "CONTINUOUS", "data_type": "NUMBER", "is_killswitch": false, "default_source_type": "ASSOCIATION", "note": "년, 교체수요"}, {"catalog_item_id": "MKT_AVG_PRICE", "category_id": "MARKET", "sub_category": "1-1 시장일반", "name": "평균 차량가격", "similarity_type": "CONTINUOUS", "data_type": "NUMBER", "is_killswitch": false, "default_source_type": "ASSOCIATION", "note": "USD, 여신규모 추정"}, {"catalog_item_id": "MKT_PURCHASE_PATTERN", "category_id": "MARKET", "sub_category": "1-1 시장일반", "name": "구매 패턴(현금:할부:리스)", "similarity_type": "CONTINUOUS", "data_type": "RATIO", "is_killswitch": false, "default_source_type": "ASSOCIATION", "note": ""}, {"catalog_item_id": "MKT_PURCHASE_PROCESS", "category_id": "MARKET", "sub_category": "1-1 시장일반", "name": "구매 프로세스", "similarity_type": "REFERENCE", "data_type": "TEXT", "is_killswitch": false, "default_source_type": "ASSOCIATION", "note": "딜러경유/직판"}, {"catalog_item_id": "MKT_SEG_RETAIL_CORP", "category_id": "MARKET", "sub_category": "1-1 시장일반", "name": "고객 세그먼트(개인:법인 비율)", "similarity_type": "CONTINUOUS", "data_type": "RATIO", "is_killswitch": false, "default_source_type": "ASSOCIATION", "note": "상품전략(할부 vs 리스) 직결"}, {"catalog_item_id": "MKT_SEG_OTHER", "category_id": "MARKET", "sub_category": "1-1 시장일반", "name": "고객 세그먼트(기타 특성)", "similarity_type": "REFERENCE", "data_type": "MULTI", "is_killswitch": false, "default_source_type": "ASSOCIATION", "note": "연령·소득대 등 정성"}, {"catalog_item_id": "MKT_DLR_TYPE", "category_id": "MARKET", "sub_category": "1-2 딜러채널", "name": "딜러 유형 구조", "similarity_type": "CATEGORICAL", "data_type": "CODE", "is_killswitch": false, "default_source_type": "ASSOCIATION", "note": "프랜차이즈/독립/직영"}, {"catalog_item_id": "MKT_DLR_MULTIBRAND", "category_id": "MARKET", "sub_category": "1-2 딜러채널", "name": "멀티브랜드 여부", "similarity_type": "CATEGORICAL", "data_type": "CODE", "is_killswitch": false, "default_source_type": "ASSOCIATION", "note": ""}, {"catalog_item_id": "MKT_DLR_CONCENTRATION", "category_id": "MARKET", "sub_category": "1-2 딜러채널", "name": "딜러 집중도", "similarity_type": "CONTINUOUS", "data_type": "PERCENT", "is_killswitch": false, "default_source_type": "ASSOCIATION", "note": "상위N 점유율"}, {"catalog_item_id": "MKT_CH_NEW", "category_id": "MARKET", "sub_category": "1-2 딜러채널", "name": "신차 채널 비중", "similarity_type": "CONTINUOUS", "data_type": "RATIO", "is_killswitch": false, "default_source_type": "ASSOCIATION", "note": "딜러/온라인/직판"}, {"catalog_item_id": "MKT_CH_USED", "category_id": "MARKET", "sub_category": "1-2 딜러채널", "name": "중고차 채널 비중", "similarity_type": "CONTINUOUS", "data_type": "RATIO", "is_killswitch": false, "default_source_type": "ASSOCIATION", "note": "금융 침투율 좌우"}, {"catalog_item_id": "MKT_DLR_FI", "category_id": "MARKET", "sub_category": "1-2 딜러채널", "name": "딜러 금융취급 관행(F&I)", "similarity_type": "CATEGORICAL", "data_type": "CODE", "is_killswitch": false, "default_source_type": "FIELD", "note": "금융 침투 핵심"}, {"catalog_item_id": "MKT_DLR_SETTLE", "category_id": "MARKET", "sub_category": "1-2 딜러채널", "name": "딜러-금융사 정산 구조", "similarity_type": "REFERENCE", "data_type": "TEXT", "is_killswitch": false, "default_source_type": "FIELD", "note": "딜러 수수료"}, {"catalog_item_id": "MKT_DLR_DIGITAL", "category_id": "MARKET", "sub_category": "1-2 딜러채널", "name": "디지털 딜러 성숙도", "similarity_type": "CATEGORICAL", "data_type": "CODE", "is_killswitch": false, "default_source_type": "ASSOCIATION", "note": "온라인 연동"}, {"catalog_item_id": "REG_LICENSE_TYPE", "category_id": "REGULATORY", "sub_category": "2-1 인허가", "name": "라이선스 종류", "similarity_type": "CATEGORICAL", "data_type": "TEXT", "is_killswitch": false, "default_source_type": "LAW", "note": ""}, {"catalog_item_id": "REG_AUTHORITY", "category_id": "REGULATORY", "sub_category": "2-1 인허가", "name": "소관 규제기관", "similarity_type": "REFERENCE", "data_type": "TEXT", "is_killswitch": false, "default_source_type": "REGULATOR", "note": ""}, {"catalog_item_id": "REG_FOREIGN_OWNERSHIP", "category_id": "REGULATORY", "sub_category": "2-1 인허가", "name": "외국인 지분 한도", "similarity_type": "BINARY", "data_type": "PERCENT", "is_killswitch": true, "default_source_type": "LAW", "note": "킬스위치"}, {"catalog_item_id": "REG_LICENSE_PERIOD", "category_id": "REGULATORY", "sub_category": "2-1 인허가", "name": "인허가 처리기간", "similarity_type": "CONTINUOUS", "data_type": "NUMBER", "is_killswitch": false, "default_source_type": "REGULATOR", "note": "일, 진출기간 추정"}, {"catalog_item_id": "REG_MIN_CAPITAL", "category_id": "REGULATORY", "sub_category": "2-1 인허가", "name": "최저자본금", "similarity_type": "CONTINUOUS", "data_type": "NUMBER", "is_killswitch": false, "default_source_type": "LAW", "note": "USD, 진출비용 직결"}, {"catalog_item_id": "REG_ENTITY_FORM", "category_id": "REGULATORY", "sub_category": "2-1 인허가", "name": "현지 법인형태 요건", "similarity_type": "CATEGORICAL", "data_type": "CODE", "is_killswitch": false, "default_source_type": "LAW", "note": ""}, {"catalog_item_id": "REG_CORP_TAX", "category_id": "REGULATORY", "sub_category": "2-2 정책세금", "name": "법인세율", "similarity_type": "CONTINUOUS", "data_type": "PERCENT", "is_killswitch": false, "default_source_type": "LAW", "note": "세후 수익성"}, {"catalog_item_id": "REG_WHT_INTEREST", "category_id": "REGULATORY", "sub_category": "2-2 정책세금", "name": "이자소득 원천징수", "similarity_type": "CONTINUOUS", "data_type": "PERCENT", "is_killswitch": false, "default_source_type": "LAW", "note": ""}, {"catalog_item_id": "REG_WHT_DIVIDEND", "category_id": "REGULATORY", "sub_category": "2-2 정책세금", "name": "배당 송금 원천징수", "similarity_type": "CONTINUOUS", "data_type": "PERCENT", "is_killswitch": false, "default_source_type": "LAW", "note": "본사 자금회수 직결"}, {"catalog_item_id": "REG_RATE_CAP", "category_id": "REGULATORY", "sub_category": "2-2 정책세금", "name": "금리 상한(우수라)", "similarity_type": "BINARY", "data_type": "PERCENT", "is_killswitch": true, "default_source_type": "LAW", "note": "사업성 직결, 이진/연속 혼용"}, {"catalog_item_id": "REG_FX_REMIT", "category_id": "REGULATORY", "sub_category": "2-2 정책세금", "name": "외환 송금 규제", "similarity_type": "BINARY", "data_type": "TEXT", "is_killswitch": true, "default_source_type": "LAW", "note": "킬스위치, 자금회수"}, {"catalog_item_id": "REG_DIV_REMIT", "category_id": "REGULATORY", "sub_category": "2-2 정책세금", "name": "배당 송금 제한", "similarity_type": "BINARY", "data_type": "TEXT", "is_killswitch": true, "default_source_type": "LAW", "note": "킬스위치"}, {"catalog_item_id": "REG_PRIVACY_LAW", "category_id": "REGULATORY", "sub_category": "2-3 정보보호", "name": "개인정보보호법", "similarity_type": "CATEGORICAL", "data_type": "TEXT", "is_killswitch": false, "default_source_type": "LAW", "note": "GDPR/PDPA 등"}, {"catalog_item_id": "REG_DATA_LOCAL", "category_id": "REGULATORY", "sub_category": "2-3 정보보호", "name": "데이터 현지화 의무", "similarity_type": "BINARY", "data_type": "CODE", "is_killswitch": true, "default_source_type": "LAW", "note": "킬스위치, 시스템 구축비 직결"}, {"catalog_item_id": "REG_DATA_TRANSFER", "category_id": "REGULATORY", "sub_category": "2-3 정보보호", "name": "국외이전 제한", "similarity_type": "CATEGORICAL", "data_type": "TEXT", "is_killswitch": false, "default_source_type": "LAW", "note": ""}, {"catalog_item_id": "REG_PROVISION", "category_id": "REGULATORY", "sub_category": "2-4 리스크", "name": "충당금 적립 기준", "similarity_type": "CATEGORICAL", "data_type": "TEXT", "is_killswitch": false, "default_source_type": "REGULATOR", "note": ""}, {"catalog_item_id": "REG_NPL_CLASS", "category_id": "REGULATORY", "sub_category": "2-4 리스크", "name": "연체 분류 기준", "similarity_type": "CONTINUOUS", "data_type": "NUMBER", "is_killswitch": false, "default_source_type": "REGULATOR", "note": "일"}, {"catalog_item_id": "REG_CB_INFRA", "category_id": "REGULATORY", "sub_category": "2-4 리스크", "name": "신용정보 조회(CB) 인프라", "similarity_type": "CATEGORICAL", "data_type": "TEXT", "is_killswitch": false, "default_source_type": "REGULATOR", "note": "여신심사 가능성"}, {"catalog_item_id": "REG_COLLECTION", "category_id": "REGULATORY", "sub_category": "2-5 추심회수", "name": "추심 규제", "similarity_type": "CATEGORICAL", "data_type": "TEXT", "is_killswitch": false, "default_source_type": "LAW", "note": ""}, {"catalog_item_id": "REG_REPOSSESS", "category_id": "REGULATORY", "sub_category": "2-5 추심회수", "name": "차량회수(repossession) 절차", "similarity_type": "CATEGORICAL", "data_type": "TEXT", "is_killswitch": false, "default_source_type": "LAW", "note": "손실률 직결"}, {"catalog_item_id": "REG_RECOVERY_PERIOD", "category_id": "REGULATORY", "sub_category": "2-5 추심회수", "name": "법적 회수 소요기간", "similarity_type": "CONTINUOUS", "data_type": "NUMBER", "is_killswitch": false, "default_source_type": "LAW", "note": "일, LGD 직결"}, {"catalog_item_id": "REG_AUTO_INS", "category_id": "REGULATORY", "sub_category": "2-6 의무보험", "name": "자동차 의무보험", "similarity_type": "CATEGORICAL", "data_type": "CODE", "is_killswitch": false, "default_source_type": "LAW", "note": ""}, {"catalog_item_id": "REG_CREDIT_LIFE", "category_id": "REGULATORY", "sub_category": "2-6 의무보험", "name": "신용생명보험 가능 여부", "similarity_type": "CATEGORICAL", "data_type": "CODE", "is_killswitch": false, "default_source_type": "LAW", "note": "상품설계"}, {"catalog_item_id": "REG_INS_TYING", "category_id": "REGULATORY", "sub_category": "2-6 의무보험", "name": "보험 끼워팔기 규제", "similarity_type": "CATEGORICAL", "data_type": "TEXT", "is_killswitch": false, "default_source_type": "LAW", "note": ""}, {"catalog_item_id": "FIN_LENDER_RANK", "category_id": "FINANCIAL", "sub_category": "3 금융환경", "name": "금융사 순위", "similarity_type": "CATEGORICAL", "data_type": "RANK", "is_killswitch": false, "default_source_type": "REGULATOR", "note": "자산/취급액 기준"}, {"catalog_item_id": "FIN_CAPTIVE_TYPE", "category_id": "FINANCIAL", "sub_category": "3 금융환경", "name": "캡티브/논캡티브 구분", "similarity_type": "CATEGORICAL", "data_type": "CODE", "is_killswitch": false, "default_source_type": "FINANCIAL_STATEMENT", "note": "OEM 계열 여부"}, {"catalog_item_id": "FIN_CAPTIVE_STRENGTH", "category_id": "FINANCIAL", "sub_category": "3 금융환경", "name": "캡티브 강도", "similarity_type": "CONTINUOUS", "data_type": "PERCENT", "is_killswitch": false, "default_source_type": "ASSOCIATION", "note": "진입 난이도"}, {"catalog_item_id": "FIN_PRODUCT_MIX", "category_id": "FINANCIAL", "sub_category": "3 금융환경", "name": "상품판매 현황", "similarity_type": "REFERENCE", "data_type": "TEXT", "is_killswitch": false, "default_source_type": "ASSOCIATION", "note": "할부/리스/렌탈"}, {"catalog_item_id": "FIN_AVG_RATE", "category_id": "FINANCIAL", "sub_category": "3 금융환경", "name": "평균 금리", "similarity_type": "CONTINUOUS", "data_type": "PERCENT", "is_killswitch": false, "default_source_type": "REGULATOR", "note": "수익성 핵심"}, {"catalog_item_id": "FIN_AVG_TERM", "category_id": "FINANCIAL", "sub_category": "3 금융환경", "name": "평균 대출기간", "similarity_type": "CONTINUOUS", "data_type": "NUMBER", "is_killswitch": false, "default_source_type": "ASSOCIATION", "note": "개월"}, {"catalog_item_id": "FIN_AVG_LTV", "category_id": "FINANCIAL", "sub_category": "3 금융환경", "name": "평균 LTV(선수금)", "similarity_type": "CONTINUOUS", "data_type": "PERCENT", "is_killswitch": false, "default_source_type": "ASSOCIATION", "note": "손실 익스포저"}, {"catalog_item_id": "FIN_FUNDING", "category_id": "FINANCIAL", "sub_category": "3 금융환경", "name": "펀딩 구조", "similarity_type": "REFERENCE", "data_type": "TEXT", "is_killswitch": false, "default_source_type": "FINANCIAL_STATEMENT", "note": "현지조달 가능성"}, {"catalog_item_id": "FIN_COUNTRY_NOTE", "category_id": "FINANCIAL", "sub_category": "3 금융환경", "name": "해당국 특징", "similarity_type": "REFERENCE", "data_type": "TEXT", "is_killswitch": false, "default_source_type": "FIELD", "note": "정성 인사이트"}, {"catalog_item_id": "SYS_VENDORS", "category_id": "SYSTEM", "sub_category": "4-1 시스템환경", "name": "주요 솔루션사", "similarity_type": "CATEGORICAL", "data_type": "MULTI", "is_killswitch": false, "default_source_type": "FIELD", "note": "코어 벤더"}, {"catalog_item_id": "SYS_SOL_TYPE", "category_id": "SYSTEM", "sub_category": "4-1 시스템환경", "name": "솔루션 유형", "similarity_type": "CATEGORICAL", "data_type": "CODE", "is_killswitch": false, "default_source_type": "FIELD", "note": "패키지/SI/SaaS"}, {"catalog_item_id": "SYS_VENDOR_LOCKIN", "category_id": "SYSTEM", "sub_category": "4-1 시스템환경", "name": "코어시스템 벤더 락인", "similarity_type": "CATEGORICAL", "data_type": "CODE", "is_killswitch": false, "default_source_type": "FIELD", "note": "연동비용 직결"}, {"catalog_item_id": "SYS_DIGITAL_MATURITY", "category_id": "SYSTEM", "sub_category": "4-1 시스템환경", "name": "디지털 채널 성숙도", "similarity_type": "CATEGORICAL", "data_type": "CODE", "is_killswitch": false, "default_source_type": "ASSOCIATION", "note": "온라인 신청 가부"}, {"catalog_item_id": "SYS_PAYMENT_INFRA", "category_id": "SYSTEM", "sub_category": "4-1 시스템환경", "name": "결제·정산 인프라", "similarity_type": "CATEGORICAL", "data_type": "TEXT", "is_killswitch": false, "default_source_type": "REGULATOR", "note": ""}, {"catalog_item_id": "CMP_LIST", "category_id": "SYSTEM", "sub_category": "4-2 경쟁사", "name": "경쟁사 리스트", "similarity_type": "REFERENCE", "data_type": "MULTI", "is_killswitch": false, "default_source_type": "FINANCIAL_STATEMENT", "note": "토요타·폭스바겐 파이낸스 필수"}, {"catalog_item_id": "CMP_RATE_RANGE", "category_id": "SYSTEM", "sub_category": "4-2 경쟁사", "name": "경쟁사 금리 현황", "similarity_type": "REFERENCE", "data_type": "RANGE", "is_killswitch": false, "default_source_type": "FINANCIAL_STATEMENT", "note": "최저~최고, 가격경쟁력 비교"}, {"catalog_item_id": "CMP_MARKET_SHARE", "category_id": "SYSTEM", "sub_category": "4-2 경쟁사", "name": "경쟁사 시장 점유율", "similarity_type": "REFERENCE", "data_type": "PERCENT", "is_killswitch": false, "default_source_type": "REGULATOR", "note": ""}, {"catalog_item_id": "CMP_ENTRY_FORM", "category_id": "SYSTEM", "sub_category": "4-2 경쟁사", "name": "경쟁사 진출 형태", "similarity_type": "REFERENCE", "data_type": "CODE", "is_killswitch": false, "default_source_type": "FINANCIAL_STATEMENT", "note": "단독/JV/제휴"}, {"catalog_item_id": "CMP_SYSTEM", "category_id": "SYSTEM", "sub_category": "4-2 경쟁사", "name": "경쟁사 사용 시스템", "similarity_type": "REFERENCE", "data_type": "TEXT", "is_killswitch": false, "default_source_type": "FIELD", "note": ""}, {"catalog_item_id": "CMP_HISTORY", "category_id": "SYSTEM", "sub_category": "4-2 경쟁사", "name": "경쟁사 업력", "similarity_type": "REFERENCE", "data_type": "NUMBER", "is_killswitch": false, "default_source_type": "FINANCIAL_STATEMENT", "note": "년, 심층조사"}, {"catalog_item_id": "CMP_DEALER_NET", "category_id": "SYSTEM", "sub_category": "4-2 경쟁사", "name": "경쟁사 딜러망 규모", "similarity_type": "REFERENCE", "data_type": "NUMBER", "is_killswitch": false, "default_source_type": "FINANCIAL_STATEMENT", "note": "심층조사"}, {"catalog_item_id": "CMP_HEADCOUNT", "category_id": "SYSTEM", "sub_category": "4-2 경쟁사", "name": "경쟁사 직원수", "similarity_type": "REFERENCE", "data_type": "NUMBER", "is_killswitch": false, "default_source_type": "FINANCIAL_STATEMENT", "note": "심층조사"}]};
+</script>
+<script>
+/**
+ * 오토파이낸스 진출 유사도 엔진 v2 (similarity.js)
+ * 통합 기준 문서(Part 3 정형화) 방법론 + 우리 설계(게이트/킬스위치/카테고리) 결합.
+ */
+const RULESET = {
+  name: "디폴트 v1",
+  categoryWeights: { MARKET: 0.25, REGULATORY: 0.25, FINANCIAL: 0.20, SYSTEM: 0.30 },
+  thresholds: { entry: 70, systemGate: 50, lowConfidence: 0.6 },
+  pctScale: {
+    REG_CORP_TAX: 30, REG_WHT_INTEREST: 30, REG_WHT_DIVIDEND: 30,
+    MKT_PEN_NEW: 100, MKT_PEN_USED: 100, FIN_CAPTIVE_STRENGTH: 100,
+    MKT_NEW_USED_RATIO: 6, _default: 100,
+  },
+  logUniverse: {
+    MKT_CAR_SALES: { min: 1e5, max: 4e6 },
+    MKT_AF_SIZE: { min: 1e9, max: 1e11 },
+    _default: { min: 1, max: 1e9 },
+  },
+  dayScale: { REG_NPL_CLASS: 180, REG_LICENSE_PERIOD: 365, _default: 365 },
+  monthScale: { FIN_AVG_TERM: 60, _default: 60 },
+  itemConf: {
+    REG_LICENSE_TYPE: 0.95, REG_FOREIGN_OWNERSHIP: 0.8, REG_RATE_CAP: 0.9, REG_AUTO_INS: 0.9,
+    MKT_PEN_NEW: 0.7, MKT_PEN_USED: 0.6, FIN_AVG_RATE: 0.7, MKT_BRAND_TOP10: 0.8,
+    SYS_VENDORS: 0.4, SYS_SOL_TYPE: 0.4, SYS_VENDOR_LOCKIN: 0.35, CMP_SYSTEM: 0.3,
+    _default: 1.0,
+  },
+  ordinalMap: {
+    SYS_DIGITAL_MATURITY: { levels: { LOW: 0, MEDIUM: 1, MEDIUM_HIGH: 2, HIGH: 3 }, max: 3 },
+    MKT_DLR_DIGITAL: { levels: { LOW: 0, MEDIUM: 1, MEDIUM_HIGH: 2, HIGH: 3 }, max: 3 },
+    SYS_VENDOR_LOCKIN: { levels: { LOW: 0, MEDIUM: 1, HIGH_SI: 2, HIGH_GROUP_STD: 2, HIGH: 2 }, max: 2 },
+  },
+};
+function simPct(a, b, scale) { return Math.max(0, 100 * (1 - Math.abs(a - b) / scale)); }
+function simLog(a, b, uni) {
+  if (a <= 0 || b <= 0) return null;
+  const lo = Math.log10(uni.min), hi = Math.log10(uni.max);
+  const norm = v => Math.min(1, Math.max(0, (Math.log10(v) - lo) / (hi - lo)));
+  return 100 * (1 - Math.abs(norm(a) - norm(b)));
+}
+function simOrdinal(a, b, map) {
+  const la = map.levels[a], lb = map.levels[b];
+  if (la == null || lb == null) return null;
+  return 100 * (1 - Math.abs(la - lb) / map.max);
+}
+function simJaccard(a, b) {
+  const A = new Set(a), B = new Set(b);
+  const inter = [...A].filter(x => B.has(x)).length;
+  const uni = new Set([...a, ...b]).size;
+  return uni ? (inter / uni) * 100 : 0;
+}
+// 의미 매트릭스 (외부 주입). 없으면 토큰매칭 fallback.
+function getSemantic() {
+  if (typeof SEMANTIC_MATRIX !== "undefined") return SEMANTIC_MATRIX;
+  if (typeof globalThis !== "undefined" && globalThis.SEMANTIC_MATRIX) return globalThis.SEMANTIC_MATRIX;
+  return {};
+}
+function semanticLookup(itemId, a, b) {
+  if (a === b) return 1.0;
+  const m = getSemantic()[itemId];
+  if (!m) return null;
+  if (m[a] && m[a][b] != null) return m[a][b];
+  if (m[b] && m[b][a] != null) return m[b][a];
+  return null;
+}
+function simCategory(a, b, itemId) {
+  // 1순위: 의미 매트릭스
+  if (itemId) {
+    const s = semanticLookup(itemId, a, b);
+    if (s != null) return s * 100;
+  }
+  // fallback: 토큰매칭 (매트릭스 미정의 쌍)
+  if (a === b) return 100;
+  const ta = String(a).split("_"), tb = String(b).split("_");
+  const inter = ta.filter(t => tb.includes(t)).length;
+  const uni = new Set([...ta, ...tb]).size;
+  return uni ? (inter / uni) * 100 : 0;
+}
+function simObject(a, b, scale) {
+  const keys = Object.keys(a).filter(k => typeof a[k] === "number" && typeof b[k] === "number");
+  if (!keys.length) return null;
+  const s = keys.map(k => simPct(a[k], b[k], scale));
+  return s.reduce((x, y) => x + y, 0) / s.length;
+}
+function itemSimilarity(item, other) {
+  const va = item.value_normalized, vb = other.value_normalized;
+  if (va == null || vb == null) return { sim: null, reason: "데이터 공백" };
+  const st = item.similarity_type, id = item.catalog_item_id;
+  if (st === "REFERENCE") return { sim: null, reason: "참고(제외)" };
+  if (st === "BINARY") return { sim: va === vb ? 100 : 0, reason: "binary" };
+  if (RULESET.ordinalMap[id] && typeof va === "string") {
+    const s = simOrdinal(va, vb, RULESET.ordinalMap[id]);
+    if (s != null) return { sim: s, reason: "ordinal" };
+  }
+  if (st === "CONTINUOUS") {
+    if (RULESET.logUniverse[id]) {
+      const av = typeof va === "object" ? (va.new ?? va.value_gbp_bn ?? null) : va;
+      const bv = typeof vb === "object" ? (vb.new ?? vb.value_gbp_bn ?? null) : vb;
+      if (typeof av === "number" && typeof bv === "number") {
+        const s = simLog(av, bv, RULESET.logUniverse[id]);
+        if (s != null) return { sim: s, reason: "log-minmax" };
+      }
+    }
+    const scale = RULESET.pctScale[id] || RULESET.dayScale[id] || RULESET.monthScale[id] || RULESET.pctScale._default;
+    if (typeof va === "number" && typeof vb === "number") return { sim: simPct(va, vb, scale), reason: "pct/num" };
+    if (typeof va === "object" && typeof vb === "object") {
+      const s = simObject(va, vb, scale);
+      return { sim: s, reason: s == null ? "공통지표 없음" : "object-avg" };
+    }
+    return { sim: null, reason: "타입 불일치" };
+  }
+  if (st === "CATEGORICAL") {
+    if (Array.isArray(va) && Array.isArray(vb)) return { sim: simJaccard(va, vb), reason: "jaccard" };
+    return { sim: simCategory(va, vb, id), reason: "category" };
+  }
+  return { sim: null, reason: "알수없음" };
+}
+function itemConf(item, other) {
+  const base = RULESET.itemConf[item.catalog_item_id] ?? RULESET.itemConf._default;
+  const dataCoef = Math.min(item.confidence_coef ?? 1, other.confidence_coef ?? 1);
+  return base * dataCoef;
+}
+function compareCountries(target, base) {
+  const baseMap = {};
+  base.items.forEach(i => (baseMap[i.catalog_item_id] = i));
+  const killswitchHits = [];
+  target.items.filter(i => i.is_killswitch).forEach(i => {
+    if (i.value_normalized === false) killswitchHits.push(i.name);
+  });
+  const cats = {};
+  const itemDetails = [];
+  let confWsum = 0, confDenom = 0;
+  target.items.forEach(i => {
+    const o = baseMap[i.catalog_item_id];
+    if (!o) return;
+    const { sim, reason } = itemSimilarity(i, o);
+    const conf = itemConf(i, o);
+    itemDetails.push({ id: i.catalog_item_id, name: i.name, category: i.category_id, sim: round1(sim), conf: round2(conf), reason });
+    if (sim == null) return;
+    const c = (cats[i.category_id] ||= { wsum: 0, csum: 0, n: 0 });
+    c.wsum += sim * conf; c.csum += conf; c.n += 1;
+    const w = RULESET.categoryWeights[i.category_id] ?? 0;
+    confWsum += w * conf; confDenom += w;
+  });
+  const categoryScores = {};
+  for (const [cat, c] of Object.entries(cats)) categoryScores[cat] = c.csum > 0 ? c.wsum / c.csum : null;
+  const sysScore = categoryScores.SYSTEM ?? 0;
+  const gatePassed = sysScore >= RULESET.thresholds.systemGate;
+  let total = 0, wused = 0;
+  for (const [cat, w] of Object.entries(RULESET.categoryWeights))
+    if (categoryScores[cat] != null) { total += categoryScores[cat] * w; wused += w; }
+  total = wused > 0 ? total / wused : 0;
+  const effConf = confDenom > 0 ? confWsum / confDenom : 0;
+  const lowConfFlag = effConf < RULESET.thresholds.lowConfidence;
+  let verdict;
+  if (killswitchHits.length > 0) verdict = "BLOCKED";
+  else if (!gatePassed) verdict = "DEEP_RESEARCH";
+  else if (total >= RULESET.thresholds.entry) verdict = "TRANSPLANTABLE";
+  else verdict = "DEEP_RESEARCH";
+  const costRatio = verdict === "TRANSPLANTABLE" ? costFromSimilarity(total) : null;
+  return {
+    target: target.country_name, base: base.country_name,
+    total: round1(total), categoryScores: mapRound(categoryScores),
+    gatePassed, killswitchHits, verdict, costRatio,
+    effConf: round2(effConf), lowConfFlag, itemDetails,
+  };
+}
+function costFromSimilarity(sim) {
+  if (sim >= 90) return 0.35;
+  if (sim >= 80) return 0.48;
+  if (sim >= 70) return 0.62;
+  return null;
+}
+const round1 = x => x == null ? null : Math.round(x * 10) / 10;
+const round2 = x => x == null ? null : Math.round(x * 100) / 100;
+const mapRound = o => Object.fromEntries(Object.entries(o).map(([k, v]) => [k, round1(v)]));
+function printReport(r) {
+  const L = [];
+  L.push(`\n===== ${r.target} <- 비교(진출)국 ${r.base} =====`);
+  L.push(`룰셋: ${RULESET.name}`);
+  L.push(`\n[카테고리별 유사도 (conf 가중)]`);
+  for (const [cat, sc] of Object.entries(r.categoryScores)) {
+    const w = RULESET.categoryWeights[cat] * 100 + "%";
+    const gate = cat === "SYSTEM" ? `  [게이트${RULESET.thresholds.systemGate} ${r.gatePassed ? "PASS" : "FAIL"}]` : "";
+    L.push(`  ${cat.padEnd(11)} ${String(sc).padStart(5)} /100 (w ${w})${gate}`);
+  }
+  L.push(`\n[킬스위치] ${r.killswitchHits.length ? "X " + r.killswitchHits.join(", ") : "전부 통과 OK"}`);
+  L.push(`[시스템 게이트] ${r.gatePassed ? "통과 OK" : "미달 X"}`);
+  L.push(`[유효신뢰도] ${r.effConf} ${r.lowConfFlag ? "(저신뢰: 단독 의사결정 금지)" : "OK"}`);
+  L.push(`\n>>> 종합 유사도: ${r.total} /100`);
+  L.push(`>>> 판정: ${r.verdict}`);
+  if (r.costRatio != null) L.push(`>>> 추정비용: 비교국 대비 ${Math.round(r.costRatio * 100)}% (절감 ${Math.round((1 - r.costRatio) * 100)}%)`);
+  const gaps = r.itemDetails.filter(d => d.sim == null && d.reason === "데이터 공백");
+  L.push(`\n[공백 ${gaps.length}개] ${gaps.map(g => g.name).join(", ") || "없음"}`);
+  return L.join("\n");
+}
+window.SimilarityEngine = { compareCountries, printReport, RULESET, itemSimilarity };
+
+</script>
+<script>
+/* charts.js — inline SVG chart library */
+var ChartLib = (function(){
+  var NS="http://www.w3.org/2000/svg";
+  var C={accent:"#1f5c4a",accentSoft:"#d9e7e0",amber:"#b88324",signal:"#c5562e",
+    line:"#d8d3c6",grid:"#e7e3d8",ink:"#16201c",soft:"#4a5550"};
+  function el(t,a){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);return e;}
+  function txt(x,y,s,o){o=o||{};var e=el("text",{x:x,y:y,"text-anchor":o.anchor||"middle","font-size":o.size||11,fill:o.fill||C.soft,"font-weight":o.weight||400});e.textContent=s;return e;}
+  function colorFor(v){return v>=70?C.accent:v>=50?C.amber:C.signal;}
+
+  function line(svg,series,opts){
+    opts=opts||{};var W=opts.W||580,H=opts.H||200,pad={l:52,r:24,t:18,b:34};
+    var years=opts.years;
+    var vals=[];series.forEach(function(s){s.data.forEach(function(v){if(v!=null)vals.push(v);});});
+    var ymax=Math.max.apply(null,vals)*1.08, ymin=opts.ymin!=null?opts.ymin:Math.min.apply(null,vals)*0.85;
+    function X(i){return pad.l+(W-pad.l-pad.r)*i/(years.length-1);}
+    function Y(v){return H-pad.b-(H-pad.t-pad.b)*(v-ymin)/(ymax-ymin);}
+    for(var g=0;g<=4;g++){var v=ymin+(ymax-ymin)*g/4,y=Y(v);
+      svg.appendChild(el("line",{x1:pad.l,y1:y,x2:W-pad.r,y2:y,stroke:C.grid,"stroke-width":1}));
+      svg.appendChild(txt(pad.l-8,y+4,Math.round(v).toLocaleString(),{anchor:"end",size:10}));}
+    years.forEach(function(yr,i){svg.appendChild(txt(X(i),H-pad.b+16,yr,{size:10}));});
+    series.forEach(function(s){var d="";s.data.forEach(function(v,i){if(v==null)return;d+=(d?"L":"M")+X(i)+","+Y(v);});
+      svg.appendChild(el("path",{d:d,fill:"none",stroke:s.color,"stroke-width":2.2,"stroke-dasharray":s.dash||"0"}));
+      s.data.forEach(function(v,i){if(v!=null)svg.appendChild(el("circle",{cx:X(i),cy:Y(v),r:2.8,fill:s.color}));});});
+  }
+
+  function donut(svg,segs,opts){
+    opts=opts||{};var W=opts.W||180,H=opts.H||180,cx=W/2,cy=H/2,rO=Math.min(W,H)/2-10,rI=rO*0.6;
+    svg.setAttribute("viewBox","0 0 "+W+" "+H);
+    var tot=0;segs.forEach(function(s){tot+=s.v;});var a=-Math.PI/2;
+    segs.forEach(function(s){var ang=s.v/tot*Math.PI*2,a2=a+ang;
+      var x1=cx+rO*Math.cos(a),y1=cy+rO*Math.sin(a),x2=cx+rO*Math.cos(a2),y2=cy+rO*Math.sin(a2);
+      var xi1=cx+rI*Math.cos(a2),yi1=cy+rI*Math.sin(a2),xi2=cx+rI*Math.cos(a),yi2=cy+rI*Math.sin(a);
+      var laf=ang>Math.PI?1:0;
+      svg.appendChild(el("path",{d:"M"+x1+","+y1+"A"+rO+","+rO+" 0 "+laf+" 1 "+x2+","+y2+"L"+xi1+","+yi1+"A"+rI+","+rI+" 0 "+laf+" 0 "+xi2+","+yi2+"Z",fill:s.color}));
+      var mid=a+ang/2,lr=(rO+rI)/2;
+      svg.appendChild(txt(cx+lr*Math.cos(mid),cy+lr*Math.sin(mid)+4,s.v+"%",{size:12,weight:700,fill:"#fff"}));
+      a=a2;});
+  }
+
+  function group(svg,data,opts){
+    opts=opts||{};var W=opts.W||580,H=opts.H||180,pad={l:50,r:24,t:18,b:38};
+    var gap=(W-pad.l-pad.r)/data.length,bw=gap*0.26;
+    var all=[];data.forEach(function(d){all.push(d.a);all.push(d.b);});
+    var ymax=Math.max.apply(null,all.concat([0]))+2,ymin=Math.min.apply(null,all.concat([0]))-1;
+    function Y(v){return H-pad.b-(H-pad.t-pad.b)*(v-ymin)/(ymax-ymin);}
+    svg.appendChild(el("line",{x1:pad.l,y1:Y(0),x2:W-pad.r,y2:Y(0),stroke:C.ink,"stroke-width":1.5}));
+    data.forEach(function(d,i){var cx2=pad.l+gap*i+gap/2;
+      [[d.a,C.soft,-bw*0.6],[d.b,C.accent,bw*0.6]].forEach(function(x){
+        var v=x[0],col=x[1],off=x[2];
+        var top=v>=0?Y(v):Y(0),bh=Math.abs(Y(v)-Y(0));
+        svg.appendChild(el("rect",{x:cx2+off-bw/2,y:top,width:bw,height:Math.max(bh,1),rx:3,fill:col}));
+        svg.appendChild(txt(cx2+off,v>=0?top-5:top+bh+13,v+(opts.suffix||''),{size:10,weight:700,fill:col}));});
+      svg.appendChild(txt(cx2,H-pad.b+18,d.label,{size:11}));});
+  }
+
+  return {line:line,donut:donut,group:group,C:C,el:el,colorFor:colorFor};
+})();
+</script>
+<script>
+
+// ===== App State =====
+var STATE = {
+  index: null,
+  countries: {},
+  lastResult: null,
+  settings: null
+};
+
+function loadData() {
+  STATE.index = DATA_INDEX;
+  STATE.countries = DATA_COUNTRIES;
+  STATE.settings = {
+    weights: Object.assign({}, DATA_INDEX.weights),
+    thresholds: Object.assign({}, DATA_INDEX.thresholds)
+  };
+}
+
+// ===== Navigation =====
+function navigate(screenId) {
+  document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
+  document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
+  var el = document.getElementById(screenId);
+  if (el) el.classList.add('active');
+  var nav = document.querySelector('.nav-item[data-screen="' + screenId + '"]');
+  if (nav) nav.classList.add('active');
+}
+
+// ===== Engine wrapper =====
+function runAnalysis(targetData, baseData) {
+  updateEngineRuleset();
+  if (window.SimilarityEngine) {
+    return window.SimilarityEngine.compareCountries(targetData, baseData);
+  }
+  return { total: 0, categoryScores: {}, gatePassed: false, killswitchHits: [], verdict: 'DEEP_RESEARCH', costRatio: null, effConf: 0, lowConfFlag: true, itemDetails: [] };
+}
+
+function updateEngineRuleset() {
+  if (window.SimilarityEngine) {
+    var rs = window.SimilarityEngine.RULESET;
+    rs.categoryWeights = Object.assign({}, STATE.settings.weights);
+    rs.thresholds = Object.assign({}, STATE.settings.thresholds);
+  }
+}
+
+// ===== Helpers =====
+function scoreColor(v) {
+  if (v == null) return '#999';
+  if (v >= 70) return '#1f5c4a';
+  if (v >= 50) return '#b88324';
+  return '#c5562e';
+}
+
+function verdictLabel(v) {
+  var map = { TRANSPLANTABLE: '이식가능', DEEP_RESEARCH: '심층조사 권고', BLOCKED: '진입 차단' };
+  return map[v] || v;
+}
+
+// ===== S0: Dashboard =====
+function renderDashboard() {
+  var countries = STATE.index.countries;
+  var bases = countries.filter(function(c) { return c.role === 'base'; });
+  var targets = countries.filter(function(c) { return c.role === 'target'; });
+
+  var html = '<table><thead><tr><th>국가</th><th>역할</th><th>권역</th><th>조사일자</th><th>충족률</th></tr></thead><tbody>';
+  countries.forEach(function(c) {
+    var data = STATE.countries[c.code];
+    var filled = data ? data.items.filter(function(i) { return i.value_normalized != null; }).length : 0;
+    var total = data ? data.items.length : 0;
+    var pct = total ? Math.round(filled/total*100) : 0;
+    html += '<tr><td>' + c.flag + ' ' + c.name_ko + ' (' + c.code + ')</td>';
+    html += '<td><span class="badge ' + (c.role==='base'?'badge-green':'badge-amber') + '">' + (c.role==='base'?'진출국':'대상국') + '</span></td>';
+    html += '<td>' + c.region + '</td>';
+    html += '<td>' + (data ? data.survey_date : '-') + '</td>';
+    html += '<td><div class="bar-inline"><div class="bar-bg"><div class="bar-fill" style="width:' + pct + '%;background:#1f5c4a;"></div></div><span class="bar-val">' + pct + '%</span></div></td></tr>';
+  });
+  html += '</tbody></table>';
+  document.getElementById('dash-countries').innerHTML = html;
+
+  if (bases.length && targets.length) {
+    var base = STATE.countries[bases[0].code];
+    var target = STATE.countries[targets[0].code];
+    var result = runAnalysis(target, base);
+    STATE.lastResult = result;
+    var verdictClass = result.verdict === 'TRANSPLANTABLE' ? 'badge-green' : result.verdict === 'BLOCKED' ? 'badge-red' : 'badge-amber';
+    document.getElementById('dash-recent').innerHTML =
+      '<div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap;cursor:pointer;" onclick="navigate(\'s4\');renderReport();">' +
+      '<div style="flex:1;min-width:200px;"><div style="font-size:13px;color:#4a5550;">' + targets[0].flag + ' ' + targets[0].name_ko + ' ← ' + bases[0].flag + ' ' + bases[0].name_ko + '</div>' +
+      '<div style="font-size:24px;font-weight:700;margin-top:4px;">' + result.total + '점</div></div>' +
+      '<div><span class="badge ' + verdictClass + '">' + verdictLabel(result.verdict) + '</span></div>' +
+      '<div style="font-size:12px;color:#4a5550;">클릭하여 보고서 확인 →</div></div>';
+  }
+}
+
+// ===== S1: Single Country =====
+function initS1() {
+  var bases = STATE.index.countries.filter(function(c) { return c.role === 'base'; });
+  var targets = STATE.index.countries.filter(function(c) { return c.role === 'target'; });
+  var selBase = document.getElementById('s1-base');
+  var selTarget = document.getElementById('s1-target');
+  selBase.innerHTML = bases.map(function(c) { return '<option value="' + c.code + '">' + c.flag + ' ' + c.name_ko + '</option>'; }).join('');
+  selTarget.innerHTML = targets.map(function(c) { return '<option value="' + c.code + '">' + c.flag + ' ' + c.name_ko + '</option>'; }).join('');
+
+  document.getElementById('s1-run').onclick = function() {
+    var baseCode = selBase.value;
+    var targetCode = selTarget.value;
+    if (!baseCode || !targetCode) return;
+    var result = runAnalysis(STATE.countries[targetCode], STATE.countries[baseCode]);
+    STATE.lastResult = result;
+    renderS1Result(result);
+  };
+
+  document.getElementById('s1-to-report').onclick = function() { navigate('s4'); renderReport(); };
+  document.getElementById('s1-to-settings').onclick = function() { navigate('s3'); };
+}
+
+function renderS1Result(r) {
+  document.getElementById('s1-result').style.display = 'block';
+  var costText = r.costRatio ? (Math.round(r.costRatio*100) + '%') : '-';
+  document.getElementById('s1-stats').innerHTML =
+    '<div class="stat-box"><div class="val" style="color:' + scoreColor(r.total) + '">' + r.total + '</div><div class="lbl">종합 유사도</div></div>' +
+    '<div class="stat-box"><div class="val">' + costText + '</div><div class="lbl">추정비용 비율</div></div>' +
+    '<div class="stat-box"><div class="val">' + r.effConf + '</div><div class="lbl">유효 신뢰도</div></div>' +
+    '<div class="stat-box"><div class="val">' + (r.gatePassed ? '✓' : '✗') + '</div><div class="lbl">시스템 게이트</div></div>';
+
+  var vbox = document.getElementById('s1-verdict-box');
+  vbox.className = 'verdict-box ' + r.verdict;
+  document.getElementById('s1-verdict').textContent = verdictLabel(r.verdict);
+
+  var cats = ['MARKET','REGULATORY','FINANCIAL','SYSTEM'];
+  var catNames = {MARKET:'시장',REGULATORY:'규제',FINANCIAL:'금융',SYSTEM:'시스템'};
+  var catHtml = '';
+  cats.forEach(function(cat) {
+    var sc = r.categoryScores[cat] || 0;
+    var w = STATE.settings.weights[cat] || 0;
+    catHtml += '<div class="bar-inline"><span style="width:60px;font-size:12px;">' + catNames[cat] + '</span>' +
+      '<div class="bar-bg"><div class="bar-fill" style="width:' + sc + '%;background:' + scoreColor(sc) + ';"></div></div>' +
+      '<span class="bar-val">' + sc + '</span>' +
+      '<span style="font-size:10px;color:#4a5550;width:50px;">w=' + Math.round(w*100) + '%</span></div>';
+  });
+  document.getElementById('s1-categories').innerHTML = catHtml;
+
+  // Killswitch
+  var targetCode = document.getElementById('s1-target').value;
+  var targetData = STATE.countries[targetCode];
+  var ksHtml = '';
+  if (r.killswitchHits.length === 0) {
+    ksHtml = '<div style="color:#1f5c4a;font-weight:600;font-size:13px;">✓ 전부 통과</div>';
+  }
+  targetData.items.filter(function(i) { return i.is_killswitch; }).forEach(function(i) {
+    var pass = i.value_normalized !== false;
+    ksHtml += '<div class="ks-item"><div class="ks-dot ' + (pass?'ks-pass':'ks-fail') + '"></div><span>' + i.name + '</span> <span class="badge ' + (pass?'badge-green':'badge-red') + '">' + (pass?'통과':'차단') + '</span></div>';
+  });
+  document.getElementById('s1-killswitch').innerHTML = ksHtml;
+
+  // Items table
+  var tabHtml = '<div class="tab active" onclick="filterItems(\'ALL\')">전체</div>';
+  cats.forEach(function(c) {
+    tabHtml += '<div class="tab" onclick="filterItems(\'' + c + '\')">' + catNames[c] + '</div>';
+  });
+  document.getElementById('s1-cat-tabs').innerHTML = tabHtml;
+  filterItems('ALL');
+}
+
+function filterItems(cat) {
+  document.querySelectorAll('#s1-cat-tabs .tab').forEach(function(t) { t.classList.remove('active'); });
+  // find matching tab
+  document.querySelectorAll('#s1-cat-tabs .tab').forEach(function(t) {
+    if ((cat === 'ALL' && t.textContent === '전체') || t.textContent === ({MARKET:'시장',REGULATORY:'규제',FINANCIAL:'금융',SYSTEM:'시스템'}[cat] || '')) {
+      t.classList.add('active');
+    }
+  });
+  if (!STATE.lastResult) return;
+  var items = STATE.lastResult.itemDetails;
+  var filtered = cat === 'ALL' ? items : items.filter(function(d) { return d.category === cat; });
+  var html = '<table><thead><tr><th>항목</th><th>유사도</th><th>신뢰도</th><th>방법</th></tr></thead><tbody>';
+  filtered.forEach(function(d) {
+    var simDisplay = d.sim != null ? d.sim : '-';
+    var simColor = d.sim != null ? scoreColor(d.sim) : '#999';
+    html += '<tr><td>' + d.name + '</td><td style="font-weight:600;color:' + simColor + '">' + simDisplay + '</td><td>' + (d.conf || '-') + '</td><td><span class="badge badge-gray">' + d.reason + '</span></td></tr>';
+  });
+  html += '</tbody></table>';
+  document.getElementById('s1-items-table').innerHTML = html;
+}
+
+// ===== S2: Regional Ranking =====
+function initS2() {
+  var bases = STATE.index.countries.filter(function(c) { return c.role === 'base'; });
+  var selBase = document.getElementById('s2-base');
+  selBase.innerHTML = bases.map(function(c) { return '<option value="' + c.code + '">' + c.flag + ' ' + c.name_ko + '</option>'; }).join('');
+
+  document.getElementById('s2-run').onclick = function() {
+    var region = document.getElementById('s2-region').value;
+    var baseCode = selBase.value;
+    var targets = STATE.index.countries.filter(function(c) { return c.region === region && c.code !== baseCode; });
+
+    if (!targets.length) {
+      document.getElementById('s2-result').style.display = 'block';
+      document.getElementById('s2-tbody').innerHTML = '<tr><td colspan="8" style="text-align:center;color:#4a5550;">해당 권역에 분석 가능한 국가가 없습니다.</td></tr>';
+      return;
+    }
+
+    var base = STATE.countries[baseCode];
+    var results = targets.map(function(c) {
+      var r = runAnalysis(STATE.countries[c.code], base);
+      r.code = c.code; r.flag = c.flag; r.name_ko = c.name_ko;
+      return r;
+    }).sort(function(a, b) { return (b.total || 0) - (a.total || 0); });
+
+    document.getElementById('s2-result').style.display = 'block';
+    var html = '';
+    results.forEach(function(r, i) {
+      var verdictBadge = r.verdict === 'TRANSPLANTABLE' ? 'badge-green' : r.verdict === 'BLOCKED' ? 'badge-red' : 'badge-amber';
+      html += '<tr style="cursor:pointer;" onclick="drillDown(\'' + r.code + '\')"><td style="font-weight:700;">' + (i+1) + '</td>' +
+        '<td>' + r.flag + ' ' + r.name_ko + '</td>' +
+        '<td style="font-weight:700;color:' + scoreColor(r.total) + '">' + r.total + '</td>' +
+        '<td>' + (r.categoryScores.MARKET || '-') + '</td>' +
+        '<td>' + (r.categoryScores.REGULATORY || '-') + '</td>' +
+        '<td>' + (r.categoryScores.FINANCIAL || '-') + '</td>' +
+        '<td>' + (r.categoryScores.SYSTEM || '-') + '</td>' +
+        '<td><span class="badge ' + verdictBadge + '">' + verdictLabel(r.verdict) + '</span></td></tr>';
+    });
+    document.getElementById('s2-tbody').innerHTML = html;
+  };
+}
+
+function drillDown(code) {
+  navigate('s1');
+  document.getElementById('s1-target').value = code;
+  document.getElementById('s1-run').onclick();
+}
+
+// ===== S3: Settings =====
+function initS3() {
+  renderSettings();
+  document.getElementById('s3-save').onclick = saveSettings;
+  document.getElementById('s3-reset').onclick = function() {
+    STATE.settings = { weights: Object.assign({}, DATA_INDEX.weights), thresholds: Object.assign({}, DATA_INDEX.thresholds) };
+    renderSettings();
+  };
+}
+
+function renderSettings() {
+  var catNames = {MARKET:'시장',REGULATORY:'규제',FINANCIAL:'금융',SYSTEM:'시스템'};
+  var wHtml = '';
+  Object.keys(STATE.settings.weights).forEach(function(cat) {
+    var w = STATE.settings.weights[cat];
+    wHtml += '<div class="setting-row"><label>' + (catNames[cat]||cat) + '</label>' +
+      '<input type="range" min="0" max="100" value="' + Math.round(w*100) + '" data-weight="' + cat + '" oninput="this.nextElementSibling.textContent=this.value+\'%\'">' +
+      '<span style="width:40px;text-align:right;font-weight:600;">' + Math.round(w*100) + '%</span></div>';
+  });
+  document.getElementById('s3-weights').innerHTML = wHtml;
+
+  var tNames = {entry:'진입 임계값',systemGate:'시스템 게이트',lowConfidence:'저신뢰도 기준'};
+  var tHtml = '';
+  Object.keys(STATE.settings.thresholds).forEach(function(key) {
+    tHtml += '<div class="setting-row"><label>' + (tNames[key]||key) + '</label>' +
+      '<input type="number" value="' + STATE.settings.thresholds[key] + '" data-threshold="' + key + '" min="0" max="100" step="0.1"></div>';
+  });
+  document.getElementById('s3-thresholds').innerHTML = tHtml;
+  document.getElementById('s3-ruleset').innerHTML = '<div style="font-size:13px;color:#4a5550;">룰셋: 디폴트 v1<br>기본 비교국: ' + STATE.index.base_default + '</div>';
+}
+
+function saveSettings() {
+  document.querySelectorAll('[data-weight]').forEach(function(sl) {
+    STATE.settings.weights[sl.dataset.weight] = parseInt(sl.value) / 100;
+  });
+  var total = 0;
+  Object.keys(STATE.settings.weights).forEach(function(k) { total += STATE.settings.weights[k]; });
+  if (total > 0) {
+    Object.keys(STATE.settings.weights).forEach(function(k) {
+      STATE.settings.weights[k] = Math.round(STATE.settings.weights[k] / total * 100) / 100;
+    });
+  }
+  document.querySelectorAll('[data-threshold]').forEach(function(inp) {
+    STATE.settings.thresholds[inp.dataset.threshold] = parseFloat(inp.value);
+  });
+  updateEngineRuleset();
+  renderSettings();
+  alert('설정이 저장되었습니다.');
+}
+
+// ===== S4: Report =====
+var currentReportMode = 'executive';
+
+function getReportTargetCode() {
+  var sel = document.getElementById('s1-target');
+  if (sel && sel.value) return sel.value;
+  var t = STATE.index.countries.find(function(c){return c.role==='target';});
+  return t ? t.code : '';
+}
+function getReportBaseCode() {
+  var sel = document.getElementById('s1-base');
+  if (sel && sel.value) return sel.value;
+  var b = STATE.index.countries.find(function(c){return c.role==='base';});
+  return b ? b.code : '';
+}
+
+function renderReport() {
+  if (!STATE.lastResult) return;
+  document.getElementById('s4-empty').style.display = 'none';
+  document.getElementById('s4-content').style.display = 'block';
+  switchReportMode(currentReportMode);
+}
+
+function switchReportMode(mode) {
+  currentReportMode = mode;
+  document.querySelectorAll('#s4-content > .tab-bar .tab').forEach(function(t) {
+    t.classList.toggle('active', t.textContent.indexOf(mode === 'executive' ? '경영진' : '실무') >= 0);
+  });
+  if (mode === 'executive') renderExecutiveReport();
+  else renderDetailedReport();
+}
+
+// ----- Executive Report (report_def_executive.json 형식) -----
+function renderExecutiveReport() {
+  var r = STATE.lastResult;
+  if (!r) return;
+  var catNames = {MARKET:'시장',REGULATORY:'규제',FINANCIAL:'금융',SYSTEM:'시스템'};
+  var targetCode = getReportTargetCode();
+  var targetData = STATE.countries[targetCode];
+  var baseCode = getReportBaseCode();
+  var baseData = STATE.countries[baseCode];
+
+  var html = '';
+
+  // Header
+  html += '<div class="rpt-header"><div class="rpt-eyebrow">오토파이낸스 해외진출 진단 · 경영진 보고서</div>';
+  html += '<h1 class="rpt-title">' + r.target + ' 진출 진단</h1>';
+  html += '<div class="rpt-meta">대상국 <b>' + r.target + '</b> · 비교 기준 <b>' + r.base + '</b> · 조사 ' + (targetData?targetData.survey_date:'') + ' · 종합 유사도 <b>' + r.total + '</b> (' + verdictLabel(r.verdict) + ')</div></div>';
+
+  // Verdict banner
+  html += '<div class="rpt-verdict">';
+  html += '<div class="rpt-vc"><div class="rpt-vk">종합 유사도</div><div class="rpt-vv" style="color:' + scoreColor(r.total) + '">' + r.total + '</div><div class="rpt-vs">/ 100</div></div>';
+  html += '<div class="rpt-vc"><div class="rpt-vk">판정</div><div class="rpt-vv">' + verdictLabel(r.verdict) + '</div><div class="rpt-vs">임계 ' + STATE.settings.thresholds.entry + '</div></div>';
+  html += '<div class="rpt-vc"><div class="rpt-vk">시스템 게이트</div><div class="rpt-vv" style="color:' + (r.gatePassed?'#1f5c4a':'#c5562e') + '">' + (r.gatePassed?'통과':'미달') + '</div><div class="rpt-vs">기준 ' + STATE.settings.thresholds.systemGate + '</div></div>';
+  html += '<div class="rpt-vc"><div class="rpt-vk">킬스위치</div><div class="rpt-vv" style="color:' + (r.killswitchHits.length?'#c5562e':'#1f5c4a') + '">' + (r.killswitchHits.length?'차단':'통과') + '</div><div class="rpt-vs">5개 항목</div></div>';
+  html += '<div class="rpt-vc"><div class="rpt-vk">유효 신뢰도</div><div class="rpt-vv">' + r.effConf + '</div><div class="rpt-vs">' + (r.lowConfFlag?'저신뢰':'OK') + '</div></div>';
+  html += '</div>';
+
+  // PART 1: 시장 상세
+  html += '<div class="rpt-section"><div class="rpt-part-num">PART 1</div><h2>시장 상세 조사</h2><p class="rpt-lead">대상국 오토파이낸스 시장의 핵심 지표와 성장 추이입니다.</p>';
+
+  // KPI Cards
+  if (targetData) {
+    var carSales = targetData.items.find(function(i){return i.catalog_item_id==='MKT_CAR_SALES';});
+    var afSize = targetData.items.find(function(i){return i.catalog_item_id==='MKT_AF_SIZE';});
+    var penNew = targetData.items.find(function(i){return i.catalog_item_id==='MKT_PEN_NEW';});
+    var segCorp = targetData.items.find(function(i){return i.catalog_item_id==='MKT_SEG_RETAIL_CORP';});
+
+    html += '<div class="rpt-cards">';
+    if (carSales) {
+      var csVal = carSales.value_normalized;
+      var csDisplay = csVal && csVal.new ? Number(csVal.new).toLocaleString() + '대' : (carSales.value_raw||'').split(';')[0];
+      html += '<div class="rpt-kpi"><div class="rpt-kpi-label">신차 등록</div><div class="rpt-kpi-big">' + csDisplay + '</div>' + (carSales.timeseries?'<div class="rpt-kpi-trend up">CAGR ' + carSales.timeseries.cagr + '%</div>':'') + '</div>';
+    }
+    if (afSize) {
+      var afVal = afSize.value_normalized;
+      var afDisplay = '';
+      if (afVal && afVal.value_gbp_bn) afDisplay = '£' + afVal.value_gbp_bn + 'bn';
+      else if (afVal && afVal.value_pln_bn) afDisplay = afVal.value_pln_bn + 'bn PLN';
+      else if (afVal && afVal.value_usd_bn) afDisplay = '$' + afVal.value_usd_bn + 'bn';
+      else afDisplay = (afSize.value_raw||'').split('(')[0].split(';')[0].trim().substring(0,20);
+      html += '<div class="rpt-kpi"><div class="rpt-kpi-label">오토금융 시장규모</div><div class="rpt-kpi-big">' + afDisplay + '</div>' + (afSize.timeseries?'<div class="rpt-kpi-trend up">CAGR ' + afSize.timeseries.cagr + '%</div>':'') + '</div>';
+    }
+    if (penNew) html += '<div class="rpt-kpi"><div class="rpt-kpi-label">금융 침투율(신차)</div><div class="rpt-kpi-big">' + (penNew.value_normalized||'-') + '%</div><div class="rpt-kpi-note">' + (penNew.note||'') + '</div></div>';
+    if (segCorp && segCorp.value_normalized) html += '<div class="rpt-kpi"><div class="rpt-kpi-label">법인 구매비중</div><div class="rpt-kpi-big">' + (segCorp.value_normalized.corp||'-') + '%</div><div class="rpt-kpi-note">B2B 시장 구조</div></div>';
+    html += '</div>';
+  }
+
+  // Charts: line chart + donuts
+  html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0;">';
+  html += '<div class="rpt-chart-box"><div class="rpt-chart-title">신차 등록 추이 (양국 비교)</div><div class="rpt-chart-sub">2019–2025 실적 + 2030 CAGR 예측 (천 대)</div><svg id="exec-line-chart" style="width:100%;height:auto;"></svg><div class="rpt-legend"><span><i style="background:#1f5c4a"></i>' + r.target + '</span><span><i style="background:#4a5550"></i>' + r.base + '</span><span style="opacity:.6">점선=예측</span></div></div>';
+  html += '<div style="display:flex;flex-direction:column;gap:14px;">';
+  html += '<div class="rpt-chart-box"><div class="rpt-chart-title">고객 세그먼트 — ' + r.target + '</div><svg id="exec-donut-target" style="width:100%;height:auto;"></svg><div class="rpt-legend"><span><i style="background:#1f5c4a"></i>법인</span><span><i style="background:#b88324"></i>개인</span></div></div>';
+  html += '<div class="rpt-chart-box"><div class="rpt-chart-title">고객 세그먼트 — ' + r.base + '</div><svg id="exec-donut-base" style="width:100%;height:auto;"></svg><div class="rpt-legend"><span><i style="background:#1f5c4a"></i>법인</span><span><i style="background:#b88324"></i>개인</span></div></div>';
+  html += '</div></div>';
+
+  // Detail table (key facts)
+  html += '<table><thead><tr><th>항목</th><th>내용</th><th>출처</th></tr></thead><tbody>';
+  if (targetData) {
+    var keyItems = ['MKT_CAR_SALES','MKT_AF_SIZE','MKT_PEN_NEW','REG_RATE_CAP','REG_LICENSE_TYPE','REG_CB_INFRA','REG_REPOSSESS','FIN_LENDER_RANK'];
+    keyItems.forEach(function(id) {
+      var it = targetData.items.find(function(i){return i.catalog_item_id===id;});
+      if (!it || !it.value_raw) return;
+      var tierCls = it.source_tier==='TIER1'?'rpt-t1':it.source_tier==='TIER2'?'rpt-t2':'rpt-t3';
+      html += '<tr><td><b>' + it.name + '</b></td><td>' + it.value_raw + '</td><td><span class="rpt-tag ' + tierCls + '">' + (it.source_name||'') + '</span></td></tr>';
+    });
+  }
+  html += '</tbody></table>';
+  html += '</div>';
+
+  // PART 2: 비교
+  html += '<div class="rpt-section"><div class="rpt-part-num">PART 2</div><h2>비교 분석</h2><p class="rpt-lead">진출국 데이터를 기준으로 대상국의 카테고리별 유사도를 산출했습니다.</p>';
+
+  // Category bar
+  html += '<div class="rpt-cat-bars"><div class="rpt-hbar-title">카테고리별 유사도</div>';
+  ['MARKET','REGULATORY','FINANCIAL','SYSTEM'].forEach(function(cat) {
+    var sc = r.categoryScores[cat] || 0;
+    var w = Math.round((STATE.settings.weights[cat]||0)*100);
+    html += '<div class="rpt-hbar-row"><span class="rpt-hbar-label">' + catNames[cat] + ' (' + w + '%)</span><div class="rpt-hbar-bg"><div class="rpt-hbar-fill" style="width:' + sc + '%;background:' + scoreColor(sc) + ';"></div></div><span class="rpt-hbar-val">' + sc + '</span></div>';
+  });
+  html += '</div>';
+
+  // CAGR group bar chart
+  html += '<div class="rpt-chart-box"><div class="rpt-chart-title">시장 성장성 비교 (CAGR %)</div><div class="rpt-chart-sub">영국 vs 대상국 — 신차 판매 / 오토금융 시장 성장률</div><svg id="exec-cagr-chart" style="width:100%;height:auto;"></svg><div class="rpt-legend"><span><i style="background:#4a5550"></i>' + r.base + '</span><span><i style="background:#1f5c4a"></i>' + r.target + '</span></div></div>';
+
+  // Compare table
+  if (targetData && baseData) {
+    html += '<h3>구조적 차이 — 핵심 지표 대조</h3>';
+    html += '<table><thead><tr><th>지표</th><th>' + r.base + '</th><th>' + r.target + '</th><th>해석</th></tr></thead><tbody>';
+    var compares = [
+      ['MKT_CAR_SALES','신차 시장규모','규모 차이'],
+      ['REG_CORP_TAX','법인세율','세율 비교'],
+      ['MKT_PEN_NEW','금융 침투율(신차)','침투 구조'],
+      ['REG_WHT_DIVIDEND','배당 원천징수','본사 송금']
+    ];
+    compares.forEach(function(c) {
+      var bItem = baseData.items.find(function(i){return i.catalog_item_id===c[0];});
+      var tItem = targetData.items.find(function(i){return i.catalog_item_id===c[0];});
+      if (!bItem || !tItem) return;
+      html += '<tr><td>' + c[1] + '</td><td class="num">' + (bItem.value_raw||'-') + '</td><td class="num">' + (tItem.value_raw||'-') + '</td><td>' + c[2] + '</td></tr>';
+    });
+    html += '</tbody></table>';
+  }
+  html += '</div>';
+
+  // PART 3: 인사이트 & 권고
+  html += '<div class="rpt-section"><div class="rpt-part-num">PART 3</div><h2>인사이트 & 권고</h2><p class="rpt-lead">조사·비교에서 도출한 진출 전략과 리스크입니다.</p>';
+
+  // Kilswitch & gate warnings
+  if (r.killswitchHits.length) {
+    html += '<div class="rpt-warning-red">⚠️ 킬스위치 차단: ' + r.killswitchHits.join(', ') + ' — 해당 장벽 해소 전 진출 불가</div>';
+  }
+  if (!r.gatePassed) {
+    html += '<div class="rpt-warning-amber">⚠️ 시스템 게이트 미달 (' + (r.categoryScores.SYSTEM||0) + '/' + STATE.settings.thresholds.systemGate + ') — 시스템 이식성 추가 조사 필요</div>';
+  }
+  if (r.lowConfFlag) {
+    html += '<div class="rpt-warning-amber">⚠️ 저신뢰도 (conf=' + r.effConf + ') — 단독 의사결정 금지, 현지 실사 필수</div>';
+  }
+
+  // Key insights from data gaps and scores
+  html += '<h3>핵심 인사이트</h3>';
+  var lowItems = r.itemDetails.filter(function(d){return d.sim != null && d.sim < 40;}).sort(function(a,b){return a.sim - b.sim;}).slice(0,5);
+  var highItems = r.itemDetails.filter(function(d){return d.sim != null && d.sim >= 80;}).sort(function(a,b){return b.sim - a.sim;}).slice(0,5);
+
+  if (highItems.length) {
+    html += '<div class="rpt-insight"><b>유사 영역.</b> ' + highItems.map(function(d){return d.name + '(' + d.sim + ')';}).join(', ') + ' — 이식 용이 항목</div>';
+  }
+  if (lowItems.length) {
+    html += '<div class="rpt-insight-warn"><b>차이 영역.</b> ' + lowItems.map(function(d){return d.name + '(' + d.sim + ')';}).join(', ') + ' — 현지화 필요</div>';
+  }
+
+  // Recommendations
+  html += '<h3>진출 권고</h3>';
+  html += '<div class="rpt-reco"><div class="rpt-reco-n">1</div><div class="rpt-reco-body"><b>데이터 보완</b> — 공백 ' + r.itemDetails.filter(function(d){return d.sim==null && d.reason==="데이터 공백";}).length + '개 항목 현지 실사로 보강</div></div>';
+  if (r.verdict === 'DEEP_RESEARCH') {
+    html += '<div class="rpt-reco"><div class="rpt-reco-n">2</div><div class="rpt-reco-body"><b>심층 조사</b> — 종합 ' + r.total + '점으로 임계(' + STATE.settings.thresholds.entry + ') 미달, 추가 조사 후 재판정</div></div>';
+  }
+  html += '<div class="rpt-reco"><div class="rpt-reco-n">' + (r.verdict==='DEEP_RESEARCH'?'3':'2') + '</div><div class="rpt-reco-body"><b>비용 시뮬레이션</b> — ' + (r.costRatio ? '추정비용 비율 ' + Math.round(r.costRatio*100) + '% 기반 상세 사업계획' : '진입 판정 후 비용 산출') + '</div></div>';
+
+  html += '</div>';
+
+  // Footer
+  html += '<div class="rpt-footer">오토파이낸스 진출 진단 에이전트 · 룰셋 디폴트 v1 · 출처 등급: 공식 1차 / 준공식 / 참고</div>';
+
+  document.getElementById('s4-report-body').innerHTML = html;
+
+  // Render SVG charts after DOM is ready
+  setTimeout(function() { renderExecCharts(targetData, STATE.countries[baseCode]); }, 0);
+}
+
+function renderExecCharts(targetData, baseData) {
+  if (!targetData || !baseData) return;
+
+  // 1. Line chart — car sales trend
+  var lineEl = document.getElementById('exec-line-chart');
+  if (lineEl) {
+    lineEl.setAttribute("viewBox", "0 0 580 200");
+    var tSales = targetData.items.find(function(i){return i.catalog_item_id==='MKT_CAR_SALES';});
+    var bSales = baseData.items.find(function(i){return i.catalog_item_id==='MKT_CAR_SALES';});
+    if (tSales && tSales.timeseries && bSales && bSales.timeseries) {
+      var tData = tSales.timeseries.data, bData = bSales.timeseries.data;
+      var years = Object.keys(tData).sort();
+      if (tSales.timeseries.forecast_2030) years = years.concat(['2030']);
+      var scale = 0.001; // thousands
+      var tSeries = years.map(function(y){return y!=='2030' && tData[y]!=null ? tData[y]*scale : null;});
+      var bSeries = years.map(function(y){return y!=='2030' && bData[y]!=null ? bData[y]*scale : null;});
+      var series = [{data:tSeries, color:'#1f5c4a', dash:'0'}, {data:bSeries, color:'#4a5550', dash:'0'}];
+      if (tSales.timeseries.forecast_2030) {
+        var lastYr = years[years.length-2];
+        var tFc = years.map(function(y){return y===lastYr?tData[lastYr]*scale:(y==='2030'?tSales.timeseries.forecast_2030*scale:null);});
+        series.push({data:tFc, color:'#1f5c4a', dash:'5,4'});
+      }
+      if (bSales.timeseries.forecast_2030) {
+        var lastYrB = years[years.length-2];
+        var bFc = years.map(function(y){return y===lastYrB?bData[lastYrB]*scale:(y==='2030'?bSales.timeseries.forecast_2030*scale:null);});
+        series.push({data:bFc, color:'#4a5550', dash:'5,4'});
+      }
+      ChartLib.line(lineEl, series, {years:years, ymin:0, W:580, H:200});
+    }
+  }
+
+  // 2. Donuts — customer segment
+  var tSeg = targetData.items.find(function(i){return i.catalog_item_id==='MKT_SEG_RETAIL_CORP';});
+  var bSeg = baseData.items.find(function(i){return i.catalog_item_id==='MKT_SEG_RETAIL_CORP';});
+
+  var donutTarget = document.getElementById('exec-donut-target');
+  if (donutTarget && tSeg && tSeg.value_normalized) {
+    ChartLib.donut(donutTarget, [
+      {v: tSeg.value_normalized.corp||0, color:'#1f5c4a'},
+      {v: tSeg.value_normalized.retail||0, color:'#b88324'}
+    ], {W:160, H:160});
+  }
+
+  var donutBase = document.getElementById('exec-donut-base');
+  if (donutBase && bSeg && bSeg.value_normalized) {
+    ChartLib.donut(donutBase, [
+      {v: bSeg.value_normalized.corp||0, color:'#1f5c4a'},
+      {v: bSeg.value_normalized.retail||0, color:'#b88324'}
+    ], {W:160, H:160});
+  }
+
+  // 3. CAGR group bar
+  var cagrEl = document.getElementById('exec-cagr-chart');
+  if (cagrEl) {
+    cagrEl.setAttribute("viewBox", "0 0 580 180");
+    var tCarCagr = 0, bCarCagr = 0, tAfCagr = 0, bAfCagr = 0;
+    var tCar = targetData.items.find(function(i){return i.catalog_item_id==='MKT_CAR_SALES';});
+    var bCar = baseData.items.find(function(i){return i.catalog_item_id==='MKT_CAR_SALES';});
+    var tAf = targetData.items.find(function(i){return i.catalog_item_id==='MKT_AF_SIZE';});
+    var bAf = baseData.items.find(function(i){return i.catalog_item_id==='MKT_AF_SIZE';});
+    if (tCar && tCar.timeseries) tCarCagr = tCar.timeseries.cagr||0;
+    if (bCar && bCar.timeseries) bCarCagr = bCar.timeseries.cagr||0;
+    if (tAf && tAf.timeseries) tAfCagr = tAf.timeseries.cagr||0;
+    if (bAf && bAf.timeseries) bAfCagr = bAf.timeseries.cagr||0;
+    ChartLib.group(cagrEl, [
+      {label:'신차 판매', a:bCarCagr, b:tCarCagr},
+      {label:'오토금융 시장', a:bAfCagr, b:tAfCagr}
+    ], {W:580, H:180, suffix:'%'});
+  }
+}
+
+// ----- Detailed Report (report_def_detailed.json 형식) -----
+function renderDetailedReport() {
+  var r = STATE.lastResult;
+  if (!r) return;
+  var catNames = {MARKET:'시장',REGULATORY:'규제',FINANCIAL:'금융',SYSTEM:'시스템'};
+  var catIcons = {MARKET:'M',REGULATORY:'R',FINANCIAL:'F',SYSTEM:'S'};
+  var TIER = {TIER1:['공식 1차','rpt-t1'],TIER2:['준공식','rpt-t2'],TIER3:['참고','rpt-t3'],GAP:['미확보','rpt-gap']};
+
+  var targetCode = getReportTargetCode();
+  var targetData = STATE.countries[targetCode];
+  var baseCode = getReportBaseCode();
+
+  var simMap = {};
+  r.itemDetails.forEach(function(d) { simMap[d.id] = d.sim; });
+
+  // Build sub_category map from catalog
+  var subCatMap = {};
+  if (DATA_CATALOG && DATA_CATALOG.items) {
+    DATA_CATALOG.items.forEach(function(ci) { subCatMap[ci.catalog_item_id] = ci.sub_category || ''; });
+  }
+
+  var html = '';
+
+  // Header
+  html += '<div class="rpt-header">';
+  html += '<div class="rpt-eyebrow">오토파이낸스 해외진출 · 실무 상세 보고서</div>';
+  html += '<h1 class="rpt-title">' + (targetData ? targetData.country_name : '') + ' 진출 상세 진단</h1>';
+  html += '<div class="rpt-meta">대상국 <b>' + r.target + '</b> · 비교 기준 <b>' + r.base + '</b> · 조사 ' + (targetData?targetData.survey_date:'') + ' · 종합 유사도 <b>' + r.total + '</b> (' + verdictLabel(r.verdict) + ')</div>';
+  html += '</div>';
+
+  // Verdict banner
+  html += '<div class="rpt-verdict">';
+  html += '<div class="rpt-vc"><div class="rpt-vk">종합 유사도</div><div class="rpt-vv" style="color:' + scoreColor(r.total) + '">' + r.total + '</div><div class="rpt-vs">/ 100</div></div>';
+  html += '<div class="rpt-vc"><div class="rpt-vk">판정</div><div class="rpt-vv">' + verdictLabel(r.verdict) + '</div><div class="rpt-vs">임계 ' + STATE.settings.thresholds.entry + '</div></div>';
+  html += '<div class="rpt-vc"><div class="rpt-vk">시스템 게이트</div><div class="rpt-vv" style="color:' + (r.gatePassed?'#1f5c4a':'#c5562e') + '">' + (r.gatePassed?'통과':'미달') + '</div><div class="rpt-vs">기준 ' + STATE.settings.thresholds.systemGate + '</div></div>';
+  html += '<div class="rpt-vc"><div class="rpt-vk">킬스위치</div><div class="rpt-vv" style="color:' + (r.killswitchHits.length?'#c5562e':'#1f5c4a') + '">' + (r.killswitchHits.length?'차단':'통과') + '</div><div class="rpt-vs">5개 항목</div></div>';
+  html += '<div class="rpt-vc"><div class="rpt-vk">유효 신뢰도</div><div class="rpt-vv">' + r.effConf + '</div><div class="rpt-vs">' + (r.lowConfFlag?'저신뢰':'OK') + '</div></div>';
+  html += '</div>';
+
+  // Summary line
+  html += '<div class="rpt-summary">이 보고서는 ' + (targetData?targetData.items.length:69) + '개 항목 전체의 조사 내용·출처·유사도를 담은 실무 진출 준비용 자료입니다.</div>';
+
+  // Category sections
+  var categories = ['MARKET','REGULATORY','FINANCIAL','SYSTEM'];
+  categories.forEach(function(cat) {
+    if (!targetData) return;
+    var catItems = targetData.items.filter(function(i) { return i.category_id === cat; });
+    var catScore = r.categoryScores[cat] || 0;
+    var gateNote = cat === 'SYSTEM' ? (' · 게이트 ' + (r.gatePassed?'통과':'미달')) : '';
+
+    html += '<div class="rpt-cat">';
+    html += '<div class="rpt-cat-head"><span class="rpt-cat-icon">' + catIcons[cat] + '</span><span class="rpt-cat-name">' + catNames[cat] + '</span><span class="rpt-cat-score">유사도 ' + catScore + gateNote + '</span></div>';
+
+    // Category hbar (top/bottom extremes)
+    var scored = r.itemDetails.filter(function(d) { return d.category === cat && d.sim != null; });
+    scored.sort(function(a,b) { return b.sim - a.sim; });
+    if (scored.length > 0) {
+      html += '<div class="rpt-hbar-section">';
+      html += '<div class="rpt-hbar-title">' + catNames[cat] + ' 항목별 유사도</div>';
+      var display = scored.length <= 7 ? scored : scored.slice(0,3).concat([{name:'⋯ (' + (scored.length-6) + '개 생략)', sim:null}]).concat(scored.slice(-3));
+      display.forEach(function(d) {
+        if (d.sim == null) {
+          html += '<div class="rpt-hbar-row"><span class="rpt-hbar-label">' + d.name + '</span><span class="rpt-hbar-skip">·····</span></div>';
+        } else {
+          html += '<div class="rpt-hbar-row"><span class="rpt-hbar-label">' + d.name + '</span><div class="rpt-hbar-bg"><div class="rpt-hbar-fill" style="width:' + d.sim + '%;background:' + scoreColor(d.sim) + ';"></div></div><span class="rpt-hbar-val">' + d.sim + '</span></div>';
+        }
+      });
+      html += '</div>';
+    }
+
+    // Items by sub_category (from catalog)
+    var subs = {};
+    catItems.forEach(function(it) {
+      var sub = subCatMap[it.catalog_item_id] || '기타';
+      if (!subs[sub]) subs[sub] = [];
+      subs[sub].push(it);
+    });
+    Object.keys(subs).forEach(function(sub) {
+      html += '<div class="rpt-sub-title">' + sub + '</div>';
+      subs[sub].forEach(function(it) {
+        var sim = simMap[it.catalog_item_id];
+        var tierInfo = TIER[it.source_tier] || ['',''];
+        var hasAction = it.action_items && it.action_items.length > 0;
+
+        html += '<div class="rpt-item' + (hasAction?' rpt-item-action':'') + '">';
+        html += '<div class="rpt-item-head"><span class="rpt-item-name">' + it.name + '</span>';
+        if (it.is_killswitch) html += '<span class="rpt-ks">킬스위치</span>';
+        if (sim != null) html += '<span class="rpt-sim">유사도 ' + sim + '</span>';
+        html += '</div>';
+
+        // Value
+        var hasVal = it.value_raw && String(it.value_raw).indexOf('조사') !== 0;
+        html += '<div class="rpt-item-val">' + (hasVal ? it.value_raw : '<span class="rpt-gap-text">조사 필요 (현지 실사)</span>') + '</div>';
+
+        // Research detail
+        if (it.research_detail) {
+          html += '<div class="rpt-item-detail">' + it.research_detail + '</div>';
+        }
+
+        // Timeseries
+        if (it.timeseries) {
+          var ts = it.timeseries;
+          html += '<div class="rpt-ts">';
+          html += '<div class="rpt-ts-title">' + it.name + ' 추이' + (ts.forecast_2030?' 및 2030 예측':'') + '</div>';
+          html += '<div class="rpt-ts-sub">CAGR ' + ts.cagr + '%' + (ts.forecast_2030 ? ' · 2030 예측 ' + Number(ts.forecast_2030).toLocaleString() + ' ' + ts.unit : '') + '</div>';
+          // Mini bar chart for timeseries
+          var years = Object.keys(ts.data);
+          var maxVal = Math.max.apply(null, years.map(function(y){return ts.data[y];}));
+          html += '<div class="rpt-ts-bars">';
+          years.forEach(function(y) {
+            var pct = maxVal > 0 ? Math.round(ts.data[y]/maxVal*100) : 0;
+            html += '<div class="rpt-ts-bar"><div class="rpt-ts-bar-fill" style="height:' + pct + '%;"></div><div class="rpt-ts-bar-yr">' + y + '</div></div>';
+          });
+          html += '</div></div>';
+        }
+
+        // Source
+        html += '<div class="rpt-item-src"><span class="rpt-tag ' + tierInfo[1] + '">' + tierInfo[0] + '</span> ' + (it.source_detail || it.source_name || '');
+        if (it.official_gap_flag) html += ' <span class="rpt-gap-flag">공식 미확보</span>';
+        html += '</div>';
+
+        // Action items
+        if (hasAction) {
+          html += '<div class="rpt-actions"><div class="rpt-actions-title">▶ 진출 준비사항</div><ul>';
+          it.action_items.forEach(function(a) { html += '<li>' + a + '</li>'; });
+          html += '</ul></div>';
+        }
+
+        html += '</div>'; // end rpt-item
+      });
+    });
+    html += '</div>'; // end rpt-cat
+  });
+
+  // Checklist
+  if (targetData) {
+    var actionItems = targetData.items.filter(function(i) { return i.action_items && i.action_items.length > 0; });
+    if (actionItems.length > 0) {
+      html += '<div class="rpt-checklist">';
+      html += '<h2>진출 준비 체크리스트</h2>';
+      html += '<div class="rpt-cl-sub">규제·라이선스·시스템 항목에서 도출한 실행 준비사항입니다.</div>';
+      actionItems.forEach(function(it) {
+        html += '<div class="rpt-ck-item"><div class="rpt-ck-name">' + it.name + '</div><ul>';
+        it.action_items.forEach(function(a) { html += '<li>' + a + '</li>'; });
+        html += '</ul></div>';
+      });
+      html += '</div>';
+    }
+  }
+
+  // Footer
+  html += '<div class="rpt-footer">오토파이낸스 진출 진단 에이전트 · 룰셋 디폴트 v1 · 출처 등급: 공식 1차 / 준공식 / 참고</div>';
+
+  document.getElementById('s4-report-body').innerHTML = html;
+}
+
+// ===== S5: Data Management =====
+function initS5() {
+  renderS5();
+  document.getElementById('s5-to-diag').onclick = function() {
+    var code = document.getElementById('s5-country-select').value;
+    if (code) { navigate('s1'); }
+  };
+}
+
+function renderS5() {
+  var html = '';
+  STATE.index.countries.forEach(function(c) {
+    var data = STATE.countries[c.code];
+    html += '<div class="data-item"><div><div style="font-weight:600;">' + c.flag + ' ' + c.name_ko + ' (' + c.code + ')</div>' +
+      '<div style="font-size:12px;color:#4a5550;">' + (c.role==='base'?'진출국':'대상국') + ' · ' + c.region + '</div></div>' +
+      '<div style="text-align:right;"><div style="font-size:12px;color:#4a5550;">조사: ' + (data?data.survey_date:'-') + '</div></div></div>';
+  });
+  document.getElementById('s5-countries').innerHTML = html;
+
+  var qHtml = '<table><thead><tr><th>국가</th><th>총항목</th><th>채움</th><th>공백</th><th>Tier1</th><th>충족률</th></tr></thead><tbody>';
+  STATE.index.countries.forEach(function(c) {
+    var data = STATE.countries[c.code];
+    if (!data) return;
+    var s = data.summary;
+    var fillPct = Math.round(s.normalized_filled / (s.normalized_filled + s.normalized_gap) * 100);
+    qHtml += '<tr><td>' + c.flag + ' ' + c.name_ko + '</td><td>' + s.total_items + '</td><td>' + s.normalized_filled + '</td><td style="color:#c5562e;font-weight:600;">' + s.normalized_gap + '</td><td>' + Math.round(s.official_ratio*100) + '%</td>' +
+      '<td><div class="bar-inline"><div class="bar-bg"><div class="bar-fill" style="width:' + fillPct + '%;background:#1f5c4a;"></div></div><span class="bar-val">' + fillPct + '%</span></div></td></tr>';
+  });
+  qHtml += '</tbody></table>';
+  document.getElementById('s5-quality').innerHTML = qHtml;
+
+  var sel = document.getElementById('s5-country-select');
+  sel.innerHTML = STATE.index.countries.map(function(c) { return '<option value="' + c.code + '">' + c.flag + ' ' + c.name_ko + '</option>'; }).join('');
+  sel.onchange = function() { renderS5Items(sel.value); };
+  renderS5Items(sel.value);
+}
+
+function renderS5Items(code) {
+  var data = STATE.countries[code];
+  if (!data) return;
+  var catNames = {MARKET:'시장',REGULATORY:'규제',FINANCIAL:'금융',SYSTEM:'시스템'};
+  var html = '<table><thead><tr><th>항목</th><th>카테고리</th><th>값</th><th>Tier</th><th>상태</th></tr></thead><tbody>';
+  data.items.forEach(function(item) {
+    var hasVal = item.value_normalized != null;
+    var tierBadge = item.source_tier==='TIER1'?'badge-green':item.source_tier==='TIER2'?'badge-amber':item.source_tier==='GAP'?'badge-red':'badge-gray';
+    var valDisplay = hasVal ? (typeof item.value_normalized === 'object' ? JSON.stringify(item.value_normalized) : String(item.value_normalized)) : '공백';
+    html += '<tr><td style="font-size:12px;">' + item.name + '</td><td><span class="badge badge-gray">' + (catNames[item.category_id]||item.category_id) + '</span></td>' +
+      '<td style="font-size:11px;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + valDisplay + '</td>' +
+      '<td><span class="badge ' + tierBadge + '">' + item.source_tier + '</span></td>' +
+      '<td><span class="badge ' + (hasVal?'badge-green':'badge-red') + '">' + (hasVal?'채움':'공백') + '</span></td></tr>';
+  });
+  html += '</tbody></table>';
+  document.getElementById('s5-items').innerHTML = html;
+}
+
+// ===== Init =====
+function initApp() {
+  try {
+    loadData();
+  } catch(e) {
+    document.getElementById('dash-recent').innerHTML = '<pre style="color:red;">' + e.message + '</pre>';
+    return;
+  }
+
+  // Navigation
+  document.querySelectorAll('.nav-item').forEach(function(el) {
+    el.onclick = function() { navigate(el.dataset.screen); };
+  });
+  document.querySelectorAll('.dash-card[data-nav]').forEach(function(el) {
+    el.onclick = function() { navigate(el.dataset.nav); };
+  });
+
+  renderDashboard();
+  initS1();
+  initS2();
+  initS3();
+  initS5();
+  if (STATE.lastResult) renderReport();
+}
+
+initApp();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+{
+  "base_default": "GB",
+  "weights": {
+    "MARKET": 0.25,
+    "REGULATORY": 0.25,
+    "FINANCIAL": 0.2,
+    "SYSTEM": 0.3
+  },
+  "thresholds": {
+    "entry": 70,
+    "systemGate": 50,
+    "lowConfidence": 0.6
+  },
+  "countries": [
+    {
+      "code": "GB",
+      "name": "United Kingdom",
+      "name_ko": "영국",
+      "role": "base",
+      "region": "EUROPE",
+      "flag": "🇬🇧"
+    },
+    {
+      "code": "PL",
+      "name": "Poland",
+      "name_ko": "폴란드",
+      "role": "target",
+      "region": "EUROPE",
+      "flag": "🇵🇱"
+    }
+  ]
+}

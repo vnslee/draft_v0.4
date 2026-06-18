@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Zenith Orbit | Regional Detail Information</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;family=Geist:wght@600;700;800&amp;family=JetBrains+Mono:wght@700&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #040508;
+            color: #e3e2e8;
+            overflow-x: hidden;
+        }
+        .glass-card {
+            background: rgba(10, 13, 20, 0.7);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(30, 41, 59, 0.5);
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.12);
+        }
+        .glass-card:hover {
+            border-color: rgba(76, 215, 246, 0.3);
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.12);
+        }
+        .neon-glow-cyan {
+            box-shadow: 0 0 15px rgba(76, 215, 246, 0.4);
+        }
+        .data-pulse {
+            position: relative;
+        }
+        .data-pulse::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 1px solid #4cd7f6;
+            border-radius: inherit;
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.05); opacity: 0; }
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #334155; }
+        
+        #topAppBar {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        #topAppBar.nav-hidden {
+            transform: translateY(-100%);
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error-container": "#ffdad6",
+                    "error": "#ffb4ab",
+                    "outline-variant": "#3d494c",
+                    "tertiary-container": "#1bbd85",
+                    "on-background": "#e3e2e8",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "secondary-fixed-dim": "#adc6ff",
+                    "inverse-on-surface": "#2f3035",
+                    "secondary-container": "#0566d9",
+                    "on-primary-container": "#00424f",
+                    "on-tertiary-container": "#00452e",
+                    "tertiary": "#4edea3",
+                    "primary-container": "#06b6d4",
+                    "on-secondary-fixed": "#001a42",
+                    "surface-dim": "#121317",
+                    "on-tertiary-fixed": "#002113",
+                    "on-primary-fixed-variant": "#004e5c",
+                    "on-primary-fixed": "#001f26",
+                    "surface-container-lowest": "#0d0e12",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "primary": "#4cd7f6",
+                    "background": "#121317",
+                    "error-container": "#93000a",
+                    "on-surface": "#e3e2e8",
+                    "surface-variant": "#333539",
+                    "tertiary-fixed": "#6ffbbe",
+                    "on-secondary-fixed-variant": "#004395",
+                    "on-primary": "#003640",
+                    "surface": "#121317",
+                    "on-secondary-container": "#e6ecff",
+                    "primary-fixed-dim": "#4cd7f6",
+                    "inverse-primary": "#00687a",
+                    "primary-fixed": "#acedff",
+                    "surface-container-high": "#292a2e",
+                    "surface-container-highest": "#333539",
+                    "surface-tint": "#4cd7f6",
+                    "on-tertiary": "#003824",
+                    "secondary": "#adc6ff",
+                    "inverse-surface": "#e3e2e8",
+                    "outline": "#869397",
+                    "surface-container": "#1e1f24",
+                    "on-secondary": "#002e6a",
+                    "surface-container-low": "#1a1b20",
+                    "on-surface-variant": "#bcc9cd",
+                    "on-error": "#690005",
+                    "surface-bright": "#38393e",
+                    "secondary-fixed": "#d8e2ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "20px",
+                    "gutter": "24px",
+                    "2xl": "48px",
+                    "md": "16px",
+                    "unit": "4px",
+                    "lg": "24px",
+                    "xs": "4px",
+                    "margin-desktop": "40px",
+                    "sm": "8px",
+                    "xl": "32px"
+            },
+            "fontFamily": {
+                    "body-base": ["Inter"],
+                    "display-lg": ["Geist"],
+                    "headline-md": ["Geist"],
+                    "label-caps": ["JetBrains Mono"],
+                    "body-sm": ["Inter"],
+                    "display-lg-mobile": ["Geist"],
+                    "stat-lg": ["Geist"]
+            },
+            "fontSize": {
+                    "body-base": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.15em", "fontWeight": "700"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "display-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "stat-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+</head>
+<body class="dark bg-background">
+<!-- Layer 0: Mesh Gradient Background -->
+<div class="fixed inset-0 pointer-events-none z-0">
+<div class="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] bg-primary/10 rounded-full blur-[120px]"></div>
+<div class="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-tertiary/5 rounded-full blur-[120px]"></div>
+</div>
+<!-- Navigation Toggle Trigger (Floating) -->
+<button class="fixed top-4 right-8 z-[60] w-10 h-10 rounded-full bg-surface-container-high/80 border border-outline-variant/30 flex items-center justify-center text-primary hover:bg-primary/20 transition-all shadow-lg backdrop-blur-md" onclick="toggleTopNav()">
+<span class="material-symbols-outlined" id="navToggleIcon">menu_open</span>
+</button>
+<!-- Top App Bar (Toggleable) -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-20 bg-surface/70 backdrop-blur-2xl border-b border-outline-variant/20 shadow-[0_0_20px_rgba(6,182,212,0.15)]" id="topAppBar">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-container text-xl" style="font-variation-settings: 'FILL' 1;">rocket_launch</span>
+</div>
+<h1 class="font-display-lg text-2xl text-primary tracking-tighter">Europe</h1>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-on-surface-variant font-body-base text-body-base hover:text-primary transition-colors" href="#">Main Menu</a>
+<a class="text-primary border-b-2 border-primary pb-1 font-body-base text-body-base" href="#">Detail</a>
+<a class="text-on-surface-variant font-body-base text-body-base hover:text-primary transition-colors" href="#">Report</a>
+<a class="text-on-surface-variant font-body-base text-body-base hover:text-primary transition-colors" href="#">Settings</a>
+</nav>
+</div>
+<div class="flex items-center gap-4 pr-16">
+<button class="px-6 py-2 rounded-full border border-primary text-primary font-label-caps text-label-caps hover:bg-primary/10 transition-all uppercase tracking-widest" onclick="openSimulationModal()">Simulation</button>
+<button class="px-6 py-2 rounded-full bg-primary text-on-primary font-label-caps text-label-caps hover:shadow-[0_0_20px_rgba(76,215,246,0.4)] transition-all uppercase tracking-widest" onclick="navigateToReport()">Report</button>
+<div class="w-px h-8 bg-outline-variant/30 mx-2"></div>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer transition-colors">language</span>
+<img alt="User profile" class="w-10 h-10 rounded-full border border-outline-variant object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuARUX2M5PtsIni96LUkXkKvb1IFjeMloDKO4uhIY7gUdkHbuHUrQYsheEyngGvreNMyZDAQm-81nZNm3-gQWYccrUDFSNWX5Tjocydn7ct36eOlrixL5NyTkCPLOW4D0uH-yUYu8pUQGzxbikJaqbB4n9DxfpqjEwM4lAmMfvGL1zbVG45O4xoW29WRWebmKtQHGYtotpnh8eVpZi9bprmXWgv6tIhgk4yPkKCv9HsKHJ-9o_DT0TdSEXAstehSf0zg9WfQtLJVm1E"/>
+</div>
+</header>
+<!-- Main Content Canvas (Expanded to Full Width) -->
+<main class="w-full pt-32 pb-20 px-margin-desktop relative z-10 transition-all duration-300">
+<!-- Regional Overview Header -->
+<section class="grid grid-cols-12 gap-gutter mb-xl">
+<div class="col-span-12 lg:col-span-8">
+<div class="glass-card p-xl rounded-xl relative overflow-hidden">
+<div class="absolute top-0 right-0 p-8 opacity-20">
+<span class="material-symbols-outlined text-9xl">public</span>
+</div>
+<div class="relative z-10">
+<span class="font-label-caps text-primary mb-2 block uppercase tracking-widest">Regional Command: North Atlantic Cluster</span>
+<h2 class="font-display-lg text-on-surface mb-4">Economic Trajectory: Europe 2024</h2>
+<p class="font-body-base text-on-surface-variant max-w-4xl leading-relaxed">
+                        Europe remains the cornerstone of global regulatory standards and high-tech manufacturing. Current analysis shows a pivot toward green hydrogen infrastructure and deep-tech aerospace collaborations. Market volatility is localized to specific Eastern sectors, while the Western core maintains stable growth vectors.
+                    </p>
+<div class="flex flex-wrap gap-10 mt-8">
+<div>
+<span class="font-label-caps text-on-surface-variant block mb-1">AGGREGATE GDP</span>
+<span class="font-stat-lg text-primary text-3xl font-bold">$19.2T</span>
+</div>
+<div>
+<span class="font-label-caps text-on-surface-variant block mb-1">STABILITY INDEX</span>
+<span class="font-stat-lg text-tertiary text-3xl font-bold">88.4%</span>
+</div>
+<div>
+<span class="font-label-caps text-on-surface-variant block mb-1">MARKET SENTIMENT</span>
+<span class="font-stat-lg text-on-surface text-3xl font-bold">BULLISH</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-span-12 lg:col-span-4">
+<div class="glass-card p-xl rounded-xl h-full flex flex-col justify-center items-center text-center">
+<div class="w-24 h-24 rounded-full border-2 border-primary/30 flex items-center justify-center mb-4 data-pulse">
+<span class="material-symbols-outlined text-primary text-4xl" style="font-variation-settings: 'FILL' 1;">insights</span>
+</div>
+<h3 class="font-headline-md text-on-surface mb-2">Expansion Viability</h3>
+<div class="w-full bg-outline-variant/20 h-2 rounded-full mt-4 overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary to-tertiary w-[74%] relative">
+<div class="absolute right-0 top-0 bottom-0 w-4 bg-white/40 blur-sm"></div>
+</div>
+</div>
+<div class="flex justify-between w-full mt-2">
+<span class="font-label-caps text-[10px] text-on-surface-variant">CURRENT RISK: 12%</span>
+<span class="font-label-caps text-[10px] text-primary">TARGET: 74%</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Data Visualization Bento Grid -->
+<section class="grid grid-cols-12 gap-gutter">
+<!-- Table Container -->
+<div class="col-span-12 lg:col-span-7">
+<div class="glass-card rounded-xl overflow-hidden">
+<div class="px-xl py-6 border-b border-outline-variant/10 flex justify-between items-center bg-surface-container/30">
+<h3 class="font-headline-md text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">table_rows</span>
+                        Sub-Regional Performance
+                    </h3>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors">filter_list</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left font-body-sm">
+<thead>
+<tr class="border-b border-outline-variant/10 text-on-surface-variant bg-surface-container-low/50">
+<th class="px-xl py-4 font-label-caps">NATION NODE</th>
+<th class="px-6 py-4 font-label-caps">GROWTH</th>
+<th class="px-6 py-4 font-label-caps">RISK FACTOR</th>
+<th class="px-6 py-4 font-label-caps">STATUS</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-outline-variant/5 hover:bg-white/5 transition-colors cursor-pointer group">
+<td class="px-xl py-4 flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-tertiary"></div>
+<span class="font-bold">Germany</span>
+</td>
+<td class="px-6 py-4 text-tertiary">+2.4%</td>
+<td class="px-6 py-4 text-on-surface-variant">Low (0.12)</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full bg-tertiary/10 text-tertiary border border-tertiary/20 text-[10px] font-label-caps">OPTIMIZED</span>
+</td>
+</tr>
+<tr class="border-b border-outline-variant/5 hover:bg-white/5 transition-colors cursor-pointer group">
+<td class="px-xl py-4 flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<span class="font-bold">France</span>
+</td>
+<td class="px-6 py-4 text-primary">+1.8%</td>
+<td class="px-6 py-4 text-on-surface-variant">Med (0.28)</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full bg-primary/10 text-primary border border-primary/20 text-[10px] font-label-caps">MONITORING</span>
+</td>
+</tr>
+<tr class="border-b border-outline-variant/5 hover:bg-white/5 transition-colors cursor-pointer group">
+<td class="px-xl py-4 flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-tertiary"></div>
+<span class="font-bold">Netherlands</span>
+</td>
+<td class="px-6 py-4 text-tertiary">+4.2%</td>
+<td class="px-6 py-4 text-on-surface-variant">Low (0.08)</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full bg-tertiary/10 text-tertiary border border-tertiary/20 text-[10px] font-label-caps">OPTIMIZED</span>
+</td>
+</tr>
+<tr class="border-b border-outline-variant/5 hover:bg-white/5 transition-colors cursor-pointer group">
+<td class="px-xl py-4 flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-error"></div>
+<span class="font-bold">Poland</span>
+</td>
+<td class="px-6 py-4 text-error">-0.5%</td>
+<td class="px-6 py-4 text-on-surface-variant">High (0.54)</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full bg-error/10 text-error border border-error/20 text-[10px] font-label-caps">ALERT</span>
+</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors cursor-pointer group">
+<td class="px-xl py-4 flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<span class="font-bold">United Kingdom</span>
+</td>
+<td class="px-6 py-4 text-primary">+1.1%</td>
+<td class="px-6 py-4 text-on-surface-variant">Med (0.31)</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full bg-primary/10 text-primary border border-primary/20 text-[10px] font-label-caps">MONITORING</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Chart / Map Module -->
+<div class="col-span-12 lg:col-span-5">
+<div class="glass-card rounded-xl h-full flex flex-col">
+<div class="px-xl py-6 border-b border-outline-variant/10 flex justify-between items-center">
+<h3 class="font-headline-md text-on-surface">Data Node Topology</h3>
+<div class="flex gap-2">
+<div class="w-3 h-3 rounded-full bg-tertiary"></div>
+<div class="w-3 h-3 rounded-full bg-primary"></div>
+<div class="w-3 h-3 rounded-full bg-outline-variant"></div>
+</div>
+</div>
+<div class="flex-1 relative min-h-[300px]">
+<div class="absolute inset-0 p-xl flex items-end justify-between gap-2 overflow-hidden">
+<div class="w-full bg-primary/20 rounded-t-lg transition-all duration-1000" style="height: 40%"></div>
+<div class="w-full bg-primary/40 rounded-t-lg transition-all duration-1000 delay-75" style="height: 65%"></div>
+<div class="w-full bg-primary/60 rounded-t-lg transition-all duration-1000 delay-150" style="height: 55%"></div>
+<div class="w-full bg-tertiary/40 rounded-t-lg transition-all duration-1000 delay-225" style="height: 85%"></div>
+<div class="w-full bg-primary/50 rounded-t-lg transition-all duration-1000 delay-300" style="height: 70%"></div>
+<div class="w-full bg-primary/30 rounded-t-lg transition-all duration-1000 delay-375" style="height: 45%"></div>
+<div class="w-full bg-primary/70 rounded-t-lg transition-all duration-1000 delay-450" style="height: 95%"></div>
+</div>
+</div>
+<div class="p-xl bg-surface-container/20">
+<p class="font-body-sm text-on-surface-variant italic text-center">
+                        "Live telemetry indicates a 4.2ms synchronization delay in Baltic trading nodes."
+                    </p>
+</div>
+</div>
+</div>
+</section>
+<!-- Secondary Bento: Connectivity & Insights -->
+<section class="grid grid-cols-12 gap-gutter mt-xl">
+<div class="col-span-12 md:col-span-4">
+<div class="glass-card p-xl rounded-xl h-full flex flex-col items-center">
+<span class="font-label-caps text-on-surface-variant mb-4 uppercase">Network Heat</span>
+<div class="relative w-full h-32 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-6xl opacity-30 animate-pulse">hub</span>
+</div>
+<p class="font-body-base text-on-surface mt-6 text-center">Intra-continental bandwidth optimization active across all EU corridors.</p>
+</div>
+</div>
+<div class="col-span-12 md:col-span-8">
+<div class="glass-card p-xl rounded-xl h-full relative overflow-hidden group">
+<div class="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity">
+<img alt="Data Network" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-J_-M2GAR_IUx8UQCwwOBgscysnLv5MrUG3XRs2aKZ97aSAO4dzCHirLxMyvYVonzCOR3W90NDV7GXISWmVltVdgBf5bYWGNoUhpyUWDXb9vfhy4wTjkb_4yS2BnQTOU21RYY7JGTFFCMce8--Wh2M_lZa64JsoOwd48wawULdpUMG_8F0H1krIa9OLbwZCqlGVNDDXnm4IS6jsEwf1ZqIX9K35LeoWBQeL-IkaBG8y0V3mobc55JkfUdMvl5KP1_dVVTDkf6ssQ"/>
+</div>
+<div class="relative z-10">
+<h4 class="font-headline-md text-primary mb-2">Expansion Simulation Ready</h4>
+<p class="font-body-base text-on-surface-variant mb-6 max-w-2xl">
+                        The regional model for Europe is fully synchronized. You can now launch a predictive simulation to see how specific market shifts or policy changes would affect your 5-year strategy.
+                    </p>
+<button class="flex items-center gap-2 px-8 py-3 bg-primary text-on-primary rounded-full font-label-caps text-label-caps hover:scale-105 active:scale-95 transition-all shadow-lg hover:shadow-primary/20" onclick="openSimulationModal()">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+                        INITIALIZE SIMULATION ENGINE
+                    </button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Simulation Modal -->
+<div class="fixed inset-0 z-[100] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300" id="simulationModal">
+<div class="absolute inset-0 bg-background/90 backdrop-blur-md" onclick="closeSimulationModal()"></div>
+<div class="relative w-full max-w-2xl glass-card rounded-2xl p-xl shadow-2xl scale-95 transition-transform duration-300" id="modalContent">
+<div class="flex justify-between items-center mb-6">
+<h2 class="font-display-lg text-primary text-2xl tracking-tight">Expansion Simulation</h2>
+<button class="text-on-surface-variant hover:text-white transition-colors" onclick="closeSimulationModal()">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="space-y-6">
+<div>
+<label class="font-label-caps text-on-surface-variant block mb-2 uppercase">Scenario Target</label>
+<select class="w-full bg-surface-container-highest border-outline-variant rounded-lg p-3 text-on-surface focus:ring-primary focus:border-primary">
+<option>Full Market Penetration - EU Core</option>
+<option>Aggressive Eastern Expansion</option>
+<option>Risk Mitigation &amp; Asset Consolidation</option>
+</select>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="font-label-caps text-on-surface-variant block mb-2 uppercase">Capital Allocation</label>
+<input class="w-full accent-primary" type="range"/>
+</div>
+<div>
+<label class="font-label-caps text-on-surface-variant block mb-2 uppercase">Timeline (Years)</label>
+<input class="w-full bg-surface-container-highest border-outline-variant rounded-lg p-2 text-on-surface" type="number" value="5"/>
+</div>
+</div>
+<div class="p-4 rounded-lg bg-primary-container/10 border border-primary/20">
+<p class="font-body-sm text-primary flex gap-2 items-center">
+<span class="material-symbols-outlined">info</span>
+                    This simulation uses quantum-probabilistic modeling to forecast regional outcomes.
+                </p>
+</div>
+</div>
+<div class="mt-8 flex justify-end gap-4">
+<button class="px-6 py-2 rounded-full font-label-caps text-label-caps text-on-surface-variant hover:text-white transition-colors" onclick="closeSimulationModal()">Cancel</button>
+<button class="px-8 py-2 rounded-full bg-gradient-to-r from-primary to-secondary text-on-primary font-label-caps text-label-caps neon-glow-cyan hover:scale-105 transition-all" onclick="runSimulation()">Run Analysis</button>
+</div>
+</div>
+</div>
+<!-- Notification system -->
+<div class="fixed bottom-margin-desktop right-margin-desktop z-[200] opacity-0 translate-y-10 transition-all duration-300" id="toast">
+<div class="glass-card px-6 py-4 rounded-full border-primary/50 text-primary flex items-center gap-3">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-label-caps text-sm" id="toastMessage">Simulation Initialized</span>
+</div>
+</div>
+<script>
+    function toggleTopNav() {
+        const nav = document.getElementById('topAppBar');
+        const icon = document.getElementById('navToggleIcon');
+        const isHidden = nav.classList.toggle('nav-hidden');
+        icon.innerText = isHidden ? 'menu' : 'menu_open';
+        
+        // Show indicator if hidden
+        if (isHidden) {
+            showToast('Navigation Hidden');
+        } else {
+            showToast('Navigation Visible');
+        }
+    }
+
+    function openSimulationModal() {
+        const modal = document.getElementById('simulationModal');
+        const content = document.getElementById('modalContent');
+        modal.classList.remove('opacity-0', 'pointer-events-none');
+        content.classList.remove('scale-95');
+        content.classList.add('scale-100');
+    }
+
+    function closeSimulationModal() {
+        const modal = document.getElementById('simulationModal');
+        const content = document.getElementById('modalContent');
+        modal.classList.add('opacity-0', 'pointer-events-none');
+        content.classList.remove('scale-100');
+        content.classList.add('scale-95');
+    }
+
+    function navigateToReport() {
+        showToast('Generating Strategic Report...');
+    }
+
+    function runSimulation() {
+        closeSimulationModal();
+        showToast('Analysis Engine Synchronizing...');
+        setTimeout(() => {
+            showToast('Simulation Complete.');
+        }, 2500);
+    }
+
+    function showToast(message) {
+        const toast = document.getElementById('toast');
+        const toastMsg = document.getElementById('toastMessage');
+        toastMsg.innerText = message;
+        toast.classList.remove('opacity-0', 'translate-y-10');
+        toast.classList.add('opacity-100', 'translate-y-0');
+        
+        setTimeout(() => {
+            toast.classList.add('opacity-0', 'translate-y-10');
+            toast.classList.remove('opacity-100', 'translate-y-0');
+        }, 3000);
+    }
+
+    document.querySelectorAll('.glass-card').forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+        });
+    });
+</script>
+</body></html>

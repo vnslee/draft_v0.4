@@ -1,0 +1,123 @@
+{
+  "MKT_DLR_TYPE": {
+    "FRANCHISE_INDEPENDENT_MIX": {
+      "FRANCHISE_DIRECT_ONLINE_MIX": 0.6,
+      "FRANCHISE_DOMINANT": 0.7
+    }
+  },
+  "MKT_DLR_MULTIBRAND": {
+    "COMMON": {
+      "GROWING": 0.6,
+      "RARE": 0.2
+    }
+  },
+  "MKT_DLR_FI": {
+    "POS_DOMINANT": {
+      "LEASE_DOMINANT": 0.3,
+      "BANK_SEPARATE": 0.2,
+      "ESTABLISHED": 0.7
+    }
+  },
+  "REG_LICENSE_TYPE": {
+    "FCA_CONSUMER_CREDIT": {
+      "KNF_LENDER_REG": 0.4,
+      "EU_PASSPORT": 0.5
+    }
+  },
+  "REG_ENTITY_FORM": {
+    "LTD_PLC": {
+      "SPZOO_SA": 0.7,
+      "GMBH_AG": 0.8
+    }
+  },
+  "REG_PRIVACY_LAW": {
+    "UK_GDPR": {
+      "EU_GDPR": 0.9,
+      "PDPA": 0.5,
+      "CCPA": 0.4
+    },
+    "EU_GDPR": {
+      "PDPA": 0.5,
+      "CCPA": 0.4
+    }
+  },
+  "REG_DATA_TRANSFER": {
+    "ADEQUACY_SCC": {
+      "EU_FREE": 0.7,
+      "RESTRICTED": 0.2,
+      "LOCALIZED": 0
+    },
+    "EU_FREE": {
+      "RESTRICTED": 0.3,
+      "LOCALIZED": 0
+    }
+  },
+  "REG_PROVISION": {
+    "IFRS9": {
+      "LOCAL_GAAP": 0.5,
+      "IFRS9_OR_LOCAL": 0.85
+    }
+  },
+  "REG_CB_INFRA": {
+    "PRIVATE_3BUREAU": {
+      "BIK_CENTRAL": 0.5,
+      "NONE": 0,
+      "STATE_REGISTRY": 0.4
+    }
+  },
+  "REG_COLLECTION": {
+    "FCA_CONC": {
+      "CIVIL_COURT_BAILIFF": 0.5,
+      "SELF_HELP": 0.3,
+      "COURT_ONLY": 0.4
+    }
+  },
+  "REG_REPOSSESS": {
+    "CCA_PROTECTED_GOODS": {
+      "LEASE_OWNERSHIP": 0.4,
+      "FREE_REPO": 0.3,
+      "COURT_ORDER": 0.6
+    }
+  },
+  "REG_AUTO_INS": {
+    "MANDATORY": {
+      "OPTIONAL": 0.2,
+      "MANDATORY_PLUS": 0.9
+    }
+  },
+  "REG_CREDIT_LIFE": {
+    "ALLOWED_STRICT": {
+      "ALLOWED": 0.7,
+      "BANNED": 0,
+      "ALLOWED_FREE": 0.6
+    }
+  },
+  "REG_INS_TYING": {
+    "REGULATED_DUTY": {
+      "CONSUMER_PROTECTED": 0.6,
+      "BANNED": 0.3,
+      "FREE": 0.2
+    }
+  },
+  "FIN_CAPTIVE_TYPE": {
+    "CAPTIVE_DOMINANT_NEW": {
+      "BANK_LEASING_DOMINANT": 0.3,
+      "CAPTIVE_DOMINANT": 0.8,
+      "INDEPENDENT": 0.2
+    }
+  },
+  "SYS_SOL_TYPE": {
+    "PACKAGE_SAAS_SI": {
+      "PACKAGE_SI_CLOUD": 0.7,
+      "SAAS_ONLY": 0.5,
+      "FULL_INHOUSE": 0.2
+    }
+  },
+  "SYS_PAYMENT_INFRA": {
+    "BACS_DD": {
+      "BIK_CEPIK_KSEF": 0.4,
+      "SEPA_DD": 0.7,
+      "CARD_ONLY": 0.3
+    }
+  }
+}

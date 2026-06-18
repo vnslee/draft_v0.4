@@ -1,0 +1,69 @@
+{
+  "report_type": "executive",
+  "title": "폴란드 진출 진단",
+  "subtitle": "오토파이낸스 해외진출 진단 · 경영진 보고서",
+  "target": "PL",
+  "base": "GB",
+  "sections": [
+    { "type": "verdict_banner" },
+    { "type": "exec_summary", "label": "한 줄 결론" },
+    {
+      "type": "part", "num": "PART 1", "title": "폴란드 시장 상세 조사",
+      "lead": "2025년 기준 폴란드 오토파이낸스 시장의 핵심 지표와 성장 추이입니다.",
+      "blocks": [
+        { "type": "kpi_cards", "items": [
+          { "label": "신차 등록", "ref": "MKT_CAR_SALES.new", "trend": "▲ 25년래 최고 (+8.3%)", "trendCls": "up" },
+          { "label": "리스 시장규모", "ref": "MKT_AF_SIZE", "trend": "▲ CAGR 11.3%", "trendCls": "up" },
+          { "label": "신차 금융침투율", "ref": "MKT_PEN_NEW", "note": "리스+렌탈 (법인 중심)" },
+          { "label": "법인 구매비중", "ref": "MKT_SEG_RETAIL_CORP.corp", "note": "B2B 시장 구조" }
+        ]},
+        { "type": "chart_grid", "cols": 2, "charts": [
+          { "chart": "donut", "title": "구매 주체 (폴란드)", "sub": "법인이 신차의 69% 구매 — B2B", "segs": [{"v":69,"label":"법인"},{"v":31,"label":"개인"}] },
+          { "chart": "donut", "title": "구매 주체 (영국)", "sub": "개인 리테일 비중 더 높음", "segs": [{"v":61,"label":"법인/플릿"},{"v":39,"label":"개인"}] }
+        ]},
+        { "type": "chart", "chart": "line", "title": "신차 등록 추이 및 2030 예측", "sub": "2019–2025 실적(실선) + CAGR 외삽(점선). 단위: 천 대", "data": "ts", "items": ["PL_MKT_CAR_SALES","GB_MKT_CAR_SALES"], "scale": 0.001, "forecast": true },
+        { "type": "chart", "chart": "line", "title": "리스 시장규모 성장 (PLN bn)", "sub": "2020–2025 ZPL 리스 신규취급액", "data": "ts", "items": ["PL_MKT_AF_SIZE"] },
+        { "type": "detail_table", "rows": [
+          ["신차 시장","597,400대(+8.3%), 25년래 최고. 법인 69% 구매","PZPM·KPMG 2025","t2"],
+          ["리스 시장","119.5bn PLN(+8.1%), 차량 74%","ZPL 2026.2","t2"],
+          ["금융 침투율","신차 약 50%(리스+렌탈), 중고차 16~30%","ZPL/Santander","t2"],
+          ["반우수라 금리상한","2025말 15.0%, 비이자비용 45%","민법§359","t1"],
+          ["대출기관 등록","KNF 14일, 최저자본 100만 PLN","소비자신용법§59a","t1"],
+          ["신용정보","BIK 중앙집중형, 은행 98% 커버","BIK","t1"],
+          ["차량회수","리스 소유권 기반, 2~4개월","민법§709-13","t3"],
+          ["주요 경쟁사","PKO Leasing(11.5%), EFL, VWFS, Toyota","ZPL/SAMAR","t2"]
+        ]}
+      ]
+    },
+    {
+      "type": "part", "num": "PART 2", "title": "영국과의 비교",
+      "lead": "진출국(영국) 데이터를 기준으로 폴란드의 항목별·카테고리별 유사도를 산출했습니다.",
+      "blocks": [
+        { "type": "chart", "chart": "bar", "title": "카테고리별 유사도", "sub": "영국 대비 폴란드. 시스템 게이트 기준선 50점", "data": "categoryScores", "gate": 50 },
+        { "type": "chart", "chart": "hbar", "title": "규제 항목별 유사도 (상위)", "sub": "규제는 EU 공통으로 유사도 높음. 0점은 제도 구조 차이", "data": "itemSims", "category": "REGULATORY", "limit": 10 },
+        { "type": "compare_table", "title": "구조적 차이 — 핵심 지표 대조", "rows": [
+          ["신차 시장규모","202만 대","59.7만 대","영국이 3.4배 — 성숙·대형 시장"],
+          ["시장 성장(CAGR)","-2.2%","+1.2%","영국 정체, 폴란드 성장"],
+          ["리스 CAGR","0.2%","+11.3%","폴란드 구조적 성장"],
+          ["개인:법인","39 : 61","31 : 69","폴란드 법인 비중 더 높음"],
+          ["주력 상품","PCP(개인)","리스(법인)","상품 구조 상이 — 이식 제약"],
+          ["법인세","25%","19%","폴란드 유리"],
+          ["배당 원천징수","0%","19%","본사 송금은 영국 유리"]
+        ]},
+        { "type": "chart", "chart": "group", "title": "시장 성장성 비교 (CAGR)", "sub": "영국은 2019 기준 보정, 폴란드는 2020 기준. 침투율은 비율이라 제외", "data": "cagr", "groups": [
+          {"label":"신차 판매","uk":-2.2,"pl":1.2},
+          {"label":"리스 시장","uk":0.2,"pl":11.3}
+        ], "suffix": "%" }
+      ]
+    },
+    {
+      "type": "part", "num": "PART 3", "title": "인사이트 & 권고",
+      "lead": "조사·비교에서 도출한 진출 전략과 리스크입니다.",
+      "blocks": [
+        { "type": "insights", "title": "핵심 인사이트", "source": "insights" },
+        { "type": "recommendations", "title": "진출 권고 (단계별)", "source": "recommendations" },
+        { "type": "risks", "title": "주요 리스크", "source": "risks" }
+      ]
+    }
+  ]
+}

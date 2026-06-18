@@ -1,0 +1,36 @@
+{
+  "report_type": "detailed",
+  "title": "폴란드 진출 상세 진단",
+  "subtitle": "오토파이낸스 해외진출 · 실무 상세 보고서",
+  "target": "PL",
+  "base": "GB",
+  "toc": true,
+  "sections": [
+    { "type": "summary_line", "text": "이 보고서는 69개 항목 전체의 조사 내용·출처·유사도를 담은 실무 진출 준비용 자료입니다. 규제·라이선스·시스템 등 준비가 필요한 항목에는 ▶ 진출 준비사항을 표시했고, 문서 끝에 전체 체크리스트를 정리했습니다." },
+    {
+      "type": "category_full", "category": "MARKET", "icon": "M", "name": "시장",
+      "chart": { "type": "hbar", "data": "itemSims", "limit": "extremes" }
+    },
+    {
+      "type": "category_full", "category": "REGULATORY", "icon": "R", "name": "규제",
+      "chart": { "type": "hbar", "data": "itemSims", "limit": "extremes" }
+    },
+    {
+      "type": "category_full", "category": "FINANCIAL", "icon": "F", "name": "금융환경",
+      "chart": { "type": "hbar", "data": "itemSims", "limit": "all" }
+    },
+    {
+      "type": "category_full", "category": "SYSTEM", "icon": "S", "name": "시스템·경쟁사",
+      "chart": { "type": "hbar", "data": "itemSims", "limit": "all" }
+    },
+    { "type": "checklist", "title": "진출 준비 체크리스트", "source": "action_items" }
+  ],
+  "item_render": {
+    "show_value": true,
+    "show_research_detail": true,
+    "show_timeseries_chart": true,
+    "show_source": true,
+    "show_action_items": true,
+    "extremes_count": 3
+  }
+}

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>폴란드 진출 진단</title>
+<style>
+  :root{--ink:#16201c;--ink-soft:#4a5550;--bg:#f4f2ec;--panel:#fbfaf6;--line:#d8d3c6;--line-soft:#e7e3d8;
+    --accent:#1f5c4a;--accent-soft:#d9e7e0;--signal:#c5562e;--signal-soft:#f3ddd2;--amber:#b88324;--amber-soft:#f0e4cb}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+  .layout{display:flex;max-width:1180px;margin:0 auto}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 24px 80px;width:100%}
+  .toc{width:210px;flex-shrink:0;position:sticky;top:0;height:100vh;overflow-y:auto;padding:30px 18px;border-right:1px solid var(--line)}
+  .toc .tt{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);font-weight:700;margin-bottom:14px}
+  .toc a{display:block;font-size:13px;color:var(--ink-soft);text-decoration:none;padding:7px 10px;border-radius:6px}
+  .toc a:hover{background:var(--accent-soft);color:var(--accent)}
+  .toc a .ic{display:inline-block;width:18px;height:18px;line-height:18px;text-align:center;background:var(--ink);color:#fff;border-radius:4px;font-size:10px;font-weight:700;margin-right:8px}
+  .main{flex:1;min-width:0;padding:30px 40px 80px}
+  @media(max-width:820px){.toc{display:none}.main{padding:24px}}
+  .rh{padding:34px 0 24px;border-bottom:2px solid var(--ink);margin-bottom:8px}
+  .rh .eyebrow{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);font-weight:600}
+  .rh h1{font-size:28px;font-weight:700;letter-spacing:-.02em;margin:8px 0 11px}
+  .rh .meta{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-soft)}
+  .rh .meta b{color:var(--ink)}
+  .summary-line{background:var(--accent-soft);border-left:3px solid var(--accent);padding:13px 16px;border-radius:0 8px 8px 0;font-size:13.5px;margin-top:16px}
+  .verdict{display:grid;grid-template-columns:repeat(5,1fr);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:24px 0}
+  .vc{padding:17px 15px;border-right:1px solid var(--line-soft);background:var(--panel)}
+  .vc:last-child{border-right:none}
+  .vc .k{font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft)}
+  .vc .v{font-size:21px;font-weight:700;letter-spacing:-.02em;margin-top:5px}
+  .vc .v.ok{color:var(--accent)}.vc .v.warn{color:var(--amber)}.vc .v.block{color:var(--signal)}
+  .vc .sub{font-size:11px;color:var(--ink-soft);margin-top:2px}
+  .sec{margin-top:46px}
+  .sec-num{display:inline-block;font-size:12px;font-weight:700;color:var(--accent);background:var(--accent-soft);padding:3px 11px;border-radius:20px;margin-bottom:12px}
+  .sec h2{font-size:22px;font-weight:700;margin-bottom:6px}
+  .sec .lead{font-size:14px;color:var(--ink-soft);margin-bottom:20px}
+  h3{font-size:16px;font-weight:650;margin:28px 0 12px;padding-bottom:7px;border-bottom:1px solid var(--line-soft)}
+  h3.sub{font-size:13px;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em;border:none;margin:22px 0 10px}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:18px 0}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px}
+  .card .label{font-size:11.5px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em}
+  .card .big{font-size:25px;font-weight:700;letter-spacing:-.02em;margin:6px 0 2px}
+  .card .note{font-size:12px;color:var(--ink-soft)}
+  .card .trend{font-size:12px;font-weight:600;margin-top:4px}
+  .trend.up{color:var(--accent)}.trend.down{color:var(--signal)}.trend.flat{color:var(--amber)}
+  .chart-box{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:20px;margin:18px 0}
+  .chart-box .ct{font-size:14px;font-weight:650;margin-bottom:4px}
+  .chart-box .cs{font-size:12px;color:var(--ink-soft);margin-bottom:16px}
+  .legend,.viz-legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:11px;font-size:12px;color:var(--ink-soft)}
+  .legend span,.viz-legend span{display:inline-flex;align-items:center;gap:6px}
+  .legend i,.viz-legend i{width:11px;height:11px;border-radius:3px;display:inline-block}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px}
+  th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line-soft)}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-soft);font-weight:600;background:var(--panel)}
+  td.num{text-align:right;font-variant-numeric:tabular-nums}
+  .insight{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:16px 18px;margin:14px 0;font-size:13.5px}
+  .insight b{color:var(--accent)}
+  .reco{display:flex;gap:14px;padding:16px;border:1px solid var(--line);border-radius:10px;margin-bottom:12px;background:var(--panel)}
+  .reco .n{flex-shrink:0;width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px}
+  .reco .rb{font-size:13.5px}.reco .rb b{display:block;margin-bottom:3px;font-size:14px}
+  .risk{display:flex;gap:12px;padding:12px 15px;border-radius:8px;margin-bottom:9px;font-size:13px;border:1px solid var(--line);background:var(--panel)}
+  .risk .sev{font-size:10px;font-weight:700;padding:3px 8px;border-radius:5px;height:fit-content;white-space:nowrap}
+  .sev.hi{background:var(--signal-soft);color:var(--signal)}.sev.md{background:var(--amber-soft);color:var(--amber)}.sev.lo{background:var(--accent-soft);color:var(--accent)}
+  .cat{margin-top:44px;scroll-margin-top:20px}
+  .cat-head{display:flex;align-items:center;gap:12px;padding-bottom:10px;border-bottom:2px solid var(--accent);margin-bottom:8px}
+  .cat-ic{width:30px;height:30px;background:var(--accent);color:#fff;border-radius:7px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px}
+  .cat-head h2{font-size:21px;font-weight:700;flex:1}
+  .cat-score{font-size:12.5px;color:var(--accent);font-weight:600;background:var(--accent-soft);padding:4px 12px;border-radius:20px}
+  .item{background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:15px 17px;margin-bottom:11px}
+  .item.has-action{border-left:3px solid var(--amber)}
+  .item-h{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:6px}
+  .item-name{font-size:15px;font-weight:650}
+  .ks{font-size:10px;font-weight:700;background:var(--signal-soft);color:var(--signal);padding:2px 8px;border-radius:5px}
+  .sim{font-size:11px;font-weight:600;background:var(--line-soft);color:var(--ink-soft);padding:2px 9px;border-radius:20px;margin-left:auto}
+  .item-val{font-size:14px;margin-bottom:6px}.gap{color:var(--amber);font-style:italic}
+  .item-rd{font-size:13px;color:var(--ink-soft);background:var(--bg);border-radius:6px;padding:9px 12px;margin:7px 0}
+  .item-src{font-size:11.5px;color:var(--ink-soft);margin-top:7px}
+  .tag{font-size:10px;padding:2px 7px;border-radius:4px;font-weight:600}
+  .tag.t1{background:var(--accent-soft);color:var(--accent)}.tag.t2{background:var(--amber-soft);color:var(--amber)}
+  .tag.t3{background:var(--line-soft);color:var(--ink-soft)}.tag.gap{background:var(--signal-soft);color:var(--signal)}
+  .gapflag{color:var(--signal);font-weight:600}
+  .actions{margin-top:11px;background:var(--amber-soft);border-radius:7px;padding:11px 14px}
+  .actions-t{font-size:12px;font-weight:700;color:var(--amber);margin-bottom:6px}
+  .actions ul{margin:0;padding-left:18px}.actions li{font-size:13px;margin-bottom:4px}
+  .viz{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px;margin:14px 0}
+  .viz .vt{font-size:13px;font-weight:650;margin-bottom:3px}
+  .viz .vs{font-size:11.5px;color:var(--ink-soft);margin-bottom:12px}
+  .checklist{margin-top:44px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:24px}
+  .checklist h2{font-size:20px;margin-bottom:6px}.checklist .cl-sub{font-size:13px;color:var(--ink-soft);margin-bottom:18px}
+  .ck-item{margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--line-soft)}.ck-item:last-child{border:none}
+  .ck-name{font-size:14px;font-weight:650;color:var(--accent);margin-bottom:5px}
+  .ck-item ul{margin:0;padding-left:18px}.ck-item li{font-size:13px;margin-bottom:3px;color:var(--ink-soft)}
+  .foot{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);font-size:11.5px;color:var(--ink-soft)}
+</style>
+</head>
+<body>
+<div class="">
+  
+  <div class="main">
+    <div class="rh">
+      <div class="eyebrow">오토파이낸스 해외진출 진단 · 경영진 보고서</div>
+      <h1>폴란드 진출 진단</h1>
+      <div class="meta">
+        <span>대상국 <b>Poland 🇵🇱</b></span>
+        <span>비교 기준 <b>United Kingdom 🇬🇧</b></span>
+        <span>조사 <b>2025년</b></span>
+        <span>종합 유사도 <b>63.5</b> (심층조사 권고)</span>
+      </div>
+    </div>
+    <div class="verdict"><div class="vc"><div class="k">종합 유사도</div><div class="v warn">63.5</div><div class="sub">/ 100</div></div><div class="vc"><div class="k">판정</div><div class="v warn">심층조사 권고</div><div class="sub">임계 70 근접</div></div><div class="vc"><div class="k">시스템 게이트</div><div class="v ok">통과</div><div class="sub">이식 가능 수준</div></div><div class="vc"><div class="k">킬스위치</div><div class="v ok">통과</div><div class="sub">5개 전부</div></div><div class="vc"><div class="k">데이터 신뢰도</div><div class="v ">0.68</div><div class="sub">유효신뢰도</div></div></div>
+<div class="insight"><b>한 줄 결론.</b> 폴란드는 영국 대비 종합 유사도 63.5점으로 심층조사 권고 등급입니다. 규제 환경(77점)은 매우 유사하고 시스템 이식도 가능(게이트 통과)하나, 시장 구조(영국=개인 리테일 vs 폴란드=법인 리스)와 금융 상품이 달라 영국 모델의 직접 이식보다 현지 적응형 진입이 필요합니다. 다만 폴란드는 리스 시장 CAGR 11.3%로 구조적 성장 중이어서 중장기 매력도는 영국을 앞섭니다.</div>
+<div class="sec"><span class="sec-num">PART 1</span><h2>폴란드 시장 상세 조사</h2><p class="lead">2025년 기준 폴란드 오토파이낸스 시장의 핵심 지표와 성장 추이입니다.</p><div class="cards"><div class="card"><div class="label">신차 등록</div><div class="big">597,400</div><div class="trend up">▲ 25년래 최고 (+8.3%)</div></div><div class="card"><div class="label">리스 시장규모</div><div class="big">119.5 bn PLN</div><div class="trend up">▲ CAGR 11.3%</div></div><div class="card"><div class="label">신차 금융침투율</div><div class="big">~50%</div><div class="note">리스+렌탈 (법인 중심)</div></div><div class="card"><div class="label">법인 구매비중</div><div class="big">69%</div><div class="note">B2B 시장 구조</div></div></div><div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:18px 0"><div class="chart-box" style="margin:0"><div class="ct">구매 주체 (폴란드)</div><div class="cs">법인이 신차의 69% 구매 — B2B</div><svg class="rchart" data-spec='{"chart":"donut","title":"구매 주체 (폴란드)","sub":"법인이 신차의 69% 구매 — B2B","segs":[{"v":69,"label":"법인"},{"v":31,"label":"개인"}]}' style="width:100%;height:auto"></svg></div><div class="chart-box" style="margin:0"><div class="ct">구매 주체 (영국)</div><div class="cs">개인 리테일 비중 더 높음</div><svg class="rchart" data-spec='{"chart":"donut","title":"구매 주체 (영국)","sub":"개인 리테일 비중 더 높음","segs":[{"v":61,"label":"법인/플릿"},{"v":39,"label":"개인"}]}' style="width:100%;height:auto"></svg></div></div><div class="chart-box"><div class="ct">신차 등록 추이 및 2030 예측</div><div class="cs">2019–2025 실적(실선) + CAGR 외삽(점선). 단위: 천 대</div><svg class="rchart" data-spec='{"type":"chart","chart":"line","title":"신차 등록 추이 및 2030 예측","sub":"2019–2025 실적(실선) + CAGR 외삽(점선). 단위: 천 대","data":"ts","items":["PL_MKT_CAR_SALES","GB_MKT_CAR_SALES"],"scale":0.001,"forecast":true}' style="width:100%;height:auto"></svg></div><div class="chart-box"><div class="ct">리스 시장규모 성장 (PLN bn)</div><div class="cs">2020–2025 ZPL 리스 신규취급액</div><svg class="rchart" data-spec='{"type":"chart","chart":"line","title":"리스 시장규모 성장 (PLN bn)","sub":"2020–2025 ZPL 리스 신규취급액","data":"ts","items":["PL_MKT_AF_SIZE"]}' style="width:100%;height:auto"></svg></div><table><thead><tr><th>항목</th><th>내용</th><th>출처</th></tr></thead><tbody><tr><td><b>신차 시장</b></td><td>597,400대(+8.3%), 25년래 최고. 법인 69% 구매</td><td><span class="tag t2">PZPM·KPMG 2025</span></td></tr><tr><td><b>리스 시장</b></td><td>119.5bn PLN(+8.1%), 차량 74%</td><td><span class="tag t2">ZPL 2026.2</span></td></tr><tr><td><b>금융 침투율</b></td><td>신차 약 50%(리스+렌탈), 중고차 16~30%</td><td><span class="tag t2">ZPL/Santander</span></td></tr><tr><td><b>반우수라 금리상한</b></td><td>2025말 15.0%, 비이자비용 45%</td><td><span class="tag t1">민법§359</span></td></tr><tr><td><b>대출기관 등록</b></td><td>KNF 14일, 최저자본 100만 PLN</td><td><span class="tag t1">소비자신용법§59a</span></td></tr><tr><td><b>신용정보</b></td><td>BIK 중앙집중형, 은행 98% 커버</td><td><span class="tag t1">BIK</span></td></tr><tr><td><b>차량회수</b></td><td>리스 소유권 기반, 2~4개월</td><td><span class="tag t3">민법§709-13</span></td></tr><tr><td><b>주요 경쟁사</b></td><td>PKO Leasing(11.5%), EFL, VWFS, Toyota</td><td><span class="tag t2">ZPL/SAMAR</span></td></tr></tbody></table></div>
+<div class="sec"><span class="sec-num">PART 2</span><h2>영국과의 비교</h2><p class="lead">진출국(영국) 데이터를 기준으로 폴란드의 항목별·카테고리별 유사도를 산출했습니다.</p><div class="chart-box"><div class="ct">카테고리별 유사도</div><div class="cs">영국 대비 폴란드. 시스템 게이트 기준선 50점</div><svg class="rchart" data-spec='{"type":"chart","chart":"bar","title":"카테고리별 유사도","sub":"영국 대비 폴란드. 시스템 게이트 기준선 50점","data":"categoryScores","gate":50}' style="width:100%;height:auto"></svg></div><div class="chart-box"><div class="ct">규제 항목별 유사도 (상위)</div><div class="cs">규제는 EU 공통으로 유사도 높음. 0점은 제도 구조 차이</div><svg class="rchart" data-spec='{"type":"chart","chart":"hbar","title":"규제 항목별 유사도 (상위)","sub":"규제는 EU 공통으로 유사도 높음. 0점은 제도 구조 차이","data":"itemSims","category":"REGULATORY","limit":10}' style="width:100%;height:auto"></svg></div><h3>구조적 차이 — 핵심 지표 대조</h3><table><thead><tr><th>지표</th><th class="num">영국 🇬🇧</th><th class="num">폴란드 🇵🇱</th><th>해석</th></tr></thead><tbody><tr><td>신차 시장규모</td><td class="num">202만 대</td><td class="num">59.7만 대</td><td>영국이 3.4배 — 성숙·대형 시장</td></tr><tr><td>시장 성장(CAGR)</td><td class="num">-2.2%</td><td class="num">+1.2%</td><td>영국 정체, 폴란드 성장</td></tr><tr><td>리스 CAGR</td><td class="num">0.2%</td><td class="num">+11.3%</td><td>폴란드 구조적 성장</td></tr><tr><td>개인:법인</td><td class="num">39 : 61</td><td class="num">31 : 69</td><td>폴란드 법인 비중 더 높음</td></tr><tr><td>주력 상품</td><td class="num">PCP(개인)</td><td class="num">리스(법인)</td><td>상품 구조 상이 — 이식 제약</td></tr><tr><td>법인세</td><td class="num">25%</td><td class="num">19%</td><td>폴란드 유리</td></tr><tr><td>배당 원천징수</td><td class="num">0%</td><td class="num">19%</td><td>본사 송금은 영국 유리</td></tr></tbody></table><div class="chart-box"><div class="ct">시장 성장성 비교 (CAGR)</div><div class="cs">영국은 2019 기준 보정, 폴란드는 2020 기준. 침투율은 비율이라 제외</div><svg class="rchart" data-spec='{"type":"chart","chart":"group","title":"시장 성장성 비교 (CAGR)","sub":"영국은 2019 기준 보정, 폴란드는 2020 기준. 침투율은 비율이라 제외","data":"cagr","groups":[{"label":"신차 판매","uk":-2.2,"pl":1.2},{"label":"리스 시장","uk":0.2,"pl":11.3}],"suffix":"%"}' style="width:100%;height:auto"></svg></div></div>
+<div class="sec"><span class="sec-num">PART 3</span><h2>인사이트 &amp; 권고</h2><p class="lead">조사·비교에서 도출한 진출 전략과 리스크입니다.</p><h3>핵심 인사이트</h3><div class="insight"><b>1. 규제는 닮았고, 시장은 다르다.</b> 폴란드 규제 유사도 77점(EU 공통 GDPR·자유송금)으로 진입 제도 부담은 낮으나, 시장(64점)·금융(56점)은 영국과 구조가 달라 영국 PCP 모델 복제는 실패 위험이 크다.</div><div class="insight"><b>2. 법인 리스가 진짜 기회다.</b> 폴란드 신차의 69%를 법인이 구매하고 리스로 조달한다. 리스 시장 CAGR 11.3%, 차량이 전체 리스의 74%. 영국식 개인 할부가 아니라 B2B 리스/CFM이 핵심 진입로다.</div><div class="insight"><b>3. 시스템은 이식 가능하나 현지화가 필수다.</b> 시스템 게이트는 통과(57점)했으나, BIK·CEPiK·KSeF 연동과 Comarch 등 현지 벤더 생태계 대응이 필요하다. 영국 Alfa 기반 코어를 그대로 옮기긴 어렵다.</div><h3>진출 권고 (단계별)</h3><div class="reco"><div class="n">1</div><div class="rb"><b>법인 리스/CFM 중심 진입</b>개인 할부가 아닌 법인·SME 리스를 주력으로. 순수 B2B 리스는 KNF 무라이선스로 진입장벽도 낮다.</div></div><div class="reco"><div class="n">2</div><div class="rb"><b>현지 시스템·신용 인프라 연동</b>BIK(신용조회 98% 커버)·CEPiK·KSeF 연동을 진출 요건으로 설계. 코어는 이식하되 연동부 재구축.</div></div><div class="reco"><div class="n">3</div><div class="rb"><b>금리 인하기 활용</b>NBP 기준금리 5.75%→4.00% 인하 사이클. 리스 수요 확대 국면이므로 초기 고객 확보에 유리.</div></div><div class="reco"><div class="n">4</div><div class="rb"><b>중고차 금융 미개척 영역 공략</b>중고차 금융침투율 16~30%로 낮음(현금 84%). 딜러·플랫폼 제휴로 차별화 가능.</div></div><h3>주요 리스크</h3><div class="risk"><span class="sev hi">HI</span><div><b>시장 구조 차이</b> — 영국 개인 리테일 경험이 폴란드 법인 리스에 직접 이식되지 않음. 사업모델 재설계 필요.</div></div><div class="risk"><span class="sev md">MD</span><div><b>데이터 신뢰도</b> — 폴란드 핵심 지표 다수가 참고(Tier3). 진출 확정 전 현지 1차 실사 필요(중고차 침투율, 회수기간 등).</div></div><div class="risk"><span class="sev md">MD</span><div><b>경쟁 강도</b> — PKO Leasing 등 은행계 리스와 VWFS·Toyota 캡티브가 장악. 비계열 외국사는 니치·디지털로 차별화 필수.</div></div><div class="risk"><span class="sev lo">LO</span><div><b>송금 세제</b> — 배당 원천징수 19%(영국 0% 대비 불리)이나 EU 모자회사지침으로 완화 가능.</div></div></div>
+    <div class="foot">오토파이낸스 진출 진단 에이전트 자동 생성 · 룰셋 디폴트 v1 · 출처 등급: 공식 1차 / 준공식 / 참고. "공식 미확보"·"조사 필요" 항목은 진출 확정 전 현지 1차 실사로 보완하십시오.</div>
+  </div>
+</div>
+<script>
+/* 공용 차트 라이브러리 (charts.js) — 외부 의존성 없는 인라인 SVG */
+const ChartLib = (function(){
+  const NS="http://www.w3.org/2000/svg";
+  const C={accent:"#1f5c4a",accentSoft:"#d9e7e0",amber:"#b88324",signal:"#c5562e",
+    line:"#d8d3c6",grid:"#e7e3d8",ink:"#16201c",soft:"#4a5550"};
+  function el(t,a){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;}
+  function txt(x,y,s,o={}){const e=el("text",{x,y,"text-anchor":o.anchor||"middle","font-size":o.size||11,fill:o.fill||C.soft,"font-weight":o.weight||400});e.textContent=s;return e;}
+  function colorFor(v){return v>=70?C.accent:v>=50?C.amber:C.signal;}
+
+  // 라인 차트 (실적 실선 + 예측 점선)
+  function line(svg,series,opts={}){
+    const W=opts.W||900,H=opts.H||260,pad={l:52,r:24,t:18,b:34};
+    const years=opts.years;
+    const vals=series.flatMap(s=>s.data.filter(v=>v!=null));
+    const ymax=Math.max(...vals)*1.08, ymin=opts.ymin!=null?opts.ymin:Math.min(...vals)*0.85;
+    const X=i=>pad.l+(W-pad.l-pad.r)*i/(years.length-1);
+    const Y=v=>H-pad.b-(H-pad.t-pad.b)*(v-ymin)/(ymax-ymin);
+    for(let g=0;g<=4;g++){const v=ymin+(ymax-ymin)*g/4,y=Y(v);
+      svg.appendChild(el("line",{x1:pad.l,y1:y,x2:W-pad.r,y2:y,stroke:C.grid,"stroke-width":1}));
+      svg.appendChild(txt(pad.l-8,y+4,Math.round(v).toLocaleString(),{anchor:"end"}));}
+    years.forEach((yr,i)=>svg.appendChild(txt(X(i),H-pad.b+18,yr)));
+    series.forEach(s=>{let d="";s.data.forEach((v,i)=>{if(v==null)return;d+=(d?"L":"M")+X(i)+","+Y(v);});
+      svg.appendChild(el("path",{d,fill:"none",stroke:s.color,"stroke-width":2.5,"stroke-dasharray":s.dash||"0"}));
+      s.data.forEach((v,i)=>{if(v!=null)svg.appendChild(el("circle",{cx:X(i),cy:Y(v),r:3.2,fill:s.color}));});});
+  }
+
+  // 막대 차트 (카테고리 유사도, 게이트선)
+  function bar(svg,items,opts={}){
+    const W=opts.W||900,H=opts.H||240,pad={l:48,r:24,t:18,b:opts.b||48};
+    const gap=(W-pad.l-pad.r)/items.length,bw=gap*0.5;
+    const Y=v=>H-pad.b-(H-pad.t-pad.b)*v/100;
+    for(let g=0;g<=4;g++){const v=25*g,y=Y(v);
+      svg.appendChild(el("line",{x1:pad.l,y1:y,x2:W-pad.r,y2:y,stroke:C.grid,"stroke-width":1}));
+      svg.appendChild(txt(pad.l-8,y+4,v,{anchor:"end"}));}
+    if(opts.gate){const gy=Y(opts.gate);svg.appendChild(el("line",{x1:pad.l,y1:gy,x2:W-pad.r,y2:gy,stroke:C.signal,"stroke-width":1.5,"stroke-dasharray":"5,4"}));
+      svg.appendChild(txt(W-pad.r,gy-6,"게이트 "+opts.gate,{anchor:"end",size:10.5,fill:C.signal,weight:600}));}
+    if(opts.threshold){const ty=Y(opts.threshold);svg.appendChild(el("line",{x1:pad.l,y1:ty,x2:W-pad.r,y2:ty,stroke:C.accent,"stroke-width":1.5,"stroke-dasharray":"5,4"}));
+      svg.appendChild(txt(W-pad.r,ty-6,"임계 "+opts.threshold,{anchor:"end",size:10.5,fill:C.accent,weight:600}));}
+    items.forEach((it,i)=>{const cx=pad.l+gap*i+gap/2,bh=H-pad.b-Y(it.v),col=it.color||colorFor(it.v);
+      svg.appendChild(el("rect",{x:cx-bw/2,y:Y(it.v),width:bw,height:bh,rx:4,fill:col}));
+      svg.appendChild(txt(cx,Y(it.v)-8,it.v,{size:13,weight:700,fill:C.ink}));
+      svg.appendChild(txt(cx,H-pad.b+18,it.label,{size:12}));
+      if(it.w)svg.appendChild(txt(cx,H-pad.b+34,"가중치 "+it.w,{size:10}));});
+  }
+
+  // 가로 막대 (항목별 유사도 분포)
+  function hbar(svg,items,opts={}){
+    const W=opts.W||900,rowH=26,pad={l:opts.l||160,r:40,t:10};
+    const H=pad.t*2+items.length*rowH;svg.setAttribute("viewBox",`0 0 ${W} ${H}`);
+    const X=v=>pad.l+(W-pad.l-pad.r)*v/100;
+    [0,50,70,100].forEach(v=>{svg.appendChild(el("line",{x1:X(v),y1:pad.t,x2:X(v),y2:H-pad.t,stroke:v===50||v===70?C.line:C.grid,"stroke-width":1,"stroke-dasharray":v===50||v===70?"3,3":"0"}));
+      svg.appendChild(txt(X(v),H-2,v,{size:9.5}));});
+    items.forEach((it,i)=>{const y=pad.t+i*rowH+rowH/2;
+      svg.appendChild(txt(pad.l-8,y+4,it.name.length>16?it.name.slice(0,15)+"…":it.name,{anchor:"end",size:11,fill:C.soft}));
+      if(it._skip||it.sim==null){svg.appendChild(txt((pad.l+W-pad.r)/2,y+4,"·····",{size:11,fill:C.line}));return;}
+      svg.appendChild(el("rect",{x:pad.l,y:y-7,width:X(it.sim)-pad.l,height:14,rx:3,fill:colorFor(it.sim)}));
+      svg.appendChild(txt(X(it.sim)+5,y+4,it.sim,{anchor:"start",size:10.5,weight:600,fill:C.soft}));});
+  }
+
+  // 도넛 (비율, 예: 개인:법인)
+  function donut(svg,segs,opts={}){
+    const W=opts.W||220,H=opts.H||220,cx=W/2,cy=H/2,rO=Math.min(W,H)/2-10,rI=rO*0.6;
+    svg.setAttribute("viewBox",`0 0 ${W} ${H}`);
+    const tot=segs.reduce((s,x)=>s+x.v,0);let a=-Math.PI/2;
+    segs.forEach(s=>{const ang=s.v/tot*Math.PI*2,a2=a+ang;
+      const x1=cx+rO*Math.cos(a),y1=cy+rO*Math.sin(a),x2=cx+rO*Math.cos(a2),y2=cy+rO*Math.sin(a2);
+      const xi1=cx+rI*Math.cos(a2),yi1=cy+rI*Math.sin(a2),xi2=cx+rI*Math.cos(a),yi2=cy+rI*Math.sin(a);
+      const laf=ang>Math.PI?1:0;
+      svg.appendChild(el("path",{d:`M${x1},${y1}A${rO},${rO} 0 ${laf} 1 ${x2},${y2}L${xi1},${yi1}A${rI},${rI} 0 ${laf} 0 ${xi2},${yi2}Z`,fill:s.color}));
+      const mid=a+ang/2,lr=(rO+rI)/2;
+      svg.appendChild(txt(cx+lr*Math.cos(mid),cy+lr*Math.sin(mid)+4,s.v+"%",{size:13,weight:700,fill:"#fff"}));
+      a=a2;});
+  }
+
+  // 그룹 막대 (양국 비교, 음수 지원)
+  function group(svg,data,opts={}){
+    const W=opts.W||900,H=opts.H||200,pad={l:50,r:24,t:18,b:40};
+    const gap=(W-pad.l-pad.r)/data.length,bw=gap*0.26;
+    const all=data.flatMap(d=>[d.uk,d.pl]);const ymax=Math.max(...all,0)+2,ymin=Math.min(...all,0)-1;
+    const Y=v=>H-pad.b-(H-pad.t-pad.b)*(v-ymin)/(ymax-ymin);
+    svg.appendChild(el("line",{x1:pad.l,y1:Y(0),x2:W-pad.r,y2:Y(0),stroke:C.ink,"stroke-width":1.5}));
+    data.forEach((d,i)=>{const cx=pad.l+gap*i+gap/2;
+      [[d.uk,C.soft,-bw*0.6,"UK"],[d.pl,C.accent,bw*0.6,"PL"]].forEach(([v,col,off])=>{
+        const top=v>=0?Y(v):Y(0),bh=Math.abs(Y(v)-Y(0));
+        svg.appendChild(el("rect",{x:cx+off-bw/2,y:top,width:bw,height:bh,rx:3,fill:col}));
+        svg.appendChild(txt(cx+off,v>=0?top-5:top+bh+13,(opts.suffix?v+opts.suffix:v),{size:10.5,weight:700,fill:col}));});
+      svg.appendChild(txt(cx,H-pad.b+22,d.label,{size:12}));});
+  }
+
+  return {line,bar,hbar,donut,group,C,el,colorFor};
+})();
+
+const VIZ={"result":{"total":63.5,"verdict":"DEEP_RESEARCH","cats":{"MARKET":63.8,"REGULATORY":77.1,"FINANCIAL":55.5,"SYSTEM":57.2},"gate":true,"eff":0.68},"itemSims":{"MARKET":[{"name":"자동차 판매대수(연간)","sim":67},{"name":"신차/중고차 비율","sim":71.7},{"name":"금융 침투율(신차)","sim":65},{"name":"브랜드 Top10","sim":42.9},{"name":"OEM 순위","sim":50},{"name":"평균 구매주기","sim":97.4},{"name":"평균 차량가격","sim":0},{"name":"고객 세그먼트(개인:법인 비율)","sim":92.4},{"name":"딜러 유형 구조","sim":60},{"name":"멀티브랜드 여부","sim":60},{"name":"딜러 집중도","sim":87.5},{"name":"딜러 금융취급 관행(F&I)","sim":30},{"name":"디지털 딜러 성숙도","sim":100}],"REGULATORY":[{"name":"라이선스 종류","sim":40},{"name":"외국인 지분 한도","sim":100},{"name":"인허가 처리기간","sim":66.8},{"name":"현지 법인형태 요건","sim":70},{"name":"법인세율","sim":80},{"name":"이자소득 원천징수","sim":100},{"name":"배당 송금 원천징수","sim":36.7},{"name":"금리 상한(우수라)","sim":100},{"name":"외환 송금 규제","sim":100},{"name":"배당 송금 제한","sim":100},{"name":"개인정보보호법","sim":90},{"name":"데이터 현지화 의무","sim":100},{"name":"국외이전 제한","sim":70},{"name":"충당금 적립 기준","sim":100},{"name":"연체 분류 기준","sim":100},{"name":"신용정보 조회(CB) 인프라","sim":50},{"name":"추심 규제","sim":50},{"name":"차량회수(repossession) 절차","sim":40},{"name":"자동차 의무보험","sim":100},{"name":"신용생명보험 가능 여부","sim":70},{"name":"보험 끼워팔기 규제","sim":60}],"FINANCIAL":[{"name":"금융사 순위","sim":11.1},{"name":"캡티브/논캡티브 구분","sim":30},{"name":"캡티브 강도","sim":81},{"name":"평균 대출기간","sim":100}],"SYSTEM":[{"name":"주요 솔루션사","sim":40},{"name":"솔루션 유형","sim":70},{"name":"코어시스템 벤더 락인","sim":100},{"name":"디지털 채널 성숙도","sim":66.7},{"name":"결제·정산 인프라","sim":40}]},"ts":{"PL_MKT_CAR_SALES":{"data":{"2019":555598,"2020":428300,"2021":446600,"2022":419700,"2023":475000,"2024":551600,"2025":597400},"cagr":1.2,"fc":634115,"unit":"대"},"PL_MKT_AF_SIZE":{"data":{"2020":70.1,"2021":88,"2022":88.1,"2023":100.1,"2024":110.5,"2025":119.5},"cagr":11.3,"fc":204,"unit":"PLN bn(전체 리스)"},"PL_MKT_PEN_NEW":{"data":{"2020":66.5,"2025":50},"cagr":-5.5,"fc":null,"unit":"%"},"GB_MKT_CAR_SALES":{"data":{"2019":2311140,"2020":1631064,"2021":1647181,"2022":1614063,"2023":1903054,"2024":1952778,"2025":2020520},"cagr":-2.2,"fc":1807829,"unit":"대"},"GB_MKT_AF_SIZE":{"data":{"2022":40.7,"2023":39,"2024":39,"2025":41},"cagr":0.2,"fc":41,"unit":"£bn(POS 소비자 카파이낸스)"},"GB_MKT_PEN_NEW":{"data":{"2023":78,"2024":80,"2025":85},"cagr":4.4,"fc":null,"unit":"%"}}};
+const C=ChartLib.C;
+function lim(items,mode){
+  items=items.slice().sort((a,b)=>b.sim-a.sim);
+  if(mode==="extremes" && items.length>7){
+    return [...items.slice(0,3),{name:"⋯ ("+(items.length-6)+"개 생략)",sim:null,_skip:true},...items.slice(-3)];
+  }
+  if(typeof mode==="number") return items.slice(0,mode);
+  return items;
+}
+// 정의 기반 차트 (data-spec)
+document.querySelectorAll(".rchart").forEach(svg=>{
+  const s=JSON.parse(svg.dataset.spec.replace(/&quot;/g,'"'));
+  if(s.chart==="bar"){
+    const cats=VIZ.result.cats;
+    ChartLib.bar(svg,[{label:"시장",v:cats.MARKET,w:"25%"},{label:"규제",v:cats.REGULATORY,w:"25%"},{label:"금융",v:cats.FINANCIAL,w:"20%"},{label:"시스템",v:cats.SYSTEM,w:"30%"}],{W:920,H:260,gate:s.gate});
+    svg.setAttribute("viewBox","0 0 920 260");
+  }else if(s.chart==="hbar"){
+    ChartLib.hbar(svg,lim(VIZ.itemSims[s.category]||[],s.limit||10),{W:920});
+  }else if(s.chart==="line"){
+    svg.setAttribute("viewBox","0 0 920 240");
+    const items=s.items, sc=s.scale||1;
+    let years=Object.keys(VIZ.ts[items[0]].data);
+    if(s.forecast && !years.includes("2030")) years=[...years,"2030"];
+    const colors=[C.accent,C.soft];
+    const series=[];
+    items.forEach((k,idx)=>{const t=VIZ.ts[k];if(!t)return;
+      const base=years.map(y=>y!=="2030"&&t.data[y]!=null?t.data[y]*sc:null);
+      series.push({data:base,color:colors[idx],dash:"0"});
+      if(s.forecast&&t.fc){const last=years.filter(y=>t.data[y]!=null).pop();series.push({data:years.map(y=>y===last?t.data[last]*sc:(y==="2030"?t.fc*sc:null)),color:colors[idx],dash:"5,4"});}
+    });
+    ChartLib.line(svg,series,{years,ymin:0});
+    if(items.length>1)svg.insertAdjacentHTML("afterend",'<div class="legend"><span><i style="background:#1f5c4a"></i>폴란드</span><span><i style="background:#4a5550"></i>영국</span><span>점선=예측</span></div>');
+  }else if(s.chart==="donut"){
+    svg.setAttribute("viewBox","0 0 220 220");
+    ChartLib.donut(svg,s.segs.map((x,i)=>({v:x.v,color:i===0?C.accent:C.amber})));
+    svg.insertAdjacentHTML("afterend",'<div class="legend">'+s.segs.map((x,i)=>`<span><i style="background:${i===0?'#1f5c4a':'#b88324'}"></i>${x.label}</span>`).join("")+'</div>');
+  }else if(s.chart==="group"){
+    svg.setAttribute("viewBox","0 0 920 200");
+    ChartLib.group(svg,s.groups,{W:920,H:200,suffix:s.suffix||""});
+    svg.insertAdjacentHTML("afterend",'<div class="legend"><span><i style="background:#4a5550"></i>영국</span><span><i style="background:#1f5c4a"></i>폴란드</span></div>');
+  }
+});
+// 카테고리 hbar
+document.querySelectorAll(".hbar-chart").forEach(svg=>{
+  ChartLib.hbar(svg,lim(VIZ.itemSims[svg.dataset.cat]||[],svg.dataset.limit==="all"?"all":"extremes"),{});
+});
+// 시계열 (항목 내)
+document.querySelectorAll(".ts-chart").forEach(svg=>{
+  const cid=svg.dataset.cid,pl=VIZ.ts["PL_"+cid],uk=VIZ.ts["UK_"+cid];if(!pl)return;
+  svg.setAttribute("viewBox","0 0 900 240");
+  let years=Object.keys(pl.data);if(pl.fc&&!years.includes("2030"))years=[...years,"2030"];
+  function ser(t,color){if(!t)return[];const base=years.map(y=>y!=="2030"&&t.data[y]!=null?t.data[y]:null);const out=[{data:base,color,dash:"0"}];if(t.fc){const last=years.filter(y=>t.data[y]!=null).pop();out.push({data:years.map(y=>y===last?t.data[last]:(y==="2030"?t.fc:null)),color,dash:"5,4"});}return out;}
+  ChartLib.line(svg,[...ser(pl,C.accent),...ser(uk,C.soft)],{years,ymin:0});
+  svg.insertAdjacentHTML("afterend",'<div class="viz-legend"><span><i style="background:#1f5c4a"></i>폴란드</span><span><i style="background:#4a5550"></i>영국</span><span>점선=예측</span></div>');
+});
+</script>
+</body>
+</html>

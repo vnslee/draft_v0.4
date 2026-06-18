@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Settings | Zenith Orbit</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Geist:wght@400;700;800&amp;family=JetBrains+Mono:wght@700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        .glass-card {
+            background: rgba(10, 13, 20, 0.7);
+            backdrop-filter: blur(24px);
+            border: 1px solid #1e293b;
+        }
+
+        .inner-bezel {
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.12);
+            border: 1px solid #334155;
+        }
+
+        .neon-glow {
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.15);
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+
+        input[type="range"]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: rgba(76, 215, 246, 0.1);
+            border-radius: 2px;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: #4cd7f6;
+            cursor: pointer;
+            -webkit-appearance: none;
+            margin-top: -6px;
+            box-shadow: 0 0 10px rgba(76, 215, 246, 0.5);
+            border: 2px solid #003640;
+        }
+
+        .pulse-cap {
+            background: linear-gradient(90deg, #4cd7f6, #06b6d4);
+            box-shadow: 0 0 12px #4cd7f6;
+        }
+        
+        body {
+            background-color: #040508;
+            background-image: 
+                radial-gradient(circle at 0% 0%, rgba(6, 182, 212, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 100% 100%, rgba(78, 222, 163, 0.05) 0%, transparent 50%);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-error-container": "#ffdad6",
+                      "error": "#ffb4ab",
+                      "outline-variant": "#3d494c",
+                      "tertiary-container": "#1bbd85",
+                      "on-background": "#e3e2e8",
+                      "on-tertiary-fixed-variant": "#005236",
+                      "secondary-fixed-dim": "#adc6ff",
+                      "inverse-on-surface": "#2f3035",
+                      "secondary-container": "#0566d9",
+                      "on-primary-container": "#00424f",
+                      "on-tertiary-container": "#00452e",
+                      "tertiary": "#4edea3",
+                      "primary-container": "#06b6d4",
+                      "on-secondary-fixed": "#001a42",
+                      "surface-dim": "#121317",
+                      "on-tertiary-fixed": "#002113",
+                      "on-primary-fixed-variant": "#004e5c",
+                      "on-primary-fixed": "#001f26",
+                      "surface-container-lowest": "#0d0e12",
+                      "tertiary-fixed-dim": "#4edea3",
+                      "primary": "#4cd7f6",
+                      "background": "#121317",
+                      "error-container": "#93000a",
+                      "on-surface": "#e3e2e8",
+                      "surface-variant": "#333539",
+                      "tertiary-fixed": "#6ffbbe",
+                      "on-secondary-fixed-variant": "#004395",
+                      "on-primary": "#003640",
+                      "surface": "#121317",
+                      "on-secondary-container": "#e6ecff",
+                      "primary-fixed-dim": "#4cd7f6",
+                      "inverse-primary": "#00687a",
+                      "primary-fixed": "#acedff",
+                      "surface-container-high": "#292a2e",
+                      "surface-container-highest": "#333539",
+                      "surface-tint": "#4cd7f6",
+                      "on-tertiary": "#003824",
+                      "secondary": "#adc6ff",
+                      "inverse-surface": "#e3e2e8",
+                      "outline": "#869397",
+                      "surface-container": "#1e1f24",
+                      "on-secondary": "#002e6a",
+                      "surface-container-low": "#1a1b20",
+                      "on-surface-variant": "#bcc9cd",
+                      "on-error": "#690005",
+                      "surface-bright": "#38393e",
+                      "secondary-fixed": "#d8e2ff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-mobile": "20px",
+                      "gutter": "24px",
+                      "2xl": "48px",
+                      "md": "16px",
+                      "unit": "4px",
+                      "lg": "24px",
+                      "xs": "4px",
+                      "margin-desktop": "40px",
+                      "sm": "8px",
+                      "xl": "32px"
+              },
+              "fontFamily": {
+                      "body-base": ["Inter"],
+                      "display-lg": ["Geist"],
+                      "headline-md": ["Geist"],
+                      "label-caps": ["JetBrains Mono"],
+                      "body-sm": ["Inter"],
+                      "display-lg-mobile": ["Geist"],
+                      "stat-lg": ["Geist"]
+              },
+              "fontSize": {
+                      "body-base": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                      "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.15em", "fontWeight": "700"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "display-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                      "stat-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="text-on-surface font-body-base antialiased min-h-screen">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-20 bg-surface/70 backdrop-blur-2xl dark:bg-surface/70 border-b border-outline-variant/20 shadow-[0_0_20px_rgba(6,182,212,0.15)]">
+<div class="flex items-center gap-4">
+<span class="font-display-lg text-display-lg-mobile tracking-tighter text-primary dark:text-primary">Zenith Orbit</span>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-on-surface-variant font-body-base text-body-base hover:text-primary transition-colors duration-300 scale-95 active:scale-90 transition-transform" href="#">Main Menu</a>
+<a class="text-on-surface-variant font-body-base text-body-base hover:text-primary transition-colors duration-300 scale-95 active:scale-90 transition-transform" href="#">Detail</a>
+<a class="text-on-surface-variant font-body-base text-body-base hover:text-primary transition-colors duration-300 scale-95 active:scale-90 transition-transform" href="#">Report</a>
+<a class="text-primary border-b-2 border-primary pb-1 font-body-base text-body-base hover:text-primary transition-colors duration-300 scale-95 active:scale-90 transition-transform" href="#">Settings</a>
+</nav>
+<div class="flex items-center gap-4">
+<div class="flex gap-2">
+<button class="material-symbols-outlined text-primary hover:bg-surface-variant/30 p-2 rounded-full transition-all">language</button>
+<button class="material-symbols-outlined text-primary hover:bg-surface-variant/30 p-2 rounded-full transition-all">translate</button>
+</div>
+<div class="w-10 h-10 rounded-full border border-primary/30 overflow-hidden">
+<img alt="User profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6SYMa4BXV5ClwNTc5g0oiI9pVRt357lE4qbaMIQxwdQgv4bYcUkWEJ4K7a7FziMn4veYR__UyKQ3m1d-TbmKK0hzlFaALHiVoxZiJ4NbgJikqfbo0ETT-2fVqPcD916XAV6dNUe8-B9Ku5qpyZ9xQmzAXbzXUnu0B7Mmcicjc1HA-MbRx5nBiVO-cfP3TjNBKTFISE5u7rQ6gOpfLQg08Hi-kzmQ9mG_AUENLOwC1NOs7w-wQbZ-PVwEEasvJ3mZPNnYVehzIK7M"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full z-40 flex flex-col pt-24 pb-10 bg-surface-container-low/80 backdrop-blur-3xl dark:bg-surface-container-low/80 border-r border-outline-variant/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)] w-72 hidden md:flex">
+<div class="px-6 mb-10">
+<div class="flex items-center gap-3 mb-2">
+<div class="w-8 h-8 bg-primary rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary">rocket_launch</span>
+</div>
+<div>
+<h2 class="font-label-caps text-label-caps text-primary">Zenith Orbit</h2>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-widest">Global Strategy Command</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-2">
+<a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-surface-variant/30 rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">explore</span>
+<span class="font-label-caps text-label-caps uppercase">Expansion Radar</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-surface-variant/30 rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-caps text-label-caps uppercase">Market Analysis</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-surface-variant/30 rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">security</span>
+<span class="font-label-caps text-label-caps uppercase">Risk Assessment</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 bg-primary-container/20 text-primary border-r-4 border-primary rounded-lg translate-x-1 transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-caps text-label-caps uppercase">Global Settings</span>
+</a>
+</nav>
+<div class="px-4 mt-auto space-y-4">
+<button class="w-full py-3 bg-primary-container text-on-primary-container rounded-full font-label-caps text-label-caps uppercase tracking-tighter hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] transition-all active:scale-95">
+                Launch Simulation
+            </button>
+<div class="pt-4 border-t border-outline-variant/20">
+<a class="flex items-center gap-4 px-4 py-2 text-on-surface-variant hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="text-body-sm font-body-sm">Help Center</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-2 text-on-surface-variant hover:text-error transition-all" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="text-body-sm font-body-sm">Log Out</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="md:pl-72 pt-20 min-h-screen">
+<div class="p-margin-desktop max-w-7xl mx-auto">
+<!-- Header & Dropdown Section -->
+<div class="flex justify-between items-end mb-10">
+<div>
+<h1 class="font-display-lg text-display-lg text-primary mb-2">System Configuration</h1>
+<p class="text-on-surface-variant font-body-base max-w-xl">Adjust global expansion heuristics, threshold sensitivity, and data source veracity for the Zenith Orbit prediction engine.</p>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-[10px] text-primary uppercase tracking-widest px-1">Weighting Ruleset ID</label>
+<div class="relative min-w-[240px]">
+<select class="w-full appearance-none glass-card inner-bezel px-4 py-3 pr-10 rounded-lg text-on-surface focus:outline-none focus:border-primary/50 transition-all cursor-pointer">
+<option>DEFAULT_GLOBAL_V4.2</option>
+<option>AGGRESSIVE_MARKET_ENTRY</option>
+<option>STABLE_LONG_TERM_SEC</option>
+<option>EMERGING_CORRIDOR_ALPHA</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-primary">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Bento Grid Settings -->
+<div class="grid grid-cols-12 gap-gutter">
+<!-- Panel 1: Category Weights (Totaling 100%) -->
+<section class="col-span-12 lg:col-span-7 glass-card inner-bezel p-8 rounded-2xl relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 blur-3xl -mr-16 -mt-16 group-hover:bg-primary/10 transition-all duration-700"></div>
+<div class="flex justify-between items-center mb-8">
+<div>
+<h3 class="font-headline-md text-headline-md text-primary mb-1">Category Weights</h3>
+<p class="text-on-surface-variant text-body-sm">Relative importance of core heuristic domains.</p>
+</div>
+<div class="px-4 py-1 glass-card border-primary/20 rounded-full">
+<span class="font-label-caps text-primary text-label-caps">Total: 100%</span>
+</div>
+</div>
+<div class="space-y-8">
+<!-- Market Slider -->
+<div class="space-y-3">
+<div class="flex justify-between font-label-caps text-[12px] uppercase">
+<span class="text-on-surface flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-primary"></span> Market</span>
+<span class="text-primary" id="val-market">35%</span>
+</div>
+<input class="w-full" max="100" min="0" oninput="document.getElementById('val-market').innerText = this.value + '%'" type="range" value="35"/>
+</div>
+<!-- Regulation Slider -->
+<div class="space-y-3">
+<div class="flex justify-between font-label-caps text-[12px] uppercase">
+<span class="text-on-surface flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-tertiary"></span> Regulation</span>
+<span class="text-tertiary" id="val-reg">25%</span>
+</div>
+<input class="w-full" max="100" min="0" oninput="document.getElementById('val-reg').innerText = this.value + '%'" type="range" value="25"/>
+</div>
+<!-- Environment/Finance Slider -->
+<div class="space-y-3">
+<div class="flex justify-between font-label-caps text-[12px] uppercase">
+<span class="text-on-surface flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-secondary"></span> Environment / Finance</span>
+<span class="text-secondary" id="val-env">20%</span>
+</div>
+<input class="w-full" max="100" min="0" oninput="document.getElementById('val-env').innerText = this.value + '%'" type="range" value="20"/>
+</div>
+<!-- System Slider -->
+<div class="space-y-3">
+<div class="flex justify-between font-label-caps text-[12px] uppercase">
+<span class="text-on-surface flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-white/40"></span> System Architecture</span>
+<span class="text-on-surface-variant" id="val-sys">20%</span>
+</div>
+<input class="w-full" max="100" min="0" oninput="document.getElementById('val-sys').innerText = this.value + '%'" type="range" value="20"/>
+</div>
+</div>
+</section>
+<!-- Panel 2: Threshold Confidence -->
+<section class="col-span-12 lg:col-span-5 glass-card inner-bezel p-8 rounded-2xl flex flex-col">
+<div class="mb-8">
+<h3 class="font-headline-md text-headline-md text-primary mb-1">Threshold Confidence</h3>
+<p class="text-on-surface-variant text-body-sm">Sensitivity gates for automated decisioning.</p>
+</div>
+<div class="flex-1 space-y-12 flex flex-col justify-center">
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<label class="font-label-caps text-label-caps uppercase tracking-wider text-on-surface">Portability Gate</label>
+<div class="w-12 h-12 flex items-center justify-center rounded-lg border border-primary/20 bg-primary/5 text-primary font-display-lg text-xl" id="val-port">82</div>
+</div>
+<p class="text-[11px] text-on-surface-variant italic mb-2">Minimum score required for cross-border asset liquidity.</p>
+<input class="w-full" max="100" min="0" oninput="document.getElementById('val-port').innerText = this.value" type="range" value="82"/>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<label class="font-label-caps text-label-caps uppercase tracking-wider text-on-surface">System Gate</label>
+<div class="w-12 h-12 flex items-center justify-center rounded-lg border border-tertiary/20 bg-tertiary/5 text-tertiary font-display-lg text-xl" id="val-gate">65</div>
+</div>
+<p class="text-[11px] text-on-surface-variant italic mb-2">Baseline operational reliability required for deployment.</p>
+<input class="w-full" max="100" min="0" oninput="document.getElementById('val-gate').innerText = this.value" type="range" value="65"/>
+</div>
+</div>
+</section>
+<!-- Panel 3: Source Reliability -->
+<section class="col-span-12 glass-card inner-bezel p-8 rounded-2xl">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+<div class="md:col-span-1">
+<h3 class="font-headline-md text-headline-md text-primary mb-1">Source Reliability</h3>
+<p class="text-on-surface-variant text-body-sm">Verification trust factors (0.0 to 1.0) applied to distinct data tiers.</p>
+<div class="mt-8 p-4 bg-primary/5 border border-primary/10 rounded-lg">
+<div class="flex items-center gap-3 text-primary mb-2">
+<span class="material-symbols-outlined">verified</span>
+<span class="font-label-caps text-label-caps uppercase">Signal Integrity</span>
+</div>
+<p class="text-[11px] text-on-surface-variant leading-relaxed">Lowering reliability scores increases the margin of error in predictive models and triggers manual secondary audits.</p>
+</div>
+</div>
+<div class="md:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+<!-- Tier 1 -->
+<div class="flex flex-col items-center gap-6 p-6 glass-card rounded-xl border-outline-variant/10">
+<div class="text-center">
+<p class="font-label-caps text-label-caps uppercase text-on-surface mb-1">Tier 1 Sources</p>
+<p class="text-[10px] text-on-surface-variant italic">Direct API/Nodes</p>
+</div>
+<div class="relative h-48 w-4 flex items-end bg-surface-variant/20 rounded-full overflow-hidden">
+<div class="w-full bg-primary pulse-cap transition-all duration-300" id="bar-t1" style="height: 95%"></div>
+<input class="absolute inset-0 w-48 h-4 rotate-[-90deg] translate-y-22 translate-x-[-22px] opacity-0 cursor-pointer" max="100" min="0" oninput="document.getElementById('bar-t1').style.height = this.value + '%'; document.getElementById('txt-t1').innerText = (this.value/100).toFixed(2)" type="range" value="95"/>
+</div>
+<span class="font-display-lg text-2xl text-primary" id="txt-t1">0.95</span>
+</div>
+<!-- Tier 2 -->
+<div class="flex flex-col items-center gap-6 p-6 glass-card rounded-xl border-outline-variant/10">
+<div class="text-center">
+<p class="font-label-caps text-label-caps uppercase text-on-surface mb-1">Tier 2 Sources</p>
+<p class="text-[10px] text-on-surface-variant italic">Aggregated Feeds</p>
+</div>
+<div class="relative h-48 w-4 flex items-end bg-surface-variant/20 rounded-full overflow-hidden">
+<div class="w-full bg-tertiary pulse-cap transition-all duration-300" id="bar-t2" style="height: 72%"></div>
+<input class="absolute inset-0 w-48 h-4 rotate-[-90deg] translate-y-22 translate-x-[-22px] opacity-0 cursor-pointer" max="100" min="0" oninput="document.getElementById('bar-t2').style.height = this.value + '%'; document.getElementById('txt-t2').innerText = (this.value/100).toFixed(2)" type="range" value="72"/>
+</div>
+<span class="font-display-lg text-2xl text-tertiary" id="txt-t2">0.72</span>
+</div>
+<!-- Tier 3 -->
+<div class="flex flex-col items-center gap-6 p-6 glass-card rounded-xl border-outline-variant/10">
+<div class="text-center">
+<p class="font-label-caps text-label-caps uppercase text-on-surface mb-1">Tier 3 Sources</p>
+<p class="text-[10px] text-on-surface-variant italic">Unverified Social/OSS</p>
+</div>
+<div class="relative h-48 w-4 flex items-end bg-surface-variant/20 rounded-full overflow-hidden">
+<div class="w-full bg-secondary pulse-cap transition-all duration-300" id="bar-t3" style="height: 48%"></div>
+<input class="absolute inset-0 w-48 h-4 rotate-[-90deg] translate-y-22 translate-x-[-22px] opacity-0 cursor-pointer" max="100" min="0" oninput="document.getElementById('bar-t3').style.height = this.value + '%'; document.getElementById('txt-t3').innerText = (this.value/100).toFixed(2)" type="range" value="48"/>
+</div>
+<span class="font-display-lg text-2xl text-secondary" id="txt-t3">0.48</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Footer Action -->
+<div class="fixed bottom-0 left-0 md:left-72 right-0 p-8 flex justify-end pointer-events-none">
+<button class="pointer-events-auto flex items-center gap-3 px-10 py-4 bg-gradient-to-r from-primary to-secondary text-on-primary font-label-caps text-label-caps uppercase tracking-widest rounded-full shadow-[0_0_30px_rgba(76,215,246,0.3)] hover:shadow-[0_0_50px_rgba(76,215,246,0.5)] hover:scale-105 active:scale-95 transition-all duration-300 group">
+<span>Save Configuration</span>
+<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">save</span>
+</button>
+</div>
+</div>
+</main>
+<!-- Visual Polish: Ambient Elements -->
+<div class="fixed top-0 left-0 w-full h-full pointer-events-none -z-10 opacity-30">
+<div class="absolute top-[20%] right-[10%] w-[40vw] h-[40vw] bg-primary/10 blur-[120px] rounded-full"></div>
+<div class="absolute bottom-[10%] left-[20%] w-[30vw] h-[30vw] bg-tertiary/10 blur-[100px] rounded-full"></div>
+</div>
+<script>
+        // Micro-interaction for feedback
+        document.querySelector('button').addEventListener('click', function() {
+            const btn = this;
+            const originalText = btn.innerHTML;
+            
+            if (originalText.includes('Save')) {
+                btn.innerHTML = '<span class="material-symbols-outlined animate-spin">sync</span><span>Syncing...</span>';
+                setTimeout(() => {
+                    btn.innerHTML = '<span class="material-symbols-outlined">check_circle</span><span>Applied Successfully</span>';
+                    btn.classList.replace('from-primary', 'from-tertiary');
+                    setTimeout(() => {
+                        btn.innerHTML = originalText;
+                        btn.classList.replace('from-tertiary', 'from-primary');
+                    }, 2000);
+                }, 1200);
+            }
+        });
+
+        // Simple validation logic placeholder: Enforcing 100% sum on Panel 1
+        // (In a real app, adjusting one would offset others proportionally)
+    </script>
+</body></html>

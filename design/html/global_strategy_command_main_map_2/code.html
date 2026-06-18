@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Zenith Orbit | Global Strategy Command</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;family=Geist:wght@600;700;800&amp;family=JetBrains+Mono:wght@700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Inter:wght@100..900&amp;family=JetBrains+Mono:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<style>
+        @layer base {
+            body {
+                @apply bg-background text-on-surface overflow-hidden;
+                font-family: 'Inter', sans-serif;
+            }
+            .material-symbols-outlined {
+                font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            }
+        }
+
+        .glass-panel {
+            background: rgba(10, 13, 20, 0.7);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(30, 41, 59, 0.5);
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.12);
+        }
+
+        .map-container {
+            background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCDMU2qNvPbZoHNBdQHjVQ9Y0UEpb50CT0nYv6vskcISVHCISQFVy40VEmkfkRysN9q-wIxiZWPPmc0mQePbV32slLpCatR7D4Y64kbBCrF7283TFcfmCO0_GxP26mQUZpfdMoa-00v3oCnty3DjZbaNOm4ZwJzFXBrgsq842xmrPmBRQtsVFzX1lfWvk4BG8_QoykKYAc9LArjnGKFa61ktilvmKt1aHtn4XdAA-axT7lu5BqecqpfsYZ0eptDNeeksbQ3DL-ux9I');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .neon-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; filter: drop-shadow(0 0 5px currentColor); }
+            50% { opacity: .7; filter: drop-shadow(0 0 12px currentColor); }
+        }
+
+        .glitch-hover:hover {
+            text-shadow: 2px 0 #4cd7f6, -2px 0 #1bbd85;
+        }
+
+        /* Nav Transition */
+        #top-nav {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+        }
+        #top-nav.nav-hidden {
+            transform: translateY(-100%);
+            opacity: 0;
+            pointer-events: none;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#ffdad6",
+                        "error": "#ffb4ab",
+                        "outline-variant": "#3d494c",
+                        "tertiary-container": "#1bbd85",
+                        "on-background": "#e3e2e8",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "inverse-on-surface": "#2f3035",
+                        "secondary-container": "#0566d9",
+                        "on-primary-container": "#00424f",
+                        "on-tertiary-container": "#00452e",
+                        "tertiary": "#4edea3",
+                        "primary-container": "#06b6d4",
+                        "on-secondary-fixed": "#001a42",
+                        "surface-dim": "#121317",
+                        "on-tertiary-fixed": "#002113",
+                        "on-primary-fixed-variant": "#004e5c",
+                        "on-primary-fixed": "#001f26",
+                        "surface-container-lowest": "#0d0e12",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "primary": "#4cd7f6",
+                        "background": "#121317",
+                        "error-container": "#93000a",
+                        "on-surface": "#e3e2e8",
+                        "surface-variant": "#333539",
+                        "tertiary-fixed": "#6ffbbe",
+                        "on-secondary-fixed-variant": "#004395",
+                        "on-primary": "#003640",
+                        "surface": "#121317",
+                        "on-secondary-container": "#e6ecff",
+                        "primary-fixed-dim": "#4cd7f6",
+                        "inverse-primary": "#00687a",
+                        "primary-fixed": "#acedff",
+                        "surface-container-high": "#292a2e",
+                        "surface-container-highest": "#333539",
+                        "surface-tint": "#4cd7f6",
+                        "on-tertiary": "#003824",
+                        "secondary": "#adc6ff",
+                        "inverse-surface": "#e3e2e8",
+                        "outline": "#869397",
+                        "surface-container": "#1e1f24",
+                        "on-secondary": "#002e6a",
+                        "surface-container-low": "#1a1b20",
+                        "on-surface-variant": "#bcc9cd",
+                        "on-error": "#690005",
+                        "surface-bright": "#38393e",
+                        "secondary-fixed": "#d8e2ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "20px",
+                        "gutter": "24px",
+                        "2xl": "48px",
+                        "md": "16px",
+                        "unit": "4px",
+                        "lg": "24px",
+                        "xs": "4px",
+                        "margin-desktop": "40px",
+                        "sm": "8px",
+                        "xl": "32px"
+                    },
+                    "fontFamily": {
+                        "body-base": ["Inter"],
+                        "display-lg": ["Geist"],
+                        "headline-md": ["Geist"],
+                        "label-caps": ["JetBrains Mono"],
+                        "body-sm": ["Inter"],
+                        "display-lg-mobile": ["Geist"],
+                        "stat-lg": ["Geist"]
+                    },
+                    "fontSize": {
+                        "body-base": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.15em", "fontWeight": "700"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "display-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "stat-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background">
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-20 bg-surface/70 backdrop-blur-2xl dark:bg-surface/70 border-b border-outline-variant/20 shadow-[0_0_20px_rgba(6,182,212,0.15)]" id="top-nav">
+<div class="flex items-center gap-8">
+<span class="font-display-lg text-display-lg-mobile tracking-tighter text-primary dark:text-primary">Zenith Orbit</span>
+<div class="hidden md:flex items-center gap-6">
+<a class="text-primary border-b-2 border-primary pb-1 font-label-caps text-label-caps hover:text-primary transition-colors duration-300" href="#">Main Menu</a>
+<div class="relative group">
+<button class="text-on-surface-variant font-body-base text-body-base hover:text-primary transition-colors duration-300 flex items-center gap-1">
+                        Detail <span class="material-symbols-outlined text-sm">expand_more</span>
+</button>
+<div class="absolute top-full left-0 mt-2 w-48 glass-panel opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none group-hover:pointer-events-auto py-2 rounded-lg">
+<a class="block px-4 py-2 hover:bg-primary/10 hover:text-primary transition-colors text-body-sm font-body-sm" href="#">Regional Detail</a>
+<a class="block px-4 py-2 hover:bg-primary/10 hover:text-primary transition-colors text-body-sm font-body-sm" href="#">Country Detail</a>
+<a class="block px-4 py-2 hover:bg-primary/10 hover:text-primary transition-colors text-body-sm font-body-sm" href="#">View All Countries</a>
+</div>
+</div>
+<div class="relative group">
+<button class="text-on-surface-variant font-body-base text-body-base hover:text-primary transition-colors duration-300 flex items-center gap-1">
+                        Report <span class="material-symbols-outlined text-sm">expand_more</span>
+</button>
+<div class="absolute top-full left-0 mt-2 w-48 glass-panel opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none group-hover:pointer-events-auto py-2 rounded-lg">
+<a class="block px-4 py-2 hover:bg-primary/10 hover:text-primary transition-colors text-body-sm font-body-sm" href="#">Regional Report</a>
+<a class="block px-4 py-2 hover:bg-primary/10 hover:text-primary transition-colors text-body-sm font-body-sm" href="#">Country Report</a>
+</div>
+</div>
+<a class="text-on-surface-variant font-body-base text-body-base hover:text-primary transition-colors duration-300" href="#">Settings</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 glass-panel rounded-full hover:bg-primary/20 transition-all scale-95 active:scale-90" onclick="toggleNav()">
+<span class="material-symbols-outlined text-primary">visibility_off</span>
+</button>
+<button class="p-2 glass-panel rounded-full hover:bg-primary/20 transition-all scale-95 active:scale-90">
+<span class="material-symbols-outlined text-primary">language</span>
+</button>
+<div class="flex items-center gap-2 px-3 py-1.5 glass-panel rounded-full">
+<div class="w-5 h-5 rounded-full overflow-hidden border border-outline-variant">
+<img alt="Korea" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0usn2VXTa7i7_NUuLHrdKOoQY6ERyvhg0aZd3y9bXOKovc7nPp0Pl9cexwXMIsrI9FiLVKjoo76CSRcw9CVCxithGiKd-6gGjEVKKX5ocDVD3Yxn52eLw3xU8qlSLhweyOqfUyi1URB73QX5YgV55QsfVeWfBvJ0G_5uvzEEI-zaSORl2toFMo8QBMx2fSURUkGDgSpYkdueEmtwF4dSJnWoVsTY2HkUgugF5fTtJSoSBxNdfLKxwNd3VFLssT2d5qGOINcAHYy8"/>
+</div>
+<div class="w-5 h-5 rounded-full overflow-hidden border border-outline-variant">
+<img alt="UK" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUmaMoHI5B8XRtotuZNxO-x9W_j8KYk1rnfhjKXa8SHoKv51HFQ10xygIyJrmFrXAd_gH0Tb00LNc0-Bu3tr8-fww3VmPqvAixow88UrdXjU_YAPBgOS8vdGSUQYnQY3FsgcWJhAZ0CpjQC0F_JGIToENvL4274dVk_2j645MZwkVPGIefS3UQB2Av4ThsbalJWXo7va5fmlZBuQpXY6X8AIprJ0sjypq2g-Mgke0L5DJ8zMgPTgqF-DEXO6_lDseynbx4DZiugOw"/>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-sm">translate</span>
+</div>
+</div>
+</nav>
+<!-- Hidden Nav Reveal Trigger (Floating Top Center) -->
+<button class="hidden fixed top-0 left-1/2 -translate-x-1/2 px-6 py-1 bg-primary/20 backdrop-blur-md border border-t-0 border-primary/30 rounded-b-xl text-primary font-label-caps text-label-caps z-50 hover:bg-primary/40 transition-all group" id="nav-reveal-trigger" onclick="toggleNav()">
+<span class="material-symbols-outlined text-sm align-middle group-hover:translate-y-0.5 transition-transform">expand_more</span> Command Bar
+</button>
+<!-- Main Content Area -->
+<main class="h-screen w-full relative">
+<!-- Interactive Map Background Section -->
+<div class="absolute inset-0 z-0 map-container flex items-center justify-center">
+<!-- Simulated Glow Layers -->
+<div class="absolute inset-0 bg-gradient-to-b from-background/20 via-transparent to-background/80 pointer-events-none"></div>
+<!-- Map Legend (Top Right) -->
+<div class="absolute top-24 right-10 z-10 glass-panel p-4 rounded-xl space-y-3 transition-all duration-500" id="legend-panel">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-2">Market Status</h3>
+<div class="flex items-center gap-3">
+<div class="w-3 h-3 rounded-full bg-primary neon-pulse"></div>
+<span class="text-body-sm font-body-sm text-on-surface">Entered Markets</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-3 h-3 rounded-full bg-tertiary shadow-[0_0_8px_rgba(78,222,163,0.5)]"></div>
+<span class="text-body-sm font-body-sm text-on-surface">Planned Markets</span>
+</div>
+<div class="flex items-center gap-3 opacity-50">
+<div class="w-3 h-3 rounded-full bg-outline"></div>
+<span class="text-body-sm font-body-sm text-on-surface">Emerging Potential</span>
+</div>
+</div>
+<!-- Interactive Markers -->
+<!-- Europe Marker -->
+<div class="absolute top-[35%] left-[48%] group cursor-pointer" onclick="toggleRegionPopup()">
+<div class="w-8 h-8 flex items-center justify-center bg-primary/20 rounded-full border border-primary/50 group-hover:scale-125 transition-transform duration-500">
+<div class="w-3 h-3 bg-primary rounded-full neon-pulse"></div>
+</div>
+<div class="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-3 py-1 glass-panel rounded-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="text-label-caps text-label-caps text-primary">Europe Zone A</span>
+</div>
+</div>
+<!-- Asia Marker -->
+<div class="absolute top-[42%] left-[75%] group cursor-pointer" onclick="toggleCountryPopup()">
+<div class="w-10 h-10 flex items-center justify-center bg-tertiary/20 rounded-full border border-tertiary/50 group-hover:scale-125 transition-transform duration-500">
+<div class="w-4 h-4 bg-tertiary rounded-full shadow-[0_0_15px_#4edea3]"></div>
+</div>
+<div class="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-3 py-1 glass-panel rounded-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="text-label-caps text-label-caps text-tertiary">Asia-Pacific (Planned)</span>
+</div>
+</div>
+</div>
+<!-- Filter Bar (Top Left over map) -->
+<div class="absolute top-24 left-10 z-10 flex items-center gap-3 transition-all duration-500" id="filter-bar">
+<div class="glass-panel p-1.5 rounded-full flex gap-1">
+<button class="px-6 py-2 bg-primary text-on-primary font-label-caps text-label-caps rounded-full transition-all">All Regions</button>
+<button class="px-6 py-2 hover:bg-surface-variant text-on-surface-variant font-label-caps text-label-caps rounded-full transition-all">Europe</button>
+<button class="px-6 py-2 hover:bg-surface-variant text-on-surface-variant font-label-caps text-label-caps rounded-full transition-all">S.America</button>
+<button class="px-6 py-2 hover:bg-surface-variant text-on-surface-variant font-label-caps text-label-caps rounded-full transition-all">N.America</button>
+<button class="px-6 py-2 hover:bg-surface-variant text-on-surface-variant font-label-caps text-label-caps rounded-full transition-all">APEC</button>
+</div>
+<button class="w-11 h-11 flex items-center justify-center glass-panel rounded-full text-primary hover:bg-primary/20 transition-all">
+<span class="material-symbols-outlined">filter_list</span>
+</button>
+</div>
+<!-- Popups (P1 & P2) -->
+<!-- P1: Regional Card Popup -->
+<div class="hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[480px] glass-panel rounded-2xl p-8 shadow-2xl z-50" id="region-popup">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h2 class="font-display-lg text-headline-md text-primary tracking-tight">Europe Hub</h2>
+<p class="text-on-surface-variant text-body-base">Strategy Node: Berlin</p>
+</div>
+<button class="text-on-surface-variant hover:text-primary" onclick="toggleRegionPopup()"><span class="material-symbols-outlined">close</span></button>
+</div>
+<div class="grid grid-cols-2 gap-4 mb-8">
+<div class="p-4 bg-surface-container-high rounded-xl border border-outline-variant/10">
+<p class="text-label-caps text-label-caps text-on-surface-variant opacity-60 mb-1">Market Penetration</p>
+<p class="font-display-lg text-headline-md text-tertiary">78.4%</p>
+</div>
+<div class="p-4 bg-surface-container-high rounded-xl border border-outline-variant/10">
+<p class="text-label-caps text-label-caps text-on-surface-variant opacity-60 mb-1">Risk Score</p>
+<p class="font-display-lg text-headline-md text-error">Low</p>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-center text-body-sm">
+<span class="text-on-surface-variant">Active Operations</span>
+<span class="font-label-caps text-label-caps">12 Countries</span>
+</div>
+<div class="w-full bg-surface-variant h-1 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[78%]"></div>
+</div>
+</div>
+<button class="w-full mt-8 py-4 bg-surface-bright border border-primary/30 text-primary font-label-caps text-label-caps rounded-xl hover:bg-primary/10 transition-all">
+                Explore Regional Analytics
+            </button>
+</div>
+<!-- P2: Country Card Popup -->
+<div class="hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[420px] glass-panel rounded-2xl p-8 shadow-2xl z-50" id="country-popup">
+<div class="flex justify-between items-start mb-6">
+<div class="flex items-center gap-4">
+<div class="w-12 h-8 rounded border border-outline-variant overflow-hidden">
+<img alt="Japan" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlFZFXFDIQSIbQ1-blS4RdrHqRRlAeLJWbknmvueJpW-aoLmQsEBO2OQXG9Cu_mjEFqISlYRX7YsYZSDbIddEpd--LvtAOIfEtt1TmjrQ-Y0_6QxNg4vulEbNNAVqfFwSD8uP0FRXfH5kpvXfT7uwL_wlp4HhNEg9sPhvHCi1d2xepxjUM1qSJk0bPgA4AGNTtQIqzQd5aYDOFbnxvt6aitwgpN63_Vfa5YDHA_BpbPc80Njj6zfGivL6DnbfhTEgtdmQ-98uUONE"/>
+</div>
+<div>
+<h2 class="font-display-lg text-headline-md text-tertiary tracking-tight">Japan</h2>
+<p class="text-on-surface-variant text-body-base">Target Q3 2024</p>
+</div>
+</div>
+<button class="text-on-surface-variant hover:text-primary" onclick="toggleCountryPopup()"><span class="material-symbols-outlined">close</span></button>
+</div>
+<div class="space-y-4 mb-8">
+<div class="flex items-center justify-between p-3 bg-surface-container-lowest rounded-lg border border-outline-variant/10">
+<span class="text-body-sm text-on-surface-variant">Expansion Readiness</span>
+<span class="text-tertiary font-label-caps">92/100</span>
+</div>
+<div class="flex items-center justify-between p-3 bg-surface-container-lowest rounded-lg border border-outline-variant/10">
+<span class="text-body-sm text-on-surface-variant">Estimated ROI</span>
+<span class="text-primary font-label-caps">24.5%</span>
+</div>
+</div>
+<p class="text-body-sm text-on-surface-variant mb-8">High regulatory alignment and infrastructure compatibility detected in Tokyo-Osaka corridor.</p>
+<div class="flex gap-4">
+<button class="flex-1 py-3 bg-primary text-on-primary font-label-caps text-label-caps rounded-lg">Approve</button>
+<button class="flex-1 py-3 border border-outline text-on-surface font-label-caps text-label-caps rounded-lg">Defer</button>
+</div>
+</div>
+<!-- Floating Action Button -->
+<div class="fixed bottom-10 right-10 flex flex-col gap-4 items-center z-40">
+<button class="w-12 h-12 glass-panel text-primary rounded-full shadow-lg flex items-center justify-center hover:bg-primary/20 transition-all group">
+<span class="material-symbols-outlined text-xl group-hover:scale-110 transition-transform">analytics</span>
+</button>
+<button class="w-16 h-16 bg-gradient-to-tr from-primary to-primary-container text-on-primary rounded-full shadow-[0_10px_40px_rgba(6,182,212,0.4)] flex items-center justify-center hover:scale-110 active:scale-90 transition-all group">
+<span class="material-symbols-outlined group-hover:rotate-90 transition-transform duration-500">add</span>
+</button>
+</div>
+</main>
+<script>
+        function toggleNav() {
+            const nav = document.getElementById('top-nav');
+            const trigger = document.getElementById('nav-reveal-trigger');
+            const filterBar = document.getElementById('filter-bar');
+            const legendPanel = document.getElementById('legend-panel');
+            
+            const isHidden = nav.classList.toggle('nav-hidden');
+            
+            if (isHidden) {
+                trigger.classList.remove('hidden');
+                // Move HUD elements up when nav is hidden
+                filterBar.style.top = '2rem';
+                legendPanel.style.top = '2rem';
+            } else {
+                trigger.classList.add('hidden');
+                // Restore HUD elements positions
+                filterBar.style.top = '6rem';
+                legendPanel.style.top = '6rem';
+            }
+        }
+
+        function toggleRegionPopup() {
+            const popup = document.getElementById('region-popup');
+            const countryPopup = document.getElementById('country-popup');
+            countryPopup.classList.add('hidden');
+            popup.classList.toggle('hidden');
+        }
+
+        function toggleCountryPopup() {
+            const popup = document.getElementById('country-popup');
+            const regionPopup = document.getElementById('region-popup');
+            regionPopup.classList.add('hidden');
+            popup.classList.toggle('hidden');
+        }
+
+        // Add some atmospheric micro-interactions
+        document.addEventListener('mousemove', (e) => {
+            const cursorGlow = document.createElement('div');
+            cursorGlow.className = 'fixed w-32 h-32 bg-primary/5 rounded-full blur-[60px] pointer-events-none z-[100]';
+            cursorGlow.style.left = `${e.clientX - 64}px`;
+            cursorGlow.style.top = `${e.clientY - 64}px`;
+            
+            // Limit the number of glow elements
+            const existing = document.querySelectorAll('.cursor-trail');
+            if (existing.length > 0) existing[0].remove();
+            cursorGlow.classList.add('cursor-trail');
+            document.body.appendChild(cursorGlow);
+        });
+    </script>
+</body></html>

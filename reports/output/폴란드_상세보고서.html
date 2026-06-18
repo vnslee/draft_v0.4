@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>폴란드 진출 상세 진단</title>
+<style>
+  :root{--ink:#16201c;--ink-soft:#4a5550;--bg:#f4f2ec;--panel:#fbfaf6;--line:#d8d3c6;--line-soft:#e7e3d8;
+    --accent:#1f5c4a;--accent-soft:#d9e7e0;--signal:#c5562e;--signal-soft:#f3ddd2;--amber:#b88324;--amber-soft:#f0e4cb}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+  .layout{display:flex;max-width:1180px;margin:0 auto}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 24px 80px;width:100%}
+  .toc{width:210px;flex-shrink:0;position:sticky;top:0;height:100vh;overflow-y:auto;padding:30px 18px;border-right:1px solid var(--line)}
+  .toc .tt{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);font-weight:700;margin-bottom:14px}
+  .toc a{display:block;font-size:13px;color:var(--ink-soft);text-decoration:none;padding:7px 10px;border-radius:6px}
+  .toc a:hover{background:var(--accent-soft);color:var(--accent)}
+  .toc a .ic{display:inline-block;width:18px;height:18px;line-height:18px;text-align:center;background:var(--ink);color:#fff;border-radius:4px;font-size:10px;font-weight:700;margin-right:8px}
+  .main{flex:1;min-width:0;padding:30px 40px 80px}
+  @media(max-width:820px){.toc{display:none}.main{padding:24px}}
+  .rh{padding:34px 0 24px;border-bottom:2px solid var(--ink);margin-bottom:8px}
+  .rh .eyebrow{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);font-weight:600}
+  .rh h1{font-size:28px;font-weight:700;letter-spacing:-.02em;margin:8px 0 11px}
+  .rh .meta{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-soft)}
+  .rh .meta b{color:var(--ink)}
+  .summary-line{background:var(--accent-soft);border-left:3px solid var(--accent);padding:13px 16px;border-radius:0 8px 8px 0;font-size:13.5px;margin-top:16px}
+  .verdict{display:grid;grid-template-columns:repeat(5,1fr);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:24px 0}
+  .vc{padding:17px 15px;border-right:1px solid var(--line-soft);background:var(--panel)}
+  .vc:last-child{border-right:none}
+  .vc .k{font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft)}
+  .vc .v{font-size:21px;font-weight:700;letter-spacing:-.02em;margin-top:5px}
+  .vc .v.ok{color:var(--accent)}.vc .v.warn{color:var(--amber)}.vc .v.block{color:var(--signal)}
+  .vc .sub{font-size:11px;color:var(--ink-soft);margin-top:2px}
+  .sec{margin-top:46px}
+  .sec-num{display:inline-block;font-size:12px;font-weight:700;color:var(--accent);background:var(--accent-soft);padding:3px 11px;border-radius:20px;margin-bottom:12px}
+  .sec h2{font-size:22px;font-weight:700;margin-bottom:6px}
+  .sec .lead{font-size:14px;color:var(--ink-soft);margin-bottom:20px}
+  h3{font-size:16px;font-weight:650;margin:28px 0 12px;padding-bottom:7px;border-bottom:1px solid var(--line-soft)}
+  h3.sub{font-size:13px;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em;border:none;margin:22px 0 10px}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:18px 0}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px}
+  .card .label{font-size:11.5px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em}
+  .card .big{font-size:25px;font-weight:700;letter-spacing:-.02em;margin:6px 0 2px}
+  .card .note{font-size:12px;color:var(--ink-soft)}
+  .card .trend{font-size:12px;font-weight:600;margin-top:4px}
+  .trend.up{color:var(--accent)}.trend.down{color:var(--signal)}.trend.flat{color:var(--amber)}
+  .chart-box{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:20px;margin:18px 0}
+  .chart-box .ct{font-size:14px;font-weight:650;margin-bottom:4px}
+  .chart-box .cs{font-size:12px;color:var(--ink-soft);margin-bottom:16px}
+  .legend,.viz-legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:11px;font-size:12px;color:var(--ink-soft)}
+  .legend span,.viz-legend span{display:inline-flex;align-items:center;gap:6px}
+  .legend i,.viz-legend i{width:11px;height:11px;border-radius:3px;display:inline-block}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px}
+  th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line-soft)}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-soft);font-weight:600;background:var(--panel)}
+  td.num{text-align:right;font-variant-numeric:tabular-nums}
+  .insight{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:16px 18px;margin:14px 0;font-size:13.5px}
+  .insight b{color:var(--accent)}
+  .reco{display:flex;gap:14px;padding:16px;border:1px solid var(--line);border-radius:10px;margin-bottom:12px;background:var(--panel)}
+  .reco .n{flex-shrink:0;width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px}
+  .reco .rb{font-size:13.5px}.reco .rb b{display:block;margin-bottom:3px;font-size:14px}
+  .risk{display:flex;gap:12px;padding:12px 15px;border-radius:8px;margin-bottom:9px;font-size:13px;border:1px solid var(--line);background:var(--panel)}
+  .risk .sev{font-size:10px;font-weight:700;padding:3px 8px;border-radius:5px;height:fit-content;white-space:nowrap}
+  .sev.hi{background:var(--signal-soft);color:var(--signal)}.sev.md{background:var(--amber-soft);color:var(--amber)}.sev.lo{background:var(--accent-soft);color:var(--accent)}
+  .cat{margin-top:44px;scroll-margin-top:20px}
+  .cat-head{display:flex;align-items:center;gap:12px;padding-bottom:10px;border-bottom:2px solid var(--accent);margin-bottom:8px}
+  .cat-ic{width:30px;height:30px;background:var(--accent);color:#fff;border-radius:7px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px}
+  .cat-head h2{font-size:21px;font-weight:700;flex:1}
+  .cat-score{font-size:12.5px;color:var(--accent);font-weight:600;background:var(--accent-soft);padding:4px 12px;border-radius:20px}
+  .item{background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:15px 17px;margin-bottom:11px}
+  .item.has-action{border-left:3px solid var(--amber)}
+  .item-h{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:6px}
+  .item-name{font-size:15px;font-weight:650}
+  .ks{font-size:10px;font-weight:700;background:var(--signal-soft);color:var(--signal);padding:2px 8px;border-radius:5px}
+  .sim{font-size:11px;font-weight:600;background:var(--line-soft);color:var(--ink-soft);padding:2px 9px;border-radius:20px;margin-left:auto}
+  .item-val{font-size:14px;margin-bottom:6px}.gap{color:var(--amber);font-style:italic}
+  .item-rd{font-size:13px;color:var(--ink-soft);background:var(--bg);border-radius:6px;padding:9px 12px;margin:7px 0}
+  .item-src{font-size:11.5px;color:var(--ink-soft);margin-top:7px}
+  .tag{font-size:10px;padding:2px 7px;border-radius:4px;font-weight:600}
+  .tag.t1{background:var(--accent-soft);color:var(--accent)}.tag.t2{background:var(--amber-soft);color:var(--amber)}
+  .tag.t3{background:var(--line-soft);color:var(--ink-soft)}.tag.gap{background:var(--signal-soft);color:var(--signal)}
+  .gapflag{color:var(--signal);font-weight:600}
+  .actions{margin-top:11px;background:var(--amber-soft);border-radius:7px;padding:11px 14px}
+  .actions-t{font-size:12px;font-weight:700;color:var(--amber);margin-bottom:6px}
+  .actions ul{margin:0;padding-left:18px}.actions li{font-size:13px;margin-bottom:4px}
+  .viz{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px;margin:14px 0}
+  .viz .vt{font-size:13px;font-weight:650;margin-bottom:3px}
+  .viz .vs{font-size:11.5px;color:var(--ink-soft);margin-bottom:12px}
+  .checklist{margin-top:44px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:24px}
+  .checklist h2{font-size:20px;margin-bottom:6px}.checklist .cl-sub{font-size:13px;color:var(--ink-soft);margin-bottom:18px}
+  .ck-item{margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--line-soft)}.ck-item:last-child{border:none}
+  .ck-name{font-size:14px;font-weight:650;color:var(--accent);margin-bottom:5px}
+  .ck-item ul{margin:0;padding-left:18px}.ck-item li{font-size:13px;margin-bottom:3px;color:var(--ink-soft)}
+  .foot{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);font-size:11.5px;color:var(--ink-soft)}
+</style>
+</head>
+<body>
+<div class="layout">
+  <nav class="toc"><div class="tt">목차</div><a href="#cat-MARKET"><span class="ic">M</span>시장</a><a href="#cat-REGULATORY"><span class="ic">R</span>규제</a><a href="#cat-FINANCIAL"><span class="ic">F</span>금융환경</a><a href="#cat-SYSTEM"><span class="ic">S</span>시스템·경쟁사</a><a href="#checklist"><span class="ic" style="background:var(--amber)">✓</span>준비 체크리스트</a></nav>
+  <div class="main">
+    <div class="rh">
+      <div class="eyebrow">오토파이낸스 해외진출 · 실무 상세 보고서</div>
+      <h1>폴란드 진출 상세 진단</h1>
+      <div class="meta">
+        <span>대상국 <b>Poland 🇵🇱</b></span>
+        <span>비교 기준 <b>United Kingdom 🇬🇧</b></span>
+        <span>조사 <b>2025년</b></span>
+        <span>종합 유사도 <b>63.5</b> (심층조사 권고)</span>
+      </div>
+    </div>
+    <div class="summary-line">이 보고서는 69개 항목 전체의 조사 내용·출처·유사도를 담은 실무 진출 준비용 자료입니다. 규제·라이선스·시스템 등 준비가 필요한 항목에는 ▶ 진출 준비사항을 표시했고, 문서 끝에 전체 체크리스트를 정리했습니다.</div>
+<section class="cat" id="cat-MARKET"><div class="cat-head"><span class="cat-ic">M</span><h2>시장</h2><span class="cat-score">유사도 63.8</span></div><div class="viz"><div class="vt">시장 항목별 유사도</div><div class="vs">영국 대비 — 닮은 항목과 다른 항목. 녹색 70+/황색 50+/적색 50미만</div><svg class="hbar-chart" data-cat="MARKET" data-limit="extremes" style="width:100%;height:auto"></svg></div><h3 class="sub">undefined</h3><div class="item">
+    <div class="item-h"><span class="item-name">자동차 판매대수(연간)</span><span class="sim">유사도 67</span></div>
+    <div class="item-val">신차 597,400대(+8.3%); 중고수입 857,600대</div><div class="item-rd">2025년 신차 승용차 등록 597,400~597,435대로 25년래 최고치(+8.3%). 수입 중고차는 857,600대로 전년 대비 처음 감소(-2.8%). (PZPM/KPMG)</div><div class="viz"><div class="vt">자동차 판매대수(연간) 추이 및 2030 예측</div>
+      <div class="vs">CAGR 1.2% · 2030 예측 634,115 대</div>
+      <svg class="ts-chart" data-cid="MKT_CAR_SALES" style="width:100%;height:auto"></svg></div><div class="item-src"><span class="tag t2">준공식</span> PZPM·KPMG, Rynek motoryzacyjny 2025 / IBRM SAMAR 등록통계 (2026.1)</div></div><div class="item">
+    <div class="item-h"><span class="item-name">신차/중고차 비율</span><span class="sim">유사도 71.7</span></div>
+    <div class="item-val">신차 597,400대 vs 중고 3,345,928대 (약 5.6배)</div><div class="item-rd">AAA Auto(Aures Holdings) 기준 2025년 중고차 거래 3,345,928대(-2.8%), 신차 597,400대 → 약 5.6배. 영국(약 3.8배)보다 중고차 편중 심함. 수입 중고차 연 85만 대(독일 52%)가 시장 지속 공급.</div><div class="item-src"><span class="tag t3">참고</span> AAA Auto Barometr 2025 / PZPM·KPMG (상업·준공식 혼합)</div></div><div class="item">
+    <div class="item-h"><span class="item-name">오토금융 시장규모</span></div>
+    <div class="item-val">리스+리스대출 119.5bn PLN(차량 73.8%, 경차량 67.4bn)</div><div class="item-rd">ZPL 기준 2025년 리스+리스대출 총 119.5bn PLN(약 $30bn, +8.1%). 차량 비중 73.8%, 경차량(승용+3.5톤 이하)은 67.4bn PLN(+11.6%). 정의: 리스 취급액 — 영국과 집계기준 다름.</div><div class="viz"><div class="vt">오토금융 시장규모 추이 및 2030 예측</div>
+      <div class="vs">CAGR 11.3% · 2030 예측 204 PLN bn(전체 리스)</div>
+      <svg class="ts-chart" data-cid="MKT_AF_SIZE" style="width:100%;height:auto"></svg></div><div class="item-src"><span class="tag t2">준공식</span> ZPL(Związek Polskiego Leasingu), Wyniki rynku leasingu 2025 (2026.2.5 발표)</div></div><div class="item">
+    <div class="item-h"><span class="item-name">오토금융 성장률(CAGR)</span></div>
+    <div class="item-val">리스 전체 +8.1%, 경차량 +11.6%</div><div class="item-src"><span class="tag t2">준공식</span> ZPL, Wyniki rynku leasingu 2025 (2026.2.5)</div></div><div class="item">
+    <div class="item-h"><span class="item-name">금융 침투율(신차)</span><span class="sim">유사도 65</span></div>
+    <div class="item-val">신차 약 절반이 리스+렌탈(co drugi auto)</div><div class="item-rd">ZPL: 2025년 리스+렌탈이 신차 두 대 중 한 대(약 50%)의 등록을 담당. 분모=신차 등록 전체. 법인이 신차의 약 69% 구매하는 B2B 구조. 영국과 분모·정의 상이.</div><div class="viz"><div class="vt">금융 침투율(신차) 추이</div>
+      <div class="vs">CAGR -5.5% · 비율 지표(예측 제외)</div>
+      <svg class="ts-chart" data-cid="MKT_PEN_NEW" style="width:100%;height:auto"></svg></div><div class="item-src"><span class="tag t2">준공식</span> ZPL, Wyniki rynku leasingu 2025 (정의: 리스+렌탈 등록대수)</div></div><div class="item">
+    <div class="item-h"><span class="item-name">금융 침투율(중고차)</span></div>
+    <div class="item-val">16%(설문)~27~30%(딜러채널) [추정]</div><div class="item-rd">단일 공식 통계 없음. Santander/IBRiS 설문(전체 구매자, 사인간 현금거래 포함)은 16%, Otomoto KLIK 딜러채널 데이터는 12개월 평균 27%. 신차(약 46~50% 금융)보다 현저히 낮음. 현금 선호·고차령·사인간 거래가 구조적 장벽. 정규화는 중간값 23% 사용.</div><div class="item-src"><span class="tag t3">참고</span> Santander Consumer/IBRiS 2024 / Otomoto KLIK (상업조사)</div></div><div class="item">
+    <div class="item-h"><span class="item-name">브랜드 Top10</span><span class="sim">유사도 42.9</span></div>
+    <div class="item-val">Toyota, Skoda, VW, 현대/기아 + BYD·MG 진입</div><div class="item-src"><span class="tag t2">준공식</span> PZPM·IBRM SAMAR, 브랜드별 등록 2025</div></div><div class="item">
+    <div class="item-h"><span class="item-name">차종 Top10</span></div>
+    <div class="item-val"><span class="gap">조사 필요 (현지 실사)</span></div><div class="item-src"><span class="tag gap">미확보</span> 미매핑 <span class="gapflag">공식 미확보</span></div></div><div class="item">
+    <div class="item-h"><span class="item-name">OEM 순위</span><span class="sim">유사도 50</span></div>
+    <div class="item-val">Toyota·VW그룹·현대기아 + 중국브랜드 부상</div><div class="item-src"><span class="tag t2">준공식</span> IBRM SAMAR, 그룹별 등록 2025</div></div><div class="item">
+    <div class="item-h"><span class="item-name">평균 구매주기</span><span class="sim">유사도 97.4</span></div>
+    <div class="item-val">평균 보유 6.07년</div><div class="item-rd">carVertical 기준 1대당 평균 보유기간 6.07년(유럽 평균 4.18년보다 김, 유럽 2위). PZPM 인용 약 5~6년. 평균 차령(약 15년)과는 별개 개념. 영국(약 4.5년)보다 길고 연주행도 18,608km로 많음.</div><div class="item-src"><span class="tag t3">참고</span> carVertical 2025 / PZPM (상업조사)</div></div><div class="item">
+    <div class="item-h"><span class="item-name">평균 차량가격</span><span class="sim">유사도 0</span></div>
+    <div class="item-val">신차 평균 185,182 PLN (약 46,000 USD)</div><div class="item-rd">2025년 전체 평균 신차가격 185,182 PLN(전년말 대비 +약 4,200 PLN, 증가폭 둔화). 중국 브랜드 평균가 139,000 PLN 미만으로 시장평균 압박. 프리미엄 비중 21~24%. 영국 인기모델(£28,000~33,000)보다 낮음.</div><div class="item-src"><span class="tag t3">참고</span> IBRM SAMAR, Raport cenowy 2025.12 (상업데이터)</div></div><div class="item">
+    <div class="item-h"><span class="item-name">구매 패턴(현금:할부:리스)</span></div>
+    <div class="item-val">신차 현금 54%; 중고차 현금 84%·대출 14%·리스 2%</div><div class="item-rd">법인/신차는 약 50%가 리스·렌탈 등록, 현금 54%(ZPF/Cofidis). 개인/중고차는 84% 현금, 12% 현금대출, 2% 자동차대출, 2% 리스. 외부금융 이용자 중 리스 14%, 대출 86%. 소비자 리스는 리스시장의 4.1%. 정규화는 중고차 기준(현금:대출:리스).</div><div class="item-src"><span class="tag t3">참고</span> ZPF·Cofidis / Santander·IBRiS 2024 (상업조사)</div></div><div class="item">
+    <div class="item-h"><span class="item-name">구매 프로세스</span></div>
+    <div class="item-val">딜러+직접+온라인</div><div class="item-src"><span class="tag gap">미확보</span> 조사필요 <span class="gapflag">공식 미확보</span></div></div><div class="item">
+    <div class="item-h"><span class="item-name">고객 세그먼트(개인:법인 비율)</span><span class="sim">유사도 92.4</span></div>
+    <div class="item-val">개인 약 31%, 법인 약 69%(411천대)</div><div class="item-rd">PZPM/PZWLP 2025: 법인/기관 약 69%(411,000대), 개인 약 31%(186,000대). MŚP(중소기업, 매출 20M PLN 이하)가 리스 주 고객(약 75%), 프리미엄 등록의 84%가 법인.</div><div class="item-src"><span class="tag t2">준공식</span> PZPM·PZWLP, 구매주체별 신차등록 2025</div></div><div class="item">
+    <div class="item-h"><span class="item-name">고객 세그먼트(기타 특성)</span></div>
+    <div class="item-val">MŚP 법인 중심</div><div class="item-src"><span class="tag gap">미확보</span> 조사필요 <span class="gapflag">공식 미확보</span></div></div><div class="item">
+    <div class="item-h"><span class="item-name">딜러 유형 구조</span><span class="sim">유사도 60</span></div>
+    <div class="item-val">딜러+직접+온라인 혼재</div><div class="item-src"><span class="tag t3">참고</span> Ken Research, Poland Auto Finance 2025 (상업조사)</div></div><div class="item">
+    <div class="item-h"><span class="item-name">멀티브랜드 여부</span><span class="sim">유사도 60</span></div>
+    <div class="item-val">멀티브랜드 성장중</div><div class="item-src"><span class="tag t3">참고</span> 업계 일반 (출처 미특정)</div></div><div class="item">
+    <div class="item-h"><span class="item-name">딜러 집중도</span><span class="sim">유사도 87.5</span></div>
+    <div class="item-val">TOP50 딜러그룹이 신차의 약 59.5%</div><div class="item-rd">TOP50 딜러그룹이 2024년 신차 345,400대(+14.75%), 시장 약 59.5%. 1위 Cichy-Zasada 31,234대, 2위 PGD 21,569대, 3위 Plichta 21,159대. 빠르게 통합 중이나 여전히 분산적. 중고차는 사인간 거래 지배로 훨씬 분산.</div><div class="item-src"><span class="tag t3">참고</span> Miesięcznik Dealer / DCG-SAMAR, Lista TOP50 2024 (2차)</div></div><div class="item">
+    <div class="item-h"><span class="item-name">신차 채널 비중</span></div>
+    <div class="item-val">딜러 중심</div><div class="item-src"><span class="tag gap">미확보</span> 조사필요 <span class="gapflag">공식 미확보</span></div></div><div class="item">
+    <div class="item-h"><span class="item-name">중고차 채널 비중</span></div>
+    <div class="item-val">중고차 사인간 거래 55%, 딜러/플랫폼 채널 성장중</div><div class="item-rd">중고차 구매자의 55%가 개인 간(사인간) 거래 이용. 딜러·플랫폼(Otomoto, AAA Auto) 채널이 조직화되며 성장 중이나 여전히 사인간 비중 높음 — 이것이 중고차 금융 침투율을 낮추는 구조적 요인.</div><div class="item-src"><span class="tag t3">참고</span> Santander·IBRiS 2024 (상업조사)</div></div><div class="item">
+    <div class="item-h"><span class="item-name">딜러 금융취급 관행(F&amp;I)</span><span class="sim">유사도 30</span></div>
+    <div class="item-val">NaszEauto 신청 80% 리스·렌탈 선택</div><div class="item-src"><span class="tag t2">준공식</span> ZPL, NaszEauto 보조금 통계 2025</div></div><div class="item">
+    <div class="item-h"><span class="item-name">딜러-금융사 정산 구조</span></div>
+    <div class="item-val">커미션 기반</div><div class="item-src"><span class="tag gap">미확보</span> 조사필요 <span class="gapflag">공식 미확보</span></div></div><div class="item">
+    <div class="item-h"><span class="item-name">디지털 딜러 성숙도</span><span class="sim">유사도 100</span></div>
+    <div class="item-val">2025.7 전자계약 가능, 온라인 탐색 40%+</div><div class="item-src"><span class="tag t2">준공식</span> ZPL / Ken Research 2025</div></div></section>
+<section class="cat" id="cat-REGULATORY"><div class="cat-head"><span class="cat-ic">R</span><h2>규제</h2><span class="cat-score">유사도 77.1</span></div><div class="viz"><div class="vt">규제 항목별 유사도</div><div class="vs">영국 대비 — 닮은 항목과 다른 항목. 녹색 70+/황색 50+/적색 50미만</div><svg class="hbar-chart" data-cat="REGULATORY" data-limit="extremes" style="width:100%;height:auto"></svg></div><h3 class="sub">undefined</h3><div class="item has-action">
+    <div class="item-h"><span class="item-name">라이선스 종류</span><span class="sim">유사도 40</span></div>
+    <div class="item-val">KNF: 순수B2B리스 무라이선스, 소비자리스/대출은 instytucja pożyczkowa 등록</div><div class="item-rd">KNF 감독. 순수 B2B 리스는 무라이선스(상법상 영업). 소비자대출 또는 구매의무가 부과된 소비자리스는 instytucja pożyczkowa로 KNF 등록 의무(2024.1.1~).</div><div class="item-src"><span class="tag t1">공식 1차</span> KNF, instytucja pożyczkowa 등록제 / 소비자신용법(2024.1.1 개정)</div><div class="actions"><div class="actions-t">▶ 진출 준비사항</div><ul><li>순수 B2B 리스로 시작하면 KNF 라이선스 불요 — 진입장벽 최소화 경로</li><li>소비자대출/소비자리스 병행 시 instytucja pożyczkowa(대출기관) KNF 등록 필수</li><li>은행업 영위 계획이 없다면 리스·대출기관 형태로 한정 권장</li></ul></div></div><div class="item">
+    <div class="item-h"><span class="item-name">소관 규제기관</span></div>
+    <div class="item-val">KNF(+NBP)</div><div class="item-src"><span class="tag t1">공식 1차</span> KNF / NBP 공식</div></div><div class="item">
+    <div class="item-h"><span class="item-name">외국인 지분 한도</span><span class="ks">킬스위치</span><span class="sim">유사도 100</span></div>
+    <div class="item-val">제한 없음(EU 자본자유)</div><div class="item-src"><span class="tag t2">준공식</span> EU 자본자유이동 원칙 / KNF</div></div><div class="item has-action">
+    <div class="item-h"><span class="item-name">인허가 처리기간</span><span class="sim">유사도 66.8</span></div>
+    <div class="item-val">대출기관 등록 14일(완전한 신청서 접수 후)</div><div class="item-rd">instytucja pożyczkowa는 완전한 신청서 접수 후 14일 이내 KNF 등록부 기재(등록일=영업개시일). 신청수수료 600 PLN. 단 자본금 확충·KRS 등기·서류구비에 실무상 수주~수개월 추가 소요 가능. 리스 자체는 인가 불요.</div><div class="item-src"><span class="tag t1">공식 1차</span> KNF / 소비자신용법 §59aa~59ag (법령)</div><div class="actions"><div class="actions-t">▶ 진출 준비사항</div><ul><li>KNF 등록은 완전한 신청서 접수 후 14일 — 빠름</li><li>단 KRS 법인등기·서류구비(비범죄경력증명 등)에 수주~수개월 추가 소요 고려</li><li>전체 셋업(법인설립→자본금→등록)에 3~6개월 리드타임 권장</li></ul></div></div><div class="item has-action">
+    <div class="item-h"><span class="item-name">최저자본금</span></div>
+    <div class="item-val">instytucja pożyczkowa 100만 PLN(~$250k) 현금; 순수리스는 없음</div><div class="item-rd">instytucja pożyczkowa 최저자본 1,000,000 PLN(약 $250,000) 전액 현금납입(차입·채권발행 불가) + 감사회 설치 의무. 순수 리스는 자본요건 없음. 과거 200,000 PLN 요건은 폐지.</div><div class="item-src"><span class="tag t1">공식 1차</span> 소비자신용법 §59a(instytucja pożyczkowa 최저자본 100만 PLN, 2022.12.18~)</div><div class="actions"><div class="actions-t">▶ 진출 준비사항</div><ul><li>대출기관 등록 시 최저자본 100만 PLN(약 25만 USD) 전액 현금 출자 준비</li><li>차입·채권발행 자금은 자본 인정 안 됨 — 순수 현금 확보 필요</li><li>감사회(supervisory board) 구성 의무 — 이사회와 별도</li></ul></div></div><div class="item has-action">
+    <div class="item-h"><span class="item-name">현지 법인형태 요건</span><span class="sim">유사도 70</span></div>
+    <div class="item-val">Sp. z o.o./S.A.</div><div class="item-src"><span class="tag t1">공식 1차</span> 상법전(KSH, Sp. z o.o./S.A.)</div><div class="actions"><div class="actions-t">▶ 진출 준비사항</div><ul><li>Sp. z o.o.(유한회사, 감사회 설치) 또는 S.A.(주식회사) 중 선택</li><li>대출기관은 감사회 설치가 의무라 지배구조 설계 필요</li></ul></div></div><div class="item has-action">
+    <div class="item-h"><span class="item-name">법인세율</span><span class="sim">유사도 80</span></div>
+    <div class="item-val">19% 표준, 9% 소규모</div><div class="item-rd">CIT 표준 19%, 소규모·신규기업(매출 €2m 이하) 9%.</div><div class="item-src"><span class="tag t2">준공식</span> PwC Worldwide Tax Summaries 2025 / 폴란드 재무부</div><div class="actions"><div class="actions-t">▶ 진출 준비사항</div><ul><li>법인세 19%(영국 25%보다 유리), 소규모는 9%</li><li>이전가격(TP) 문서화 — 모회사 거래 시 EU 기준 준수</li></ul></div></div><div class="item">
+    <div class="item-h"><span class="item-name">이자소득 원천징수</span><span class="sim">유사도 100</span></div>
+    <div class="item-val">20%(조약·EU지침 감면)</div><div class="item-src"><span class="tag t2">준공식</span> PwC WWTS 2025</div></div><div class="item has-action">
+    <div class="item-h"><span class="item-name">배당 송금 원천징수</span><span class="sim">유사도 36.7</span></div>
+    <div class="item-val">19%(조약·EU지침 감면)</div><div class="item-rd">비거주자 배당 원천징수 19%. EU 모자회사지침 적용 시(10% 지분·2년 보유 등) 감면·면제 가능.</div><div class="item-src"><span class="tag t2">준공식</span> PwC WWTS 2025 (EU 모자회사지침 포함)</div><div class="actions"><div class="actions-t">▶ 진출 준비사항</div><ul><li>배당 송금 시 원천징수 19% — 본사 회수 비용 고려</li><li>EU 모자회사지침 활용 시 면제 가능: 10% 지분·2년 보유 요건 — 지주구조 설계로 절감</li></ul></div></div><div class="item has-action">
+    <div class="item-h"><span class="item-name">금리 상한(우수라)</span><span class="ks">킬스위치</span><span class="sim">유사도 100</span></div>
+    <div class="item-val">반우수라: 2025말 최고이자 15.0%, 비이자비용 상한 45%; 사업가능</div><div class="item-rd">반우수라법(2024.1.1 완전시행): 최고이자 = 2×(NBP기준+3.5%p) → 2025년말 15.0%(기준 4.00%). 연체 최고이자 19.0%. 비이자비용 상한 = 신용액의 45%.</div><div class="item-src"><span class="tag t1">공식 1차</span> 민법 §359(최고이자) / 소비자신용법 §36a(비이자비용 상한); 반우수라법 2024.1.1</div><div class="actions"><div class="actions-t">▶ 진출 준비사항</div><ul><li>반우수라법 준수: 2025말 최고이자 15.0%(2×(NBP기준+3.5%p)) 상한</li><li>비이자비용 상한 신용액의 45% — 수수료·보험 끼워팔기 단가 설계 시 반영</li><li>NBP 기준금리 변동에 연동되므로 상한 모니터링 체계 필요</li></ul></div></div><div class="item">
+    <div class="item-h"><span class="item-name">외환 송금 규제</span><span class="ks">킬스위치</span><span class="sim">유사도 100</span></div>
+    <div class="item-val">완전 자유(EU)</div><div class="item-src"><span class="tag t2">준공식</span> EU 자본자유이동(제한 없음)</div></div><div class="item">
+    <div class="item-h"><span class="item-name">배당 송금 제한</span><span class="ks">킬스위치</span><span class="sim">유사도 100</span></div>
+    <div class="item-val">완전 자유(EU)</div><div class="item-src"><span class="tag t2">준공식</span> —(제한 없음)</div></div><div class="item has-action">
+    <div class="item-h"><span class="item-name">개인정보보호법</span><span class="sim">유사도 90</span></div>
+    <div class="item-val">EU GDPR(RODO, UODO)</div><div class="item-rd">EU GDPR(RODO) + 폴란드 이행법, UODO 감독. EU 회원국으로 역내 자유 이전.</div><div class="item-src"><span class="tag t1">공식 1차</span> EU GDPR(RODO) + 폴란드 개인정보보호법; UODO</div><div class="actions"><div class="actions-t">▶ 진출 준비사항</div><ul><li>EU GDPR(RODO) 준수 체계 구축, UODO 감독</li><li>영국 UK GDPR과 거의 동일 수준 — 기존 EU 대응 경험 이전 가능</li></ul></div></div><div class="item">
+    <div class="item-h"><span class="item-name">데이터 현지화 의무</span><span class="ks">킬스위치</span><span class="sim">유사도 100</span></div>
+    <div class="item-val">현지화 의무 없음(EEA 자유)</div><div class="item-src"><span class="tag t2">준공식</span> UODO / EU GDPR</div></div><div class="item has-action">
+    <div class="item-h"><span class="item-name">국외이전 제한</span><span class="sim">유사도 70</span></div>
+    <div class="item-val">EEA 자유, 역외 GDPR 안전장치</div><div class="item-src"><span class="tag t2">준공식</span> EU GDPR Ch.V</div><div class="actions"><div class="actions-t">▶ 진출 준비사항</div><ul><li>EU 역내 자유 이전 — 한국(본사) 이전 시 적정성·SCC 검토</li><li>한국은 EU 적정성 보유국이나 금융데이터 별도 확인 권장</li></ul></div></div><div class="item">
+    <div class="item-h"><span class="item-name">충당금 적립 기준</span><span class="sim">유사도 100</span></div>
+    <div class="item-val">IFRS9/현지</div><div class="item-src"><span class="tag t2">준공식</span> IFRS 9 / 폴란드 회계기준</div></div><div class="item">
+    <div class="item-h"><span class="item-name">연체 분류 기준</span><span class="sim">유사도 100</span></div>
+    <div class="item-val">90일 기준</div><div class="item-src"><span class="tag t2">준공식</span> BIK / 감독기준</div></div><div class="item has-action">
+    <div class="item-h"><span class="item-name">신용정보 조회(CB) 인프라</span><span class="sim">유사도 50</span></div>
+    <div class="item-val">BIK(은행 98% 커버) + BIG InfoMonitor</div><div class="item-rd">BIK(Biuro Informacji Kredytowej, 1997설립)가 은행 98% 커버하는 사실상 중앙집중형. 스코어 1~100 + 별점. BIG InfoMonitor 병행. 은행·SKOK·대출사·리스사 의무 보고.</div><div class="item-src"><span class="tag t1">공식 1차</span> BIK(Biuro Informacji Kredytowej) 공식; BIG InfoMonitor</div><div class="actions"><div class="actions-t">▶ 진출 준비사항</div><ul><li>BIK(신용정보, 은행 98% 커버) 연동 필수 — 여신심사 핵심 인프라</li><li>BIK 가입·API 연동 절차를 시스템 구축 요건에 포함</li><li>BIG InfoMonitor 병행 검토</li></ul></div></div><div class="item">
+    <div class="item-h"><span class="item-name">추심 규제</span><span class="sim">유사도 50</span></div>
+    <div class="item-val">민사소송→komornik 집행</div><div class="item-src"><span class="tag t1">공식 1차</span> 민법·민사소송법(KPC)</div></div><div class="item has-action">
+    <div class="item-h"><span class="item-name">차량회수(repossession) 절차</span><span class="sim">유사도 40</span></div>
+    <div class="item-val">리스: 7일 cure→즉시해지→반환요구→강제회수(소유권 기반)</div><div class="item-rd">리스 차량은 리스사 소유 → 회수가 상대적으로 용이. 7일 추가납부 최고 → 즉시 해지·반환요구 → 미반환 시 강제회수·민사소송(민법 §709-13). 소유권 기반이라 채무자 채권자의 압류 대상 아님.</div><div class="item-src"><span class="tag t1">공식 1차</span> 민법 §709-13(리스 해지·반환)</div><div class="actions"><div class="actions-t">▶ 진출 준비사항</div><ul><li>리스는 소유권 기반 회수 — 영국 1/3룰보다 회수 유리</li><li>단 komornik(집행관) 압류 시 1개월 제척기간 내 제3자 이의의 소 제기 체계 구축</li><li>windykator(추심) 네트워크 사전 확보</li></ul></div></div><div class="item">
+    <div class="item-h"><span class="item-name">법적 회수 소요기간</span></div>
+    <div class="item-val">통상 2~4개월(분쟁 시 6~12개월)</div><div class="item-rd">리스(소유권 리스사 보유)는 해지 후 windykator 회수 가능, 채무자 협조 시 수일. komornik 경매 경로는 압류~경매 2~4개월, 소유권 분쟁 시 6~12개월. 리스사는 압류 인지 후 1개월(제척기간) 내 제3자 이의의 소(KPC 841조) 제기 필수. 영국보다 절차 표준화 낮음.</div><div class="item-src"><span class="tag t3">참고</span> 법무법인 자료 / 민사소송법(KPC) (2차)</div></div><div class="item has-action">
+    <div class="item-h"><span class="item-name">자동차 의무보험</span><span class="sim">유사도 100</span></div>
+    <div class="item-val">OC 제3자 책임 의무</div><div class="item-src"><span class="tag t1">공식 1차</span> 강제보험법(2003.5.22)</div><div class="actions"><div class="actions-t">▶ 진출 준비사항</div><ul><li>OC(자동차 의무보험) 연계 상품 설계 가능</li><li>보험 끼워팔기는 소비자보호 규제 대상 — 단가에 반우수라 비이자비용 상한 반영</li></ul></div></div><div class="item">
+    <div class="item-h"><span class="item-name">신용생명보험 가능 여부</span><span class="sim">유사도 70</span></div>
+    <div class="item-val">가능</div><div class="item-src"><span class="tag t3">참고</span> 시장(출처 미특정)</div></div><div class="item">
+    <div class="item-h"><span class="item-name">보험 끼워팔기 규제</span><span class="sim">유사도 60</span></div>
+    <div class="item-val">소비자보호 규제</div><div class="item-src"><span class="tag t3">참고</span> 소비자보호 규제(출처 미특정)</div></div></section>
+<section class="cat" id="cat-FINANCIAL"><div class="cat-head"><span class="cat-ic">F</span><h2>금융환경</h2><span class="cat-score">유사도 55.5</span></div><div class="viz"><div class="vt">금융환경 항목별 유사도</div><div class="vs">영국 대비 — 닮은 항목과 다른 항목. 녹색 70+/황색 50+/적색 50미만</div><svg class="hbar-chart" data-cat="FINANCIAL" data-limit="all" style="width:100%;height:auto"></svg></div><h3 class="sub">undefined</h3><div class="item">
+    <div class="item-h"><span class="item-name">금융사 순위</span><span class="sim">유사도 11.1</span></div>
+    <div class="item-val">PKO Leasing(1위), EFL, Santander, Pekao, mLeasing</div><div class="item-rd">리스 금액 기준 1.PKO Leasing(146억 PLN) 2.EFL(92.3억) 3.mLeasing. 차량 대수 기준 1.VW FS 2.Toyota Leasing 3.Arval. PKO Leasing 전체시장 약 11.5%.</div><div class="item-src"><span class="tag t2">준공식</span> ZPL 리스랭킹 2025 / leason.pl</div></div><div class="item">
+    <div class="item-h"><span class="item-name">캡티브/논캡티브 구분</span><span class="sim">유사도 30</span></div>
+    <div class="item-val">은행계 리스 우위 + 캡티브</div><div class="item-src"><span class="tag t3">참고</span> leason.pl 2025(2차)</div></div><div class="item">
+    <div class="item-h"><span class="item-name">캡티브 강도</span><span class="sim">유사도 81</span></div>
+    <div class="item-val">은행계 우위, 캡티브 브랜드별 포진</div><div class="item-src"><span class="tag t3">참고</span> leason.pl(추정)</div></div><div class="item">
+    <div class="item-h"><span class="item-name">상품판매 현황</span></div>
+    <div class="item-val">리스 73.8%, 경차량 56.4%, 소비자리스 4.1%</div><div class="item-rd">차량 리스 73.8%(2024), 경차량 56.4%, 소비자리스 4.1%. 운용리스 우위. 장기렌탈(CFM) 플릿 약 276천 대(PZWLP).</div><div class="item-src"><span class="tag t2">준공식</span> ZPL, Wyniki rynku leasingu 2025</div></div><div class="item">
+    <div class="item-h"><span class="item-name">평균 금리</span></div>
+    <div class="item-val">리스 RRSO 약 6.7%, 소비자 자동차대출 RRSO 9~15%</div><div class="item-rd">NBP 기준금리 2025년 6회 인하(175bp) 5.75%→4.00%(2025.12.4), WIBOR 3M 약 5.8%→3.8%. 리스 RRSO 약 6.7%(변동, WIBOR+마진). 소비자 자동차대출 RRSO 9~15%(중고차 더 높음). 딜러 프로모션 0%(50/50)도 존재. 법인 리스가 소비자 대출보다 현저히 저렴.</div><div class="item-src"><span class="tag t3">참고</span> FmLeasing 2026 / BIK 2025 / NBP 기준금리 (2차+공식)</div></div><div class="item">
+    <div class="item-h"><span class="item-name">평균 대출기간</span><span class="sim">유사도 100</span></div>
+    <div class="item-val">최대 84개월, 표준 36~48</div><div class="item-src"><span class="tag t3">참고</span> 업계 통상치</div></div><div class="item">
+    <div class="item-h"><span class="item-name">평균 LTV(선수금)</span></div>
+    <div class="item-val">선수금 0~45%(통상 10~20%), 잔존가치 1~20%</div><div class="item-rd">선수금(opłata wstępna) 통상 0~45%, 일반적으로 10~20%(연말 절세 시 45%). 잔존가치(wykup) 1~20%(2년 계약 17~20%, 1%도 일반적). 자동차대출은 다수 은행 100% 금융 가능, 8~10년 초과 차량은 선수금 요구.</div><div class="item-src"><span class="tag t3">참고</span> 주요 리스사 약관(PKO/EFL/mLeasing) (2차)</div></div><div class="item has-action">
+    <div class="item-h"><span class="item-name">펀딩 구조</span></div>
+    <div class="item-val">모회사 은행 펀딩 중심</div><div class="item-src"><span class="tag t3">참고</span> leason.pl(모회사 펀딩)</div><div class="actions"><div class="actions-t">▶ 진출 준비사항</div><ul><li>캡티브는 모회사 그룹 차입, 대출기관은 자기자본·은행차입</li><li>대출기관은 예금수취·채권발행 불가 — 펀딩 구조 사전 설계</li></ul></div></div><div class="item">
+    <div class="item-h"><span class="item-name">해당국 특징</span></div>
+    <div class="item-val"><span class="gap">조사 필요 (현지 실사)</span></div><div class="item-rd">법인 중심(신차 69% 법인), 동산 리스 침투율 유럽 최고(45%, 2023, 평균 28%), EU 5위 리스시장. SME 핵심고객. 세제(리스료 손비, 승용차 150천 PLN 한도)가 리스 강력 유인. 영국 같은 커미션 스캔들은 미확인, 2024 반우수라법으로 사전 규제.</div><div class="item-src"><span class="tag gap">미확보</span> Leaseurope·ZPL 동산리스 침투율 / PZPM 법인구매 비중 2025 <span class="gapflag">공식 미확보</span></div></div></section>
+<section class="cat" id="cat-SYSTEM"><div class="cat-head"><span class="cat-ic">S</span><h2>시스템·경쟁사</h2><span class="cat-score">유사도 57.2 · 게이트 통과</span></div><div class="viz"><div class="vt">시스템·경쟁사 항목별 유사도</div><div class="vs">영국 대비 — 닮은 항목과 다른 항목. 녹색 70+/황색 50+/적색 50미만</div><svg class="hbar-chart" data-cat="SYSTEM" data-limit="all" style="width:100%;height:auto"></svg></div><h3 class="sub">undefined</h3><div class="item has-action">
+    <div class="item-h"><span class="item-name">주요 솔루션사</span><span class="sim">유사도 40</span></div>
+    <div class="item-val">Comarch(크라쿠프) + 글로벌 벤더(Alfa/NETSOL)</div><div class="item-rd">Comarch(1993설립, 크라쿠프; Loan Origination·Finance Platform)가 자국 벤더로 강세. 글로벌 벤더(Alfa/NETSOL) 병행.</div><div class="item-src"><span class="tag t2">준공식</span> Comarch 공시 / 업계</div><div class="actions"><div class="actions-t">▶ 진출 준비사항</div><ul><li>Comarch 등 현지 벤더 생태계 검토 — BIK·CEPiK·KSeF 연동 기구축 강점</li><li>영국 Alfa 코어 이식 시 현지 연동부 재구축 필요</li></ul></div></div><div class="item">
+    <div class="item-h"><span class="item-name">솔루션 유형</span><span class="sim">유사도 70</span></div>
+    <div class="item-val">패키지+SI+클라우드(Comarch)</div><div class="item-src"><span class="tag t2">준공식</span> Comarch 공시</div></div><div class="item">
+    <div class="item-h"><span class="item-name">코어시스템 벤더 락인</span><span class="sim">유사도 100</span></div>
+    <div class="item-val">Comarch 현지 SI 강세</div><div class="item-src"><span class="tag t3">참고</span> 업계(출처 미특정)</div></div><div class="item">
+    <div class="item-h"><span class="item-name">디지털 채널 성숙도</span><span class="sim">유사도 66.7</span></div>
+    <div class="item-val">Comarch 자동스코어링+BIK 연동</div><div class="item-rd">Comarch Loan Origination 자동 스코어링·문서관리, BIK 연동. 2025.7.13 민법개정으로 리스계약 전자 문서형식 가능. 소비자 40%+ 온라인 탐색.</div><div class="item-src"><span class="tag t2">준공식</span> Comarch 공시 / ZPL</div></div><div class="item has-action">
+    <div class="item-h"><span class="item-name">결제·정산 인프라</span><span class="sim">유사도 40</span></div>
+    <div class="item-val">BIK/CEPiK/KSeF 연동</div><div class="item-rd">BIK/CEPiK(차량등록·OC 확인)/KSeF(전자송장) 연동. 공적 인프라 연계가 시스템 요건.</div><div class="item-src"><span class="tag t2">준공식</span> BIK/CEPiK/KSeF 공식 인프라</div><div class="actions"><div class="actions-t">▶ 진출 준비사항</div><ul><li>CEPiK(차량등록·OC 확인) 연동 — 리스 차량 등록 필수</li><li>KSeF(전자송장) 연동 — 2026 의무화 대비</li><li>BIK 신용조회 연동과 함께 3대 공적 인프라 연동 설계</li></ul></div></div><div class="item">
+    <div class="item-h"><span class="item-name">경쟁사 리스트</span></div>
+    <div class="item-val">PKO Leasing, EFL, mLeasing, VWFS Polska, Toyota Bank/Leasing, BMW FS, Ayvens</div><div class="item-src"><span class="tag t3">참고</span> ZPL / SAMAR</div></div><div class="item">
+    <div class="item-h"><span class="item-name">경쟁사 금리 현황</span></div>
+    <div class="item-val">반우수라 상한 15% 내 다양</div><div class="item-src"><span class="tag t1">공식 1차</span> 민법 §359 상한</div></div><div class="item">
+    <div class="item-h"><span class="item-name">경쟁사 시장 점유율</span></div>
+    <div class="item-val">PKO Leasing 전체시장 11.5%(공시) / 18.4%(랭킹)</div><div class="item-src"><span class="tag t1">공식 1차</span> PKO BP 공시 / leason.pl</div></div><div class="item">
+    <div class="item-h"><span class="item-name">경쟁사 진출 형태</span></div>
+    <div class="item-val">캡티브+은행계+CFM(Arval/Ayvens)</div><div class="item-src"><span class="tag t3">참고</span> 업계</div></div><div class="item">
+    <div class="item-h"><span class="item-name">경쟁사 사용 시스템</span></div>
+    <div class="item-val">Comarch 등</div><div class="item-src"><span class="tag t3">참고</span> 업계</div></div><div class="item">
+    <div class="item-h"><span class="item-name">경쟁사 업력</span></div>
+    <div class="item-val">VWFS Polska 2019(전신1997); Toyota Bank 2000, Toyota Leasing 2002</div><div class="item-rd">VWFS Polska 현법인 2019(전신 VW Leasing Polska 1997). Toyota Bank Polska 2000~, Toyota Leasing Polska 2002~. Toyota Leasing FY2024/25 51,300건 리스계약(전년 39,900건).</div><div class="item-src"><span class="tag t1">공식 1차</span> KRS 등기(VWFS Polska 0000803746, Toyota Bank/Leasing)</div></div><div class="item">
+    <div class="item-h"><span class="item-name">경쟁사 딜러망 규모</span></div>
+    <div class="item-val">브랜드별 전국망</div><div class="item-src"><span class="tag t3">참고</span> 업계</div></div><div class="item">
+    <div class="item-h"><span class="item-name">경쟁사 직원수</span></div>
+    <div class="item-val">VWFS Polska 약 436 FTE(2022)</div><div class="item-rd">VWFS Polska 약 436 FTE(2022, VWFS 보고서). Toyota 계열 직원수 조사 필요. (KRS 재무제표 기준)</div><div class="item-src"><span class="tag t1">공식 1차</span> VWFS Polska 연차보고서 2022(KRS) / Toyota 조사 필요</div></div></section>
+<section class="checklist" id="checklist"><h2>진출 준비 체크리스트</h2><div class="cl-sub">규제·라이선스·시스템 항목에서 도출한 실행 준비사항입니다.</div><div class="ck-item"><div class="ck-name">라이선스 종류</div><ul><li>순수 B2B 리스로 시작하면 KNF 라이선스 불요 — 진입장벽 최소화 경로</li><li>소비자대출/소비자리스 병행 시 instytucja pożyczkowa(대출기관) KNF 등록 필수</li><li>은행업 영위 계획이 없다면 리스·대출기관 형태로 한정 권장</li></ul></div><div class="ck-item"><div class="ck-name">인허가 처리기간</div><ul><li>KNF 등록은 완전한 신청서 접수 후 14일 — 빠름</li><li>단 KRS 법인등기·서류구비(비범죄경력증명 등)에 수주~수개월 추가 소요 고려</li><li>전체 셋업(법인설립→자본금→등록)에 3~6개월 리드타임 권장</li></ul></div><div class="ck-item"><div class="ck-name">최저자본금</div><ul><li>대출기관 등록 시 최저자본 100만 PLN(약 25만 USD) 전액 현금 출자 준비</li><li>차입·채권발행 자금은 자본 인정 안 됨 — 순수 현금 확보 필요</li><li>감사회(supervisory board) 구성 의무 — 이사회와 별도</li></ul></div><div class="ck-item"><div class="ck-name">현지 법인형태 요건</div><ul><li>Sp. z o.o.(유한회사, 감사회 설치) 또는 S.A.(주식회사) 중 선택</li><li>대출기관은 감사회 설치가 의무라 지배구조 설계 필요</li></ul></div><div class="ck-item"><div class="ck-name">법인세율</div><ul><li>법인세 19%(영국 25%보다 유리), 소규모는 9%</li><li>이전가격(TP) 문서화 — 모회사 거래 시 EU 기준 준수</li></ul></div><div class="ck-item"><div class="ck-name">배당 송금 원천징수</div><ul><li>배당 송금 시 원천징수 19% — 본사 회수 비용 고려</li><li>EU 모자회사지침 활용 시 면제 가능: 10% 지분·2년 보유 요건 — 지주구조 설계로 절감</li></ul></div><div class="ck-item"><div class="ck-name">금리 상한(우수라)</div><ul><li>반우수라법 준수: 2025말 최고이자 15.0%(2×(NBP기준+3.5%p)) 상한</li><li>비이자비용 상한 신용액의 45% — 수수료·보험 끼워팔기 단가 설계 시 반영</li><li>NBP 기준금리 변동에 연동되므로 상한 모니터링 체계 필요</li></ul></div><div class="ck-item"><div class="ck-name">개인정보보호법</div><ul><li>EU GDPR(RODO) 준수 체계 구축, UODO 감독</li><li>영국 UK GDPR과 거의 동일 수준 — 기존 EU 대응 경험 이전 가능</li></ul></div><div class="ck-item"><div class="ck-name">국외이전 제한</div><ul><li>EU 역내 자유 이전 — 한국(본사) 이전 시 적정성·SCC 검토</li><li>한국은 EU 적정성 보유국이나 금융데이터 별도 확인 권장</li></ul></div><div class="ck-item"><div class="ck-name">신용정보 조회(CB) 인프라</div><ul><li>BIK(신용정보, 은행 98% 커버) 연동 필수 — 여신심사 핵심 인프라</li><li>BIK 가입·API 연동 절차를 시스템 구축 요건에 포함</li><li>BIG InfoMonitor 병행 검토</li></ul></div><div class="ck-item"><div class="ck-name">차량회수(repossession) 절차</div><ul><li>리스는 소유권 기반 회수 — 영국 1/3룰보다 회수 유리</li><li>단 komornik(집행관) 압류 시 1개월 제척기간 내 제3자 이의의 소 제기 체계 구축</li><li>windykator(추심) 네트워크 사전 확보</li></ul></div><div class="ck-item"><div class="ck-name">자동차 의무보험</div><ul><li>OC(자동차 의무보험) 연계 상품 설계 가능</li><li>보험 끼워팔기는 소비자보호 규제 대상 — 단가에 반우수라 비이자비용 상한 반영</li></ul></div><div class="ck-item"><div class="ck-name">펀딩 구조</div><ul><li>캡티브는 모회사 그룹 차입, 대출기관은 자기자본·은행차입</li><li>대출기관은 예금수취·채권발행 불가 — 펀딩 구조 사전 설계</li></ul></div><div class="ck-item"><div class="ck-name">주요 솔루션사</div><ul><li>Comarch 등 현지 벤더 생태계 검토 — BIK·CEPiK·KSeF 연동 기구축 강점</li><li>영국 Alfa 코어 이식 시 현지 연동부 재구축 필요</li></ul></div><div class="ck-item"><div class="ck-name">결제·정산 인프라</div><ul><li>CEPiK(차량등록·OC 확인) 연동 — 리스 차량 등록 필수</li><li>KSeF(전자송장) 연동 — 2026 의무화 대비</li><li>BIK 신용조회 연동과 함께 3대 공적 인프라 연동 설계</li></ul></div></section>
+    <div class="foot">오토파이낸스 진출 진단 에이전트 자동 생성 · 룰셋 디폴트 v1 · 출처 등급: 공식 1차 / 준공식 / 참고. "공식 미확보"·"조사 필요" 항목은 진출 확정 전 현지 1차 실사로 보완하십시오.</div>
+  </div>
+</div>
+<script>
+/* 공용 차트 라이브러리 (charts.js) — 외부 의존성 없는 인라인 SVG */
+const ChartLib = (function(){
+  const NS="http://www.w3.org/2000/svg";
+  const C={accent:"#1f5c4a",accentSoft:"#d9e7e0",amber:"#b88324",signal:"#c5562e",
+    line:"#d8d3c6",grid:"#e7e3d8",ink:"#16201c",soft:"#4a5550"};
+  function el(t,a){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;}
+  function txt(x,y,s,o={}){const e=el("text",{x,y,"text-anchor":o.anchor||"middle","font-size":o.size||11,fill:o.fill||C.soft,"font-weight":o.weight||400});e.textContent=s;return e;}
+  function colorFor(v){return v>=70?C.accent:v>=50?C.amber:C.signal;}
+
+  // 라인 차트 (실적 실선 + 예측 점선)
+  function line(svg,series,opts={}){
+    const W=opts.W||900,H=opts.H||260,pad={l:52,r:24,t:18,b:34};
+    const years=opts.years;
+    const vals=series.flatMap(s=>s.data.filter(v=>v!=null));
+    const ymax=Math.max(...vals)*1.08, ymin=opts.ymin!=null?opts.ymin:Math.min(...vals)*0.85;
+    const X=i=>pad.l+(W-pad.l-pad.r)*i/(years.length-1);
+    const Y=v=>H-pad.b-(H-pad.t-pad.b)*(v-ymin)/(ymax-ymin);
+    for(let g=0;g<=4;g++){const v=ymin+(ymax-ymin)*g/4,y=Y(v);
+      svg.appendChild(el("line",{x1:pad.l,y1:y,x2:W-pad.r,y2:y,stroke:C.grid,"stroke-width":1}));
+      svg.appendChild(txt(pad.l-8,y+4,Math.round(v).toLocaleString(),{anchor:"end"}));}
+    years.forEach((yr,i)=>svg.appendChild(txt(X(i),H-pad.b+18,yr)));
+    series.forEach(s=>{let d="";s.data.forEach((v,i)=>{if(v==null)return;d+=(d?"L":"M")+X(i)+","+Y(v);});
+      svg.appendChild(el("path",{d,fill:"none",stroke:s.color,"stroke-width":2.5,"stroke-dasharray":s.dash||"0"}));
+      s.data.forEach((v,i)=>{if(v!=null)svg.appendChild(el("circle",{cx:X(i),cy:Y(v),r:3.2,fill:s.color}));});});
+  }
+
+  // 막대 차트 (카테고리 유사도, 게이트선)
+  function bar(svg,items,opts={}){
+    const W=opts.W||900,H=opts.H||240,pad={l:48,r:24,t:18,b:opts.b||48};
+    const gap=(W-pad.l-pad.r)/items.length,bw=gap*0.5;
+    const Y=v=>H-pad.b-(H-pad.t-pad.b)*v/100;
+    for(let g=0;g<=4;g++){const v=25*g,y=Y(v);
+      svg.appendChild(el("line",{x1:pad.l,y1:y,x2:W-pad.r,y2:y,stroke:C.grid,"stroke-width":1}));
+      svg.appendChild(txt(pad.l-8,y+4,v,{anchor:"end"}));}
+    if(opts.gate){const gy=Y(opts.gate);svg.appendChild(el("line",{x1:pad.l,y1:gy,x2:W-pad.r,y2:gy,stroke:C.signal,"stroke-width":1.5,"stroke-dasharray":"5,4"}));
+      svg.appendChild(txt(W-pad.r,gy-6,"게이트 "+opts.gate,{anchor:"end",size:10.5,fill:C.signal,weight:600}));}
+    if(opts.threshold){const ty=Y(opts.threshold);svg.appendChild(el("line",{x1:pad.l,y1:ty,x2:W-pad.r,y2:ty,stroke:C.accent,"stroke-width":1.5,"stroke-dasharray":"5,4"}));
+      svg.appendChild(txt(W-pad.r,ty-6,"임계 "+opts.threshold,{anchor:"end",size:10.5,fill:C.accent,weight:600}));}
+    items.forEach((it,i)=>{const cx=pad.l+gap*i+gap/2,bh=H-pad.b-Y(it.v),col=it.color||colorFor(it.v);
+      svg.appendChild(el("rect",{x:cx-bw/2,y:Y(it.v),width:bw,height:bh,rx:4,fill:col}));
+      svg.appendChild(txt(cx,Y(it.v)-8,it.v,{size:13,weight:700,fill:C.ink}));
+      svg.appendChild(txt(cx,H-pad.b+18,it.label,{size:12}));
+      if(it.w)svg.appendChild(txt(cx,H-pad.b+34,"가중치 "+it.w,{size:10}));});
+  }
+
+  // 가로 막대 (항목별 유사도 분포)
+  function hbar(svg,items,opts={}){
+    const W=opts.W||900,rowH=26,pad={l:opts.l||160,r:40,t:10};
+    const H=pad.t*2+items.length*rowH;svg.setAttribute("viewBox",`0 0 ${W} ${H}`);
+    const X=v=>pad.l+(W-pad.l-pad.r)*v/100;
+    [0,50,70,100].forEach(v=>{svg.appendChild(el("line",{x1:X(v),y1:pad.t,x2:X(v),y2:H-pad.t,stroke:v===50||v===70?C.line:C.grid,"stroke-width":1,"stroke-dasharray":v===50||v===70?"3,3":"0"}));
+      svg.appendChild(txt(X(v),H-2,v,{size:9.5}));});
+    items.forEach((it,i)=>{const y=pad.t+i*rowH+rowH/2;
+      svg.appendChild(txt(pad.l-8,y+4,it.name.length>16?it.name.slice(0,15)+"…":it.name,{anchor:"end",size:11,fill:C.soft}));
+      if(it._skip||it.sim==null){svg.appendChild(txt((pad.l+W-pad.r)/2,y+4,"·····",{size:11,fill:C.line}));return;}
+      svg.appendChild(el("rect",{x:pad.l,y:y-7,width:X(it.sim)-pad.l,height:14,rx:3,fill:colorFor(it.sim)}));
+      svg.appendChild(txt(X(it.sim)+5,y+4,it.sim,{anchor:"start",size:10.5,weight:600,fill:C.soft}));});
+  }
+
+  // 도넛 (비율, 예: 개인:법인)
+  function donut(svg,segs,opts={}){
+    const W=opts.W||220,H=opts.H||220,cx=W/2,cy=H/2,rO=Math.min(W,H)/2-10,rI=rO*0.6;
+    svg.setAttribute("viewBox",`0 0 ${W} ${H}`);
+    const tot=segs.reduce((s,x)=>s+x.v,0);let a=-Math.PI/2;
+    segs.forEach(s=>{const ang=s.v/tot*Math.PI*2,a2=a+ang;
+      const x1=cx+rO*Math.cos(a),y1=cy+rO*Math.sin(a),x2=cx+rO*Math.cos(a2),y2=cy+rO*Math.sin(a2);
+      const xi1=cx+rI*Math.cos(a2),yi1=cy+rI*Math.sin(a2),xi2=cx+rI*Math.cos(a),yi2=cy+rI*Math.sin(a);
+      const laf=ang>Math.PI?1:0;
+      svg.appendChild(el("path",{d:`M${x1},${y1}A${rO},${rO} 0 ${laf} 1 ${x2},${y2}L${xi1},${yi1}A${rI},${rI} 0 ${laf} 0 ${xi2},${yi2}Z`,fill:s.color}));
+      const mid=a+ang/2,lr=(rO+rI)/2;
+      svg.appendChild(txt(cx+lr*Math.cos(mid),cy+lr*Math.sin(mid)+4,s.v+"%",{size:13,weight:700,fill:"#fff"}));
+      a=a2;});
+  }
+
+  // 그룹 막대 (양국 비교, 음수 지원)
+  function group(svg,data,opts={}){
+    const W=opts.W||900,H=opts.H||200,pad={l:50,r:24,t:18,b:40};
+    const gap=(W-pad.l-pad.r)/data.length,bw=gap*0.26;
+    const all=data.flatMap(d=>[d.uk,d.pl]);const ymax=Math.max(...all,0)+2,ymin=Math.min(...all,0)-1;
+    const Y=v=>H-pad.b-(H-pad.t-pad.b)*(v-ymin)/(ymax-ymin);
+    svg.appendChild(el("line",{x1:pad.l,y1:Y(0),x2:W-pad.r,y2:Y(0),stroke:C.ink,"stroke-width":1.5}));
+    data.forEach((d,i)=>{const cx=pad.l+gap*i+gap/2;
+      [[d.uk,C.soft,-bw*0.6,"UK"],[d.pl,C.accent,bw*0.6,"PL"]].forEach(([v,col,off])=>{
+        const top=v>=0?Y(v):Y(0),bh=Math.abs(Y(v)-Y(0));
+        svg.appendChild(el("rect",{x:cx+off-bw/2,y:top,width:bw,height:bh,rx:3,fill:col}));
+        svg.appendChild(txt(cx+off,v>=0?top-5:top+bh+13,(opts.suffix?v+opts.suffix:v),{size:10.5,weight:700,fill:col}));});
+      svg.appendChild(txt(cx,H-pad.b+22,d.label,{size:12}));});
+  }
+
+  return {line,bar,hbar,donut,group,C,el,colorFor};
+})();
+
+const VIZ={"result":{"total":63.5,"verdict":"DEEP_RESEARCH","cats":{"MARKET":63.8,"REGULATORY":77.1,"FINANCIAL":55.5,"SYSTEM":57.2},"gate":true,"eff":0.68},"itemSims":{"MARKET":[{"name":"자동차 판매대수(연간)","sim":67},{"name":"신차/중고차 비율","sim":71.7},{"name":"금융 침투율(신차)","sim":65},{"name":"브랜드 Top10","sim":42.9},{"name":"OEM 순위","sim":50},{"name":"평균 구매주기","sim":97.4},{"name":"평균 차량가격","sim":0},{"name":"고객 세그먼트(개인:법인 비율)","sim":92.4},{"name":"딜러 유형 구조","sim":60},{"name":"멀티브랜드 여부","sim":60},{"name":"딜러 집중도","sim":87.5},{"name":"딜러 금융취급 관행(F&I)","sim":30},{"name":"디지털 딜러 성숙도","sim":100}],"REGULATORY":[{"name":"라이선스 종류","sim":40},{"name":"외국인 지분 한도","sim":100},{"name":"인허가 처리기간","sim":66.8},{"name":"현지 법인형태 요건","sim":70},{"name":"법인세율","sim":80},{"name":"이자소득 원천징수","sim":100},{"name":"배당 송금 원천징수","sim":36.7},{"name":"금리 상한(우수라)","sim":100},{"name":"외환 송금 규제","sim":100},{"name":"배당 송금 제한","sim":100},{"name":"개인정보보호법","sim":90},{"name":"데이터 현지화 의무","sim":100},{"name":"국외이전 제한","sim":70},{"name":"충당금 적립 기준","sim":100},{"name":"연체 분류 기준","sim":100},{"name":"신용정보 조회(CB) 인프라","sim":50},{"name":"추심 규제","sim":50},{"name":"차량회수(repossession) 절차","sim":40},{"name":"자동차 의무보험","sim":100},{"name":"신용생명보험 가능 여부","sim":70},{"name":"보험 끼워팔기 규제","sim":60}],"FINANCIAL":[{"name":"금융사 순위","sim":11.1},{"name":"캡티브/논캡티브 구분","sim":30},{"name":"캡티브 강도","sim":81},{"name":"평균 대출기간","sim":100}],"SYSTEM":[{"name":"주요 솔루션사","sim":40},{"name":"솔루션 유형","sim":70},{"name":"코어시스템 벤더 락인","sim":100},{"name":"디지털 채널 성숙도","sim":66.7},{"name":"결제·정산 인프라","sim":40}]},"ts":{"PL_MKT_CAR_SALES":{"data":{"2019":555598,"2020":428300,"2021":446600,"2022":419700,"2023":475000,"2024":551600,"2025":597400},"cagr":1.2,"fc":634115,"unit":"대"},"PL_MKT_AF_SIZE":{"data":{"2020":70.1,"2021":88,"2022":88.1,"2023":100.1,"2024":110.5,"2025":119.5},"cagr":11.3,"fc":204,"unit":"PLN bn(전체 리스)"},"PL_MKT_PEN_NEW":{"data":{"2020":66.5,"2025":50},"cagr":-5.5,"fc":null,"unit":"%"},"GB_MKT_CAR_SALES":{"data":{"2019":2311140,"2020":1631064,"2021":1647181,"2022":1614063,"2023":1903054,"2024":1952778,"2025":2020520},"cagr":-2.2,"fc":1807829,"unit":"대"},"GB_MKT_AF_SIZE":{"data":{"2022":40.7,"2023":39,"2024":39,"2025":41},"cagr":0.2,"fc":41,"unit":"£bn(POS 소비자 카파이낸스)"},"GB_MKT_PEN_NEW":{"data":{"2023":78,"2024":80,"2025":85},"cagr":4.4,"fc":null,"unit":"%"}}};
+const C=ChartLib.C;
+function lim(items,mode){
+  items=items.slice().sort((a,b)=>b.sim-a.sim);
+  if(mode==="extremes" && items.length>7){
+    return [...items.slice(0,3),{name:"⋯ ("+(items.length-6)+"개 생략)",sim:null,_skip:true},...items.slice(-3)];
+  }
+  if(typeof mode==="number") return items.slice(0,mode);
+  return items;
+}
+// 정의 기반 차트 (data-spec)
+document.querySelectorAll(".rchart").forEach(svg=>{
+  const s=JSON.parse(svg.dataset.spec.replace(/&quot;/g,'"'));
+  if(s.chart==="bar"){
+    const cats=VIZ.result.cats;
+    ChartLib.bar(svg,[{label:"시장",v:cats.MARKET,w:"25%"},{label:"규제",v:cats.REGULATORY,w:"25%"},{label:"금융",v:cats.FINANCIAL,w:"20%"},{label:"시스템",v:cats.SYSTEM,w:"30%"}],{W:920,H:260,gate:s.gate});
+    svg.setAttribute("viewBox","0 0 920 260");
+  }else if(s.chart==="hbar"){
+    ChartLib.hbar(svg,lim(VIZ.itemSims[s.category]||[],s.limit||10),{W:920});
+  }else if(s.chart==="line"){
+    svg.setAttribute("viewBox","0 0 920 240");
+    const items=s.items, sc=s.scale||1;
+    let years=Object.keys(VIZ.ts[items[0]].data);
+    if(s.forecast && !years.includes("2030")) years=[...years,"2030"];
+    const colors=[C.accent,C.soft];
+    const series=[];
+    items.forEach((k,idx)=>{const t=VIZ.ts[k];if(!t)return;
+      const base=years.map(y=>y!=="2030"&&t.data[y]!=null?t.data[y]*sc:null);
+      series.push({data:base,color:colors[idx],dash:"0"});
+      if(s.forecast&&t.fc){const last=years.filter(y=>t.data[y]!=null).pop();series.push({data:years.map(y=>y===last?t.data[last]*sc:(y==="2030"?t.fc*sc:null)),color:colors[idx],dash:"5,4"});}
+    });
+    ChartLib.line(svg,series,{years,ymin:0});
+    if(items.length>1)svg.insertAdjacentHTML("afterend",'<div class="legend"><span><i style="background:#1f5c4a"></i>폴란드</span><span><i style="background:#4a5550"></i>영국</span><span>점선=예측</span></div>');
+  }else if(s.chart==="donut"){
+    svg.setAttribute("viewBox","0 0 220 220");
+    ChartLib.donut(svg,s.segs.map((x,i)=>({v:x.v,color:i===0?C.accent:C.amber})));
+    svg.insertAdjacentHTML("afterend",'<div class="legend">'+s.segs.map((x,i)=>`<span><i style="background:${i===0?'#1f5c4a':'#b88324'}"></i>${x.label}</span>`).join("")+'</div>');
+  }else if(s.chart==="group"){
+    svg.setAttribute("viewBox","0 0 920 200");
+    ChartLib.group(svg,s.groups,{W:920,H:200,suffix:s.suffix||""});
+    svg.insertAdjacentHTML("afterend",'<div class="legend"><span><i style="background:#4a5550"></i>영국</span><span><i style="background:#1f5c4a"></i>폴란드</span></div>');
+  }
+});
+// 카테고리 hbar
+document.querySelectorAll(".hbar-chart").forEach(svg=>{
+  ChartLib.hbar(svg,lim(VIZ.itemSims[svg.dataset.cat]||[],svg.dataset.limit==="all"?"all":"extremes"),{});
+});
+// 시계열 (항목 내)
+document.querySelectorAll(".ts-chart").forEach(svg=>{
+  const cid=svg.dataset.cid,pl=VIZ.ts["PL_"+cid],uk=VIZ.ts["UK_"+cid];if(!pl)return;
+  svg.setAttribute("viewBox","0 0 900 240");
+  let years=Object.keys(pl.data);if(pl.fc&&!years.includes("2030"))years=[...years,"2030"];
+  function ser(t,color){if(!t)return[];const base=years.map(y=>y!=="2030"&&t.data[y]!=null?t.data[y]:null);const out=[{data:base,color,dash:"0"}];if(t.fc){const last=years.filter(y=>t.data[y]!=null).pop();out.push({data:years.map(y=>y===last?t.data[last]:(y==="2030"?t.fc:null)),color,dash:"5,4"});}return out;}
+  ChartLib.line(svg,[...ser(pl,C.accent),...ser(uk,C.soft)],{years,ymin:0});
+  svg.insertAdjacentHTML("afterend",'<div class="viz-legend"><span><i style="background:#1f5c4a"></i>폴란드</span><span><i style="background:#4a5550"></i>영국</span><span>점선=예측</span></div>');
+});
+</script>
+</body>
+</html>
