@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>국가 진출 진단 보고서 (M5) | Global Market Diagnostic</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<!-- Satoshi & Pretendard fonts (simulated via high-quality sans-serif fallbacks for preview) -->
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@100..900&family=Satoshi:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        @import url('https://fonts.cdnfonts.com/css/satoshi');
+        
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .font-display-lg { font-family: 'Satoshi', sans-serif; }
+        .font-label-caps { font-family: 'Satoshi', sans-serif; text-transform: uppercase; }
+        .font-stat-lg { font-family: 'Satoshi', sans-serif; }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+
+        /* Double-Bezel Architecture */
+        .bezel-container {
+            background: rgba(0, 0, 0, 0.03);
+            padding: 1px;
+            border-radius: 12px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+        .bezel-inner {
+            background: #ffffff;
+            border-radius: 11px;
+            border: 1px solid #e0e3e5;
+            box-shadow: inset 0 1px 1px rgba(255,255,255,1);
+        }
+
+        .map-pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 74, 198, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(0, 74, 198, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 74, 198, 0); }
+        }
+
+        .shimmer {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        .tab-active {
+            border-bottom: 2px solid #004ac6;
+            color: #004ac6;
+            font-weight: 700;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-container": "#bdffdb",
+                        "outline-variant": "#c3c6d7",
+                        "on-surface-variant": "#434655",
+                        "tertiary-fixed": "#6ffbbe",
+                        "on-secondary-fixed-variant": "#3f465f",
+                        "primary": "#004ac6",
+                        "surface-container-low": "#f2f4f6",
+                        "primary-fixed": "#dbe1ff",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-container": "#d8defe",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed": "#00174b",
+                        "secondary": "#575d78",
+                        "on-primary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "on-secondary-container": "#5b617d",
+                        "inverse-on-surface": "#eff1f3",
+                        "surface": "#f7f9fb",
+                        "on-background": "#191c1e",
+                        "error": "#ba1a1a",
+                        "inverse-primary": "#b4c5ff",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "on-primary-container": "#eeefff",
+                        "primary-container": "#2563eb",
+                        "tertiary": "#006242",
+                        "on-tertiary-fixed": "#002113",
+                        "surface-dim": "#d8dadc",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-highest": "#e0e3e5",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "on-error-container": "#93000a",
+                        "inverse-surface": "#2d3133",
+                        "background": "#f7f9fb",
+                        "surface-variant": "#e0e3e5",
+                        "surface-container": "#eceef0",
+                        "secondary-fixed": "#dce1ff",
+                        "error-container": "#ffdad6",
+                        "surface-bright": "#f7f9fb",
+                        "outline": "#737686",
+                        "surface-tint": "#0053db",
+                        "tertiary-container": "#007d55",
+                        "on-surface": "#191c1e",
+                        "on-secondary-fixed": "#141a32",
+                        "secondary-fixed-dim": "#bfc5e4",
+                        "surface-container-high": "#e6e8ea"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "xxl": "48px",
+                        "sm": "8px",
+                        "lg": "24px",
+                        "section-md": "96px",
+                        "margin-desktop": "48px",
+                        "margin-mobile": "16px",
+                        "xl": "32px",
+                        "xs": "4px",
+                        "md": "16px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Satoshi"],
+                        "label-caps": ["Satoshi"],
+                        "body-bold": ["Pretendard"],
+                        "headline-md": ["Pretendard"],
+                        "stat-lg-mobile": ["Satoshi"],
+                        "headline-md-mobile": ["Pretendard"],
+                        "body-base": ["Pretendard"],
+                        "stat-lg": ["Satoshi"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["44px", {"lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.15em", "fontWeight": "700"}],
+                        "body-bold": ["16px", {"lineHeight": "24px", "letterSpacing": "0", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "stat-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-md-mobile": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "body-base": ["16px", {"lineHeight": "24px", "letterSpacing": "0", "fontWeight": "400"}],
+                        "stat-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop bg-surface/90 backdrop-blur-xl border-b border-outline-variant shadow-sm w-full h-20">
+<div class="flex items-center gap-xl">
+<span class="font-display-lg text-display-lg font-black text-primary">Market Entry Diagnostic</span>
+<nav class="hidden md:flex items-center gap-lg">
+<a class="text-on-surface-variant font-body-base hover:text-primary transition-colors duration-300" href="#">메인</a>
+<a class="text-on-surface-variant font-body-base hover:text-primary transition-colors duration-300" href="#">상세 진단</a>
+<a class="text-primary font-body-bold border-b-2 border-primary pb-1 transition-colors duration-300" href="#">보고서</a>
+<a class="text-on-surface-variant font-body-base hover:text-primary transition-colors duration-300" href="#">환경 설정</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<span class="text-label-caps font-label-caps text-on-surface-variant px-sm py-xs bg-surface-container rounded-full">KR/UK</span>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-transform active:scale-95 duration-200">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-transform active:scale-95 duration-200">account_circle</button>
+</div>
+</header>
+<main class="pt-24 pb-xxl px-margin-desktop">
+<!-- Dashboard Header -->
+<div class="flex flex-col md:flex-row justify-between items-end gap-md mb-xl">
+<div class="flex flex-col gap-sm">
+<div class="flex items-center gap-md">
+<div class="w-12 h-8 bezel-container overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A macro photograph of the South Korean national flag, Taegeukgi, rendered with textile texture and soft studio lighting. The vibrant red and blue emblem stands out against a pristine white background. The shot is captured in a high-fidelity, professional style with a shallow depth of field, reflecting an analytical and prestigious atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCO876UEjv4xxffOjMUnKsBPR7dLiScfGS6Bghax8PnZJKPXRwq-Id-mxlK3fK3xrUJW3VczUHlpF8gpOtZeX7s0LldEjU9Lq2YSqPdtMZe2UjQW-b97-lrlIIqTQAoGGZVgd8jkpnboOaoCTRXr88p720iF9EEwu5iOOw5VBCn8NUu3EgA2_MrQYh3QX4xoU2JRqq4LTWkRFkldAhvm_RucWfJVkrvfkkxyR2wu0CifN6r3XJXaTXgGh0ZQpa-ab2RVYSkIXbuwfU"/>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md text-on-surface">대한민국 (KR)</h1>
+<p class="font-body-base text-on-surface-variant">Republic of Korea | East Asia Pacific Region</p>
+</div>
+</div>
+<div class="flex items-center gap-sm mt-xs">
+<span class="font-label-caps text-label-caps bg-surface-container-highest px-md py-xs rounded-full">Region: E. Asia</span>
+<span class="text-outline-variant">/</span>
+<span class="font-label-caps text-label-caps bg-surface-container-highest px-md py-xs rounded-full">Ref: Singapore (SG)</span>
+</div>
+</div>
+<div class="flex flex-col items-end gap-sm text-right">
+<div class="text-on-surface-variant space-y-1">
+<p class="font-label-caps text-label-caps">Report ID: <span class="font-bold">#MED-2024-0812-KR</span></p>
+<p class="font-label-caps text-label-caps">Created: 2024. 08. 12</p>
+<p class="font-label-caps text-label-caps">Snapshot: 2024. Q3 Data</p>
+</div>
+<button class="flex items-center gap-sm bg-primary text-on-primary px-xl py-md rounded-full font-body-bold shadow-md hover:bg-primary-container transition-all duration-300 transform hover:scale-[1.02] active:scale-95">
+<span class="material-symbols-outlined" data-weight="fill">download</span>
+                    보고서 PDF 다운로드
+                </button>
+</div>
+</div>
+<!-- Analytical Navigation Tabs -->
+<div class="flex border-b border-outline-variant mb-lg overflow-x-auto no-scrollbar">
+<button class="px-lg py-md font-body-bold text-primary border-b-2 border-primary whitespace-nowrap">요약</button>
+<button class="px-lg py-md font-body-base text-on-surface-variant hover:text-primary transition-colors whitespace-nowrap">판정근거</button>
+<button class="px-lg py-md font-body-base text-on-surface-variant hover:text-primary transition-colors whitespace-nowrap">비용 추정</button>
+<button class="px-lg py-md font-body-base text-on-surface-variant hover:text-primary transition-colors whitespace-nowrap">리스크</button>
+<button class="px-lg py-md font-body-base text-on-surface-variant hover:text-primary transition-colors whitespace-nowrap">가중치</button>
+<button class="px-lg py-md font-body-base text-on-surface-variant hover:text-primary transition-colors whitespace-nowrap">출처</button>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Primary Diagnostic Score (Main Column) -->
+<div class="md:col-span-8 flex flex-col gap-gutter">
+<div class="bezel-container h-full">
+<div class="bezel-inner p-xl flex flex-col h-full">
+<div class="flex justify-between items-start mb-xl">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">종합 진단 결과</h3>
+<p class="font-body-base text-on-surface-variant">시장 진입 타당성 및 매력도 스코어</p>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-stat-lg text-stat-lg text-primary">84.5 <span class="text-headline-md">/ 100</span></span>
+<span class="font-label-caps text-label-caps text-tertiary px-sm py-xs bg-tertiary-container/20 rounded-full">Highly Recommended</span>
+</div>
+</div>
+<!-- Main Visualization: Map & Stats Overlap -->
+<div class="relative flex-grow flex items-center justify-center min-h-[400px] rounded-xl overflow-hidden bg-surface-container-low border border-outline-variant">
+<!-- Map Container -->
+<div class="absolute inset-0 z-0">
+<img class="w-full h-full object-cover opacity-60" data-alt="A high-tech digital topographic map of the Korean Peninsula with glowing blue outlines and data nodes connecting major cities like Seoul and Busan. The background is a sophisticated dark-grey-into-light-blue gradient with micro-grid overlays. The lighting is focused, highlighting the peninsula as a central data hub, following an analytical and prestigious visual style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvj387Vo251I1o6L0C2hYzcL_xd-hder6Pli9NgSHTiX8AOJwvXfIZKSPnIgHDDb_1oh5Qc2HUbZbA_n0y35hXiQzn6VztKNsr0NKzLzsXEtufZ7jYq5z0OxWXmrrtyGHV4nJuLXLaxxGCIpV6qhXJaksvLPcJD0kv6myn8C3Q5xEtdJl_J1EhELF9QjPbCQXfvxx5i7vEXTK1nqXIUWhZDKmJVHPpd-fWoXYvLR4qpvPXRf7ZBe5t4C2YEN-1HjYmLe48sI2MaoI"/>
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-primary rounded-full map-pulse"></div>
+</div>
+<!-- Overlapping Data Cards -->
+<div class="absolute bottom-md left-md right-md grid grid-cols-2 md:grid-cols-4 gap-md z-10">
+<div class="bg-white/80 backdrop-blur-md p-md rounded-lg border border-white/50 shadow-sm">
+<p class="font-label-caps text-label-caps text-on-surface-variant mb-xs">시장 규모</p>
+<p class="font-stat-lg-mobile text-stat-lg-mobile font-bold text-on-surface">$1.7T</p>
+</div>
+<div class="bg-white/80 backdrop-blur-md p-md rounded-lg border border-white/50 shadow-sm">
+<p class="font-label-caps text-label-caps text-on-surface-variant mb-xs">성장률 (YoY)</p>
+<p class="font-stat-lg-mobile text-stat-lg-mobile font-bold text-tertiary">+3.2%</p>
+</div>
+<div class="bg-white/80 backdrop-blur-md p-md rounded-lg border border-white/50 shadow-sm">
+<p class="font-label-caps text-label-caps text-on-surface-variant mb-xs">규제 장벽</p>
+<p class="font-stat-lg-mobile text-stat-lg-mobile font-bold text-on-surface-variant">Low</p>
+</div>
+<div class="bg-white/80 backdrop-blur-md p-md rounded-lg border border-white/50 shadow-sm">
+<p class="font-label-caps text-label-caps text-on-surface-variant mb-xs">진입 비용</p>
+<p class="font-stat-lg-mobile text-stat-lg-mobile font-bold text-secondary">Moderate</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Side Comparison Panel -->
+<div class="md:col-span-4 flex flex-col gap-gutter">
+<div class="bezel-container">
+<div class="bezel-inner p-xl">
+<h3 class="font-body-bold text-on-surface mb-lg">지표별 상세 판정</h3>
+<div class="space-y-xl">
+<!-- Indicator Item -->
+<div>
+<div class="flex justify-between items-center mb-sm">
+<span class="font-body-base text-on-surface">경제적 안정성</span>
+<span class="font-body-bold text-primary">92%</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary relative w-[92%]">
+<div class="absolute inset-0 shimmer"></div>
+</div>
+</div>
+</div>
+<!-- Indicator Item -->
+<div>
+<div class="flex justify-between items-center mb-sm">
+<span class="font-body-base text-on-surface">인프라 구축 수준</span>
+<span class="font-body-bold text-primary">88%</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary relative w-[88%]">
+<div class="absolute inset-0 shimmer"></div>
+</div>
+</div>
+</div>
+<!-- Indicator Item -->
+<div>
+<div class="flex justify-between items-center mb-sm">
+<span class="font-body-base text-on-surface">인건비 및 물류</span>
+<span class="font-body-bold text-secondary">65%</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-secondary relative w-[65%]">
+<div class="absolute inset-0 shimmer"></div>
+</div>
+</div>
+</div>
+<!-- Indicator Item -->
+<div>
+<div class="flex justify-between items-center mb-sm">
+<span class="font-body-base text-on-surface">법적/세무 리스크</span>
+<span class="font-body-bold text-tertiary-container">79%</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-tertiary-container relative w-[79%]">
+<div class="absolute inset-0 shimmer"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Snapshot Info -->
+<div class="bezel-container">
+<div class="bezel-inner p-xl bg-primary-container text-on-primary-container">
+<div class="flex items-center gap-sm mb-md">
+<span class="material-symbols-outlined">insights</span>
+<h4 class="font-body-bold">AI 진단 제언</h4>
+</div>
+<p class="font-body-base leading-relaxed">
+                            한국 시장은 높은 디지털 침투율과 견고한 구매력을 갖추고 있습니다. 싱가포르 대비 운영 비용은 약 15% 높으나, 로컬 물류 허브와의 연결성을 고려할 때 장기적인 확장성이 우수합니다.
+                        </p>
+</div>
+</div>
+</div>
+<!-- Risk Matrix & Cost Analysis -->
+<div class="md:col-span-12 grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="bezel-container">
+<div class="bezel-inner p-xl">
+<h4 class="font-body-bold text-on-surface mb-md">핵심 리스크 요인</h4>
+<ul class="space-y-md">
+<li class="flex items-start gap-md">
+<span class="material-symbols-outlined text-error" data-weight="fill">warning</span>
+<div class="font-body-base text-on-surface-variant">
+<p class="font-body-bold text-on-surface">고령화에 따른 인력 부족</p>
+<p class="text-sm">숙련 노동자 수급 불균형 심화 가능성</p>
+</div>
+</li>
+<li class="flex items-start gap-md">
+<span class="material-symbols-outlined text-secondary" data-weight="fill">change_circle</span>
+<div class="font-body-base text-on-surface-variant">
+<p class="font-body-bold text-on-surface">환율 변동성</p>
+<p class="text-sm">KRW/USD 변동에 따른 마진 압박</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="bezel-container">
+<div class="bezel-inner p-xl">
+<h4 class="font-body-bold text-on-surface mb-md">초기 진입 예상 비용</h4>
+<div class="flex flex-col gap-sm">
+<div class="flex justify-between items-center p-md bg-surface-container rounded-lg">
+<span class="font-body-base text-on-surface-variant">법인 설립 및 라이선스</span>
+<span class="font-stat-lg-mobile font-bold text-on-surface">$25,000</span>
+</div>
+<div class="flex justify-between items-center p-md bg-surface-container rounded-lg">
+<span class="font-body-base text-on-surface-variant">오피스 임차 및 인프라</span>
+<span class="font-stat-lg-mobile font-bold text-on-surface">$120,000</span>
+</div>
+</div>
+</div>
+</div>
+<div class="bezel-container">
+<div class="bezel-inner p-xl">
+<h4 class="font-body-bold text-on-surface mb-md">주요 규제 업데이트</h4>
+<div class="space-y-md">
+<div class="p-md border-l-4 border-primary bg-surface">
+<p class="font-label-caps text-label-caps text-primary">2024.07 시행</p>
+<p class="font-body-base font-bold">신성장 동력 세액 공제 확대</p>
+<p class="text-sm text-on-surface-variant">R&D 비용 최대 40% 공제 혜택</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full flex flex-col md:flex-row justify-between items-center px-margin-desktop gap-md py-xl bg-surface-container-lowest border-t border-outline-variant">
+<div class="flex flex-col gap-xs">
+<span class="font-headline-md text-headline-md font-bold text-secondary">Global Market Diagnostic</span>
+<p class="font-label-caps text-label-caps text-on-surface-variant">© 2024 Global Market Diagnostic. All rights reserved.</p>
+</div>
+<div class="flex gap-lg">
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary underline transition-all" href="#">이용약관</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary underline transition-all" href="#">개인정보처리방침</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary underline transition-all" href="#">고객지원</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary underline transition-all" href="#">데이터 출처</a>
+</div>
+</footer>
+<script>
+        // Micro-interactions for tabs
+        const tabs = document.querySelectorAll('.px-lg.py-md');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => {
+                    t.classList.remove('text-primary', 'font-body-bold', 'border-b-2', 'border-primary');
+                    t.classList.add('text-on-surface-variant', 'font-body-base');
+                });
+                tab.classList.remove('text-on-surface-variant', 'font-body-base');
+                tab.classList.add('text-primary', 'font-body-bold', 'border-b-2', 'border-primary');
+            });
+        });
+
+        // Simple parallax or atmospheric scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 20) {
+                header.classList.add('shadow-md');
+            } else {
+                header.classList.remove('shadow-md');
+            }
+        });
+    </script>
+</body></html>

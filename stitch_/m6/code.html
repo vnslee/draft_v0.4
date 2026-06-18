@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>설정 화면 (M6) - Market Entry Diagnostic</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@100..900&family=Satoshi:wght@100..900&display=swap" rel="stylesheet"/>
+<!-- Satoshi font placeholder - using sans-serif as fallback for this environment -->
+<style>
+        @import url('https://fonts.cdnfonts.com/css/satoshi');
+        
+        body {
+            font-family: 'Pretendard Variable', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .font-display-lg { font-family: 'Satoshi', sans-serif; }
+        .font-label-caps { font-family: 'Satoshi', sans-serif; }
+        .font-stat-lg { font-family: 'Satoshi', sans-serif; }
+
+        /* Custom Double-Bezel Architecture */
+        .double-bezel {
+            @apply bg-black/5 p-[1px] rounded-xl;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+        .double-bezel-inner {
+            @apply bg-surface rounded-[calc(0.75rem-1px)] border border-outline-variant/30;
+            box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.8);
+        }
+
+        /* Custom Range Slider Styling */
+        input[type=range] {
+            -webkit-appearance: none;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            @apply w-full h-1.5 bg-surface-container-highest rounded-full border border-outline-variant/20;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            @apply h-5 w-5 rounded-full bg-primary border-2 border-surface cursor-pointer -mt-1.5 shadow-md;
+            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        input[type=range]:active::-webkit-slider-thumb {
+            @apply scale-125;
+        }
+
+        /* Micro-interactions */
+        .btn-precision {
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .btn-precision:active {
+            transform: scale(0.96);
+        }
+
+        /* Glassmorphism Navigation */
+        .glass-nav {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-container": "#bdffdb",
+                        "outline-variant": "#c3c6d7",
+                        "on-surface-variant": "#434655",
+                        "tertiary-fixed": "#6ffbbe",
+                        "on-secondary-fixed-variant": "#3f465f",
+                        "primary": "#004ac6",
+                        "surface-container-low": "#f2f4f6",
+                        "primary-fixed": "#dbe1ff",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-container": "#d8defe",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed": "#00174b",
+                        "secondary": "#575d78",
+                        "on-primary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "on-secondary-container": "#5b617d",
+                        "inverse-on-surface": "#eff1f3",
+                        "surface": "#f7f9fb",
+                        "on-background": "#191c1e",
+                        "error": "#ba1a1a",
+                        "inverse-primary": "#b4c5ff",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "on-primary-container": "#eeefff",
+                        "primary-container": "#2563eb",
+                        "tertiary": "#006242",
+                        "on-tertiary-fixed": "#002113",
+                        "surface-dim": "#d8dadc",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-highest": "#e0e3e5",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "on-error-container": "#93000a",
+                        "inverse-surface": "#2d3133",
+                        "background": "#f7f9fb",
+                        "surface-variant": "#e0e3e5",
+                        "surface-container": "#eceef0",
+                        "secondary-fixed": "#dce1ff",
+                        "error-container": "#ffdad6",
+                        "surface-bright": "#f7f9fb",
+                        "outline": "#737686",
+                        "surface-tint": "#0053db",
+                        "tertiary-container": "#007d55",
+                        "on-surface": "#191c1e",
+                        "on-secondary-fixed": "#141a32",
+                        "secondary-fixed-dim": "#bfc5e4",
+                        "surface-container-high": "#e6e8ea"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "xxl": "48px",
+                        "sm": "8px",
+                        "lg": "24px",
+                        "section-md": "96px",
+                        "margin-desktop": "48px",
+                        "margin-mobile": "16px",
+                        "xl": "32px",
+                        "xs": "4px",
+                        "md": "16px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Satoshi"],
+                        "label-caps": ["Satoshi"],
+                        "body-bold": ["Pretendard"],
+                        "headline-md": ["Pretendard"],
+                        "stat-lg-mobile": ["Satoshi"],
+                        "headline-md-mobile": ["Pretendard"],
+                        "body-base": ["Pretendard"],
+                        "stat-lg": ["Satoshi"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["44px", {"lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.15em", "fontWeight": "700"}],
+                        "body-bold": ["16px", {"lineHeight": "24px", "letterSpacing": "0", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "stat-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-md-mobile": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "body-base": ["16px", {"lineHeight": "24px", "letterSpacing": "0", "fontWeight": "400"}],
+                        "stat-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface overflow-x-hidden min-h-screen">
+<!-- TopNavBar (Shared Component) -->
+<nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop bg-surface/90 backdrop-blur-xl border-b border-outline-variant h-20 shadow-sm">
+<div class="flex items-center gap-xl">
+<span class="font-display-lg text-display-lg font-black text-primary">Market Entry Diagnostic</span>
+<div class="hidden md:flex gap-lg items-center">
+<a class="text-on-surface-variant font-body-base hover:text-primary transition-colors duration-300" href="#">메인</a>
+<a class="text-on-surface-variant font-body-base hover:text-primary transition-colors duration-300" href="#">상세 진단</a>
+<a class="text-on-surface-variant font-body-base hover:text-primary transition-colors duration-300" href="#">보고서</a>
+<a class="text-primary font-body-bold border-b-2 border-primary pb-1" href="#">환경 설정</a>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="text-on-surface-variant font-label-caps tracking-widest px-md py-xs border border-outline-variant rounded-full hover:bg-surface-container-low transition-all">KR/UK</button>
+<div class="flex gap-sm">
+<span class="material-symbols-outlined text-on-surface-variant p-2 hover:bg-surface-container rounded-full cursor-pointer transition-colors" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant p-2 hover:bg-surface-container rounded-full cursor-pointer transition-colors" data-icon="account_circle">account_circle</span>
+</div>
+</div>
+</nav>
+<main class="pt-32 pb-xl px-margin-desktop max-w-[1440px] mx-auto">
+<!-- Header & Ruleset Selector -->
+<div class="flex flex-col md:flex-row justify-between items-end mb-xl gap-md">
+<div>
+<h1 class="font-headline-md text-headline-md text-on-surface">가중치 및 임계값 설정</h1>
+<p class="text-on-surface-variant font-body-base mt-2">글로벌 마켓 진단 엔진의 분석 파라미터를 정밀하게 조정합니다.</p>
+</div>
+<div class="relative w-full md:w-72">
+<label class="font-label-caps text-label-caps text-outline mb-1 block">WEIGHTING RULESET ID</label>
+<div class="flex items-center justify-between bg-surface-container-lowest border border-outline-variant px-md h-[52px] rounded-full cursor-pointer hover:border-primary transition-colors group">
+<span class="font-body-bold text-primary">STD_V2.0_GLOBAL_2024</span>
+<span class="material-symbols-outlined text-outline group-hover:text-primary" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Asymmetrical Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- 1. Category Weights (col-span-8) -->
+<section class="md:col-span-8 double-bezel h-full">
+<div class="double-bezel-inner p-xl h-full flex flex-col">
+<div class="flex justify-between items-center mb-xl">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary" data-icon="category">category</span>
+<h2 class="font-headline-md text-headline-md">분류 항목별 가중치 (Category Weights)</h2>
+</div>
+<div class="bg-primary-container/10 px-md py-1 rounded-full">
+<span class="font-stat-lg text-primary" id="total-weight">100</span><span class="text-primary font-body-bold ml-1">%</span>
+</div>
+</div>
+<div class="space-y-lg flex-grow">
+<!-- Market -->
+<div class="space-y-sm">
+<div class="flex justify-between items-end">
+<span class="font-body-bold text-on-surface">시장성 (Market)</span>
+<span class="font-stat-lg text-primary text-[24px]" id="market-val">30%</span>
+</div>
+<input class="w-full category-slider" id="market-slider" max="100" min="0" type="range" value="30"/>
+</div>
+<!-- Regulation -->
+<div class="space-y-sm">
+<div class="flex justify-between items-end">
+<span class="font-body-bold text-on-surface">규제 대응성 (Regulation)</span>
+<span class="font-stat-lg text-primary text-[24px]" id="reg-val">30%</span>
+</div>
+<input class="w-full category-slider" id="reg-slider" max="100" min="0" type="range" value="30"/>
+</div>
+<!-- Environment -->
+<div class="space-y-sm">
+<div class="flex justify-between items-end">
+<span class="font-body-bold text-on-surface">금융 환경 (Environment/Finance)</span>
+<span class="font-stat-lg text-primary text-[24px]" id="env-val">20%</span>
+</div>
+<input class="w-full category-slider" id="env-slider" max="100" min="0" type="range" value="20"/>
+</div>
+<!-- System -->
+<div class="space-y-sm">
+<div class="flex justify-between items-end">
+<span class="font-body-bold text-on-surface">시스템 통합성 (System)</span>
+<span class="font-stat-lg text-primary text-[24px]" id="sys-val">20%</span>
+</div>
+<input class="w-full category-slider" id="sys-slider" max="100" min="0" type="range" value="20"/>
+</div>
+</div>
+<div class="mt-xl pt-lg border-t border-outline-variant/30 flex items-center gap-md text-on-surface-variant font-body-base">
+<span class="material-symbols-outlined text-secondary" data-icon="info">info</span>
+<p>모든 가중치의 합계는 반드시 100%여야 합니다. 자동 보정 기능이 활성화되어 있습니다.</p>
+</div>
+</div>
+</section>
+<!-- 2. Threshold Reliability (col-span-4) -->
+<section class="md:col-span-4 double-bezel h-full">
+<div class="double-bezel-inner p-xl h-full flex flex-col">
+<div class="flex items-center gap-sm mb-xl">
+<span class="material-symbols-outlined text-secondary" data-icon="tune">tune</span>
+<h2 class="font-headline-md text-headline-md">임계치 신뢰도</h2>
+</div>
+<div class="space-y-xl flex-grow">
+<!-- Implantation Threshold -->
+<div class="space-y-sm">
+<div class="flex justify-between items-center">
+<span class="font-body-bold text-on-surface">진입 임계점 (Implantation)</span>
+<span class="bg-surface-container px-sm py-xs rounded font-label-caps text-on-surface" id="threshold-val">75</span>
+</div>
+<input class="w-full" id="threshold-slider" max="100" min="0" type="range" value="75"/>
+</div>
+<!-- System Gate -->
+<div class="space-y-sm">
+<div class="flex justify-between items-center">
+<span class="font-body-bold text-on-surface">시스템 게이트 (System Gate)</span>
+<span class="bg-surface-container px-sm py-xs rounded font-label-caps text-on-surface" id="gate-val">40</span>
+</div>
+<input class="w-full" id="gate-slider" max="100" min="0" type="range" value="40"/>
+</div>
+<div class="mt-xl p-md bg-secondary-container/20 rounded-lg border border-secondary-container/40">
+<p class="font-label-caps text-secondary-container text-on-secondary-container mb-2">SYSTEM ALERT</p>
+<p class="text-on-surface-variant text-[13px] leading-relaxed">설정된 임계치에 따라 필터링 강도가 결정됩니다. 80 이상 설정 시 고위험 국가가 자동으로 배제됩니다.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. Source Reliability (col-span-12 or row-below) -->
+<section class="md:col-span-12 double-bezel">
+<div class="double-bezel-inner p-xl">
+<div class="flex items-center gap-sm mb-xl">
+<span class="material-symbols-outlined text-tertiary" data-icon="database">database</span>
+<h2 class="font-headline-md text-headline-md">데이터 소스 신뢰성 계수 (Source Reliability)</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-xl">
+<!-- Tier 1 -->
+<div class="space-y-md p-md border border-outline-variant/20 rounded-xl bg-surface-container-low/30">
+<div class="flex justify-between items-center">
+<span class="font-body-bold text-primary">Tier 1 (Official Govt.)</span>
+<span class="font-stat-lg text-primary text-[24px]" id="tier1-val">0.95</span>
+</div>
+<input class="w-full" id="tier1-slider" max="1" min="0" step="0.01" type="range" value="0.95"/>
+<p class="text-on-surface-variant font-label-caps text-label-caps">공식 정부 통계 및 국제 기구 데이터</p>
+</div>
+<!-- Tier 2 -->
+<div class="space-y-md p-md border border-outline-variant/20 rounded-xl bg-surface-container-low/30">
+<div class="flex justify-between items-center">
+<span class="font-body-bold text-secondary">Tier 2 (Commercial)</span>
+<span class="font-stat-lg text-secondary text-[24px]" id="tier2-val">0.70</span>
+</div>
+<input class="w-full" id="tier2-slider" max="1" min="0" step="0.01" type="range" value="0.70"/>
+<p class="text-on-surface-variant font-label-caps text-label-caps">상업용 시장 조사 보고서 및 분석 자료</p>
+</div>
+<!-- Tier 3 -->
+<div class="space-y-md p-md border border-outline-variant/20 rounded-xl bg-surface-container-low/30">
+<div class="flex justify-between items-center">
+<span class="font-body-bold text-outline">Tier 3 (Alternative)</span>
+<span class="font-stat-lg text-outline text-[24px]" id="tier3-val">0.45</span>
+</div>
+<input class="w-full" id="tier3-slider" max="1" min="0" step="0.01" type="range" value="0.45"/>
+<p class="text-on-surface-variant font-label-caps text-label-caps">비정형 뉴스 데이터 및 소셜 리스닝</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Action Footer -->
+<div class="mt-xxl flex justify-end items-center gap-md">
+<button class="px-xl h-14 rounded-full border border-outline-variant text-on-surface font-body-bold hover:bg-surface-container transition-all btn-precision">
+                초기화
+            </button>
+<button class="px-xxl h-14 rounded-full bg-primary text-white font-body-bold flex items-center gap-sm shadow-lg hover:shadow-primary/20 hover:-translate-y-0.5 btn-precision">
+<span>저장</span>
+<div class="bg-white/20 p-1 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]" data-icon="save">save</span>
+</div>
+</button>
+</div>
+</main>
+<!-- Footer Component -->
+<footer class="w-full flex flex-col md:flex-row justify-between items-center px-margin-desktop gap-md py-xl border-t border-outline-variant bg-surface-container-lowest">
+<div class="font-headline-md text-headline-md font-bold text-secondary">Global Market Diagnostic</div>
+<div class="flex gap-lg">
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary underline transition-all" href="#">이용약관</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary underline transition-all" href="#">개인정보처리방침</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary underline transition-all" href="#">고객지원</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary underline transition-all" href="#">데이터 출처</a>
+</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant">© 2024 Global Market Diagnostic. All rights reserved.</div>
+</footer>
+<script>
+        // Micro-interactions for sliders
+        const setupSlider = (sliderId, valId, suffix = '') => {
+            const slider = document.getElementById(sliderId);
+            const valDisplay = document.getElementById(valId);
+            if (slider && valDisplay) {
+                slider.addEventListener('input', (e) => {
+                    valDisplay.textContent = e.target.value + suffix;
+                });
+            }
+        };
+
+        // Initialize Category Sliders (Pseudo-logic for 100% total)
+        const catSliders = ['market-slider', 'reg-slider', 'env-slider', 'sys-slider'];
+        const catVals = ['market-val', 'reg-val', 'env-val', 'sys-val'];
+        
+        catSliders.forEach((id, idx) => {
+            const slider = document.getElementById(id);
+            const display = document.getElementById(catVals[idx]);
+            slider.addEventListener('input', (e) => {
+                display.textContent = e.target.value + '%';
+                updateTotal();
+            });
+        });
+
+        function updateTotal() {
+            const total = catSliders.reduce((acc, id) => acc + parseInt(document.getElementById(id).value), 0);
+            const totalDisplay = document.getElementById('total-weight');
+            totalDisplay.textContent = total;
+            if (total !== 100) {
+                totalDisplay.parentElement.classList.replace('bg-primary-container/10', 'bg-error-container/20');
+                totalDisplay.classList.replace('text-primary', 'text-error');
+            } else {
+                totalDisplay.parentElement.classList.replace('bg-error-container/20', 'bg-primary-container/10');
+                totalDisplay.classList.replace('text-error', 'text-primary');
+            }
+        }
+
+        // Initialize other sliders
+        setupSlider('threshold-slider', 'threshold-val');
+        setupSlider('gate-slider', 'gate-val');
+        setupSlider('tier1-slider', 'tier1-val');
+        setupSlider('tier2-slider', 'tier2-val');
+        setupSlider('tier3-slider', 'tier3-val');
+
+        // Simple button click effect
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.classList.add('scale-95');
+                setTimeout(() => this.classList.remove('scale-95'), 150);
+            });
+        });
+    </script>
+</body></html>

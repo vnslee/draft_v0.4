@@ -1,9 +1,5 @@
 # UI Design Guide 문서
 
-## 분위기
-- 해당 링크 참조해서 구현해줘. 
-  - https://github.com/uxjoseph/supanova-design-skill
-
 ## 공통사항
 - 전체 화면의 상단바만 존재하고 왼쪽 오른쪽 사이드바는 없어야함.
 - 전부 한글로 구성, 단 화면 최상단 우측에 영문 변환 가능한 버튼 구성
